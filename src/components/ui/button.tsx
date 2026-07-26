@@ -16,9 +16,10 @@ const buttonVariants = cva(
         ghost: "text-maibazu-ink hover:bg-maibazu-ink/5",
       },
       size: {
-        default: "h-10 px-5 py-2",
-        lg: "h-12 px-8 text-base",
-        sm: "h-9 px-4 text-xs",
+        default: "h-10 px-4 py-2",
+        sm: "h-9 rounded-md px-3",
+        lg: "h-11 rounded-md px-8",
+        icon: "h-9 w-9", // ←★ この1行を追加
       },
     },
     defaultVariants: {

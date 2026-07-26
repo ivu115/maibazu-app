@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useState } from 'react';
-import Link from 'next/link'; // 👈 これが絶対に必要です！
+import Link from 'next/link';
+import { usePathname } from 'next/navigation'; // 👈 追加
 import { 
   Users, 
   CalendarDays, 
-  JapaneseCircle, 
+  JapaneseYen, 
   TrendingUp, 
   MessageSquare, 
   LayoutDashboard, 
@@ -22,6 +23,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function DashboardPage() {
+  const pathname = usePathname(); // 👈 現在のパスを取得
+
   return (
     <div className="flex min-h-screen bg-[#F8FAFC]">
       {/* 🏰 サイドバー（共通ナビゲーション） */}
@@ -35,12 +38,12 @@ export default function DashboardPage() {
           </Link>
         </div>
         <nav className="flex-1 px-4 py-4 space-y-2">
-          {/* 各ページへのリンクを href で指定 */}
-          <Link href="/dashboard"><NavItem icon={<LayoutDashboard size={20}/>} label="ダッシュボード" active={window.location.pathname === '/dashboard'} /></Link>
-          <Link href="/schedule"><NavItem icon={<CalendarDays size={20}/>} label="お稽古スケジュール" active={window.location.pathname === '/schedule'} /></Link>
-          <Link href="/students"><NavItem icon={<Users size={20}/>} label="生徒名簿（CRM）" active={window.location.pathname === '/students'} /></Link>
-          <Link href="/sns"><NavItem icon={<MessageSquare size={20}/>} label="SNS投稿サポート" active={window.location.pathname === '/sns'} /></Link>
-          <Link href="/settings"><NavItem icon={<Settings size={20}/>} label="教室設定" active={window.location.pathname === '/settings'} /></Link>
+          {/* window.location.pathname から pathname に修正 */}
+          <Link href="/dashboard"><NavItem icon={<LayoutDashboard size={20}/>} label="ダッシュボード" active={pathname === '/dashboard'} /></Link>
+          <Link href="/schedule"><NavItem icon={<CalendarDays size={20}/>} label="お稽古スケジュール" active={pathname === '/schedule'} /></Link>
+          <Link href="/students"><NavItem icon={<Users size={20}/>} label="生徒名簿（CRM）" active={pathname === '/students'} /></Link>
+          <Link href="/sns"><NavItem icon={<MessageSquare size={20}/>} label="SNS投稿サポート" active={pathname === '/sns'} /></Link>
+          <Link href="/settings"><NavItem icon={<Settings size={20}/>} label="教室設定" active={pathname === '/settings'} /></Link>
         </nav>
         <div className="p-4 border-t border-white/10">
           <div className="bg-white/5 p-4 rounded-2xl text-[10px] opacity-50 font-bold">
