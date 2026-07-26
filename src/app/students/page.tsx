@@ -124,9 +124,9 @@ export default function StudentsPage() {
 
                     <div className="md:w-1/3 flex items-center justify-between gap-4">
                       <p className="text-[11px] text-slate-500 leading-relaxed line-clamp-2 italic">“{student.memo}”</p>
-                      <Button variant="ghost" size="icon" className="text-slate-300 hover:text-slate-600">
-                        <MoreVertical size={20} />
-                      </Button>
+                      <Button variant="ghost" className="p-2 rounded-full text-slate-300 hover:text-slate-600">
+  <MoreVertical size={20} />
+</Button>
                     </div>
                   </div>
                 </CardContent>
