@@ -23,7 +23,7 @@ export default function Home() {
           </nav>
           <Link href="/search">
             <Button className="bg-[#E63946] hover:bg-[#D62839] text-white rounded-full px-6 transition-all hover:scale-105 active:scale-95 text-xs font-bold">
-              無料相談・予約
+              1日体験を予約
             </Button>
           </Link>
         </div>
@@ -47,7 +47,7 @@ export default function Home() {
             </p>
             <Link href="/search">
               <Button size="lg" className="text-xl px-10 py-8 bg-[#1D3557] text-white hover:shadow-2xl transition-all hover:-translate-y-1 rounded-2xl font-bold gap-2">
-                まずはハイブリッド体験コースを探す <ArrowRight size={20} />
+                まずは体験できる教室を探す <ArrowRight size={20} />
               </Button>
             </Link>
           </div>
@@ -79,7 +79,7 @@ export default function Home() {
             <article>
               <h3 className="text-xl font-bold text-[#1D3557] mb-3 flex items-center gap-2">
                 <span className="w-1.5 h-6 bg-[#E63946] rounded-full"></span>
-                「足し算」の西洋と、「引き算」の日舞
+                「足し算」の西洋と、「引き算」の日本舞踊
               </h3>
               <p className="leading-relaxed">
                 バレエやヒップホップなどの西洋のダンスが「重心を高く上げ、飛び跳ねる、動の美」であるのに対し、日本舞踊は対極。重心をぐっと下げ、地面を踏みしめるように滑らせる「すり足」が基本です。無駄な動きをそぎ落とした先に宿る「静の美」と、一瞬の静止に宿る感情。その深みこそが、見る者を魅了し続けています。
@@ -118,13 +118,13 @@ export default function Home() {
             <img src="/rental.jpg" alt="Rich Selection" className="relative rounded-[2.5rem] shadow-xl w-full h-auto object-cover" />
             <div className="space-y-8">
               <header>
-                <h2 className="text-3xl font-black text-[#1D3557] mb-4 uppercase tracking-tighter">Hybrid Trial Pack</h2>
+                <h2 className="text-3xl font-black text-[#1D3557] mb-4 uppercase tracking-tighter">日本舞踊 1日体験プラン</h2>
                 <p className="text-slate-500 font-medium underline decoration-[#E63946] decoration-2 underline-offset-4">事前動画 ＋ 対面1回完結の新しい体験</p>
               </header>
               <div className="space-y-4">
-                <StepItem number="STEP 1" title="自宅でオンデマンド予習（5分）" desc="歴史や作法、当日の流れを動画で事前にチェック。不安ゼロで当日へ。" />
-                <StepItem number="STEP 2" title="稽古場での対面レッスン（60分）" desc="道具はすべて用意。親しみやすい本格邦楽に合わせて楽しく身体を動かします。" />
-                <StepItem number="STEP 3" title="Web振り返りノート" desc="レッスン後の感想や質問をアプリで送信。先生から一言メッセージが届きます。" />
+                <StepItem number="STEP1" title="自宅でオンデマンド予習（5分）" desc="歴史や作法、当日の流れを動画で事前にチェック。不安ゼロで当日へ。" />
+                <StepItem number="STEP2" title="稽古場での対面レッスン（60分）" desc="道具はすべて用意。親しみやすい本格邦楽に合わせて楽しく身体を動かします。" />
+                <StepItem number="STEP3" title="Web振り返りノート" desc="レッスン後の感想や質問をアプリで送信。先生から一言メッセージが届きます。" />
               </div>
             </div>
           </div>
@@ -206,7 +206,7 @@ function SchoolCard({ id, name, location, tags, price, img }: any) {
         <CardHeader className="p-6">
           <CardTitle className="text-xl font-black mb-4 tracking-tight">{name}</CardTitle>
           <div className="flex justify-between items-center pt-4 border-t border-slate-100">
-            <span className="text-[10px] font-bold text-[#1D3557]/40 uppercase tracking-widest">Hybrid Trial</span>
+            <span className="text-[10px] font-bold text-[#1D3557]/40 uppercase tracking-widest">Trial Plan</span>
             <span className="text-xl font-black text-[#E63946]">{price}</span>
           </div>
         </CardHeader>
