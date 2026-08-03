@@ -2,167 +2,162 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { 
-  Users, 
-  CalendarDays, 
-  LayoutDashboard, 
-  MessageSquare, 
-  Settings,
-  Plus,
-  ChevronLeft,
-  ChevronRight,
-  Clock,
-  MapPin,
-  CheckCircle2,
-  AlertCircle,
-  ArrowUpRight
-} from "lucide-react";
+import { useParams } from 'next/navigation';
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { CheckCircle2, MapPin, User, ChevronLeft, ShieldCheck, Calendar, Clock, Video, Sparkles } from "lucide-react";
 
-const LESSONS = [
-  { id: 1, time: "10:00 - 11:00", type: "対面体験", student: "田中 美咲", status: "確定", room: "お座敷A" },
-  { id: 2, time: "13:00 - 14:30", type: "グループ", student: "初級クラス (4名)", status: "満員", room: "広間" },
-  { id: 3, time: "16:00 - 17:00", type: "対面体験", student: "新規申込者宛", status: "仮予約", room: "お座敷A" },
-  { id: 4, time: "19:00 - 20:00", type: "個人稽古", student: "佐藤 健太", status: "確定", room: "お座敷B" },
-];
+const SCHOOL_DETAILS: Record<string, any> = {
+  "1": { name: "S 教室", location: "大阪府 吹田市", teacher: "花月 先生 (20代)", style: "花月流", price: "15,000円", image: "/lesson.jpg" },
+  "2": { name: "H 教室", location: "兵庫県 伊丹市", teacher: "杉本 先生 (50代)", style: "無所属", price: "12,000円", image: "/rental.jpg" },
+  "3": { name: "K 教室", location: "東京・世田谷", teacher: "西川 先生 (30代)", style: "西川流", price: "18,000円", image: "/hero.jpg" }
+};
 
-export default function SchedulePage() {
+export default function SchoolDetailPage() {
+  const params = useParams();
+  const id = params.id as string;
+  const school = SCHOOL_DETAILS[id] || SCHOOL_DETAILS["1"];
+
+  // フォーム用ステート
+  const [step, setStep] = useState(1); // 1: 日時選択, 2: 情報入力, 3: 完了
+  const [selectedTime, setSelectedTime] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+  const [studentName, setStudentName] = useState("");
+  const [studentEmail, setStudentEmail] = useState("");
+
   return (
-    <div className="flex min-h-screen bg-[#F8FAFC]">
-      {/* 🏰 サイドバー */}
-      <aside className="w-64 bg-[#1D3557] text-white hidden md:flex flex-col">
-        <div className="p-6 flex items-center gap-3">
-          <Link href="/" className="flex items-center gap-3">
-            <div className="bg-[#E63946] p-1 rounded grow-0">
-               <img src="/logo.png" alt="logo" className="w-6 h-6 invert brightness-0" />
-            </div>
-            <span className="font-black text-xl tracking-tighter text-white">舞バズ Admin</span>
+    <div className="min-h-screen bg-white text-black font-sans">
+      <nav className="border-b p-4 sticky top-0 bg-white/90 backdrop-blur z-50">
+        <div className="max-w-4xl mx-auto flex items-center justify-between">
+          <Link href="/search" className="flex items-center text-slate-400 font-bold hover:text-[#E63946] transition-colors text-xs">
+            <ChevronLeft size={18} /> 教室一覧へ戻る
           </Link>
+          <div className="font-black text-[#E63946] text-sm">舞バズ 認定教室</div>
         </div>
-        <nav className="flex-1 px-4 py-4 space-y-1">
-          <Link href="/dashboard"><NavItem icon={<LayoutDashboard size={20}/>} label="ダッシュボード" active={false} /></Link>
-          <Link href="/schedule"><NavItem icon={<CalendarDays size={20}/>} label="お稽古スケジュール" active={true} /></Link>
-          <Link href="/students"><NavItem icon={<Users size={20}/>} label="生徒名簿（CRM）" active={false} /></Link>
-          <Link href="/sns"><NavItem icon={<MessageSquare size={20}/>} label="SNS投稿サポート" active={false} /></Link>
-          <Link href="/settings"><NavItem icon={<Settings size={20}/>} label="教室設定" active={false} /></Link>
-        </nav>
-        <div className="p-4 border-t border-white/10 opacity-50 text-[10px] font-bold">
-           講師：花月 士宝菊 先生
-        </div>
-      </aside>
+      </nav>
 
-      {/* 📅 メインコンテンツ */}
-      <main className="flex-1 overflow-y-auto text-black font-sans">
-        <header className="bg-white border-b h-16 flex items-center justify-between px-8 sticky top-0 z-10">
-          <h2 className="font-extrabold text-xl text-slate-800">お稽古スケジュール</h2>
-          <div className="flex items-center gap-4">
-            <Link href="/search/1" target="_blank">
-              <Button size="sm" variant="outline" className="text-xs gap-1 border-slate-200 text-slate-600 font-bold">
-                公開ページを確認 <ArrowUpRight size={14} />
-              </Button>
-            </Link>
-            <Button className="bg-[#E63946] hover:bg-[#D62839] text-white gap-2 rounded-xl font-bold">
-              <Plus size={18} /> お稽古枠を追加
-            </Button>
-          </div>
-        </header>
-
-        <div className="p-8 max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            <div className="lg:col-span-1 space-y-6">
-              <Card className="border-none shadow-sm rounded-3xl overflow-hidden bg-white">
-                <CardHeader className="bg-[#1D3557] text-white p-4">
-                  <div className="flex justify-between items-center text-sm font-bold">
-                    <ChevronLeft size={16} className="cursor-pointer" />
-                    <span>2026年 8月</span>
-                    <ChevronRight size={16} className="cursor-pointer" />
-                  </div>
-                </CardHeader>
-                <CardContent className="p-4">
-                  <div className="grid grid-cols-7 gap-1 text-[10px] text-center font-bold text-slate-400 mb-2">
-                    <span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span>
-                  </div>
-                  <div className="grid grid-cols-7 gap-1 text-xs text-center font-medium">
-                    {[...Array(31)].map((_, i) => (
-                      <div key={i} className={`p-2 rounded-lg cursor-pointer transition-colors ${i + 1 === 1 ? 'bg-[#E63946] text-white font-bold' : 'hover:bg-slate-100'}`}>
-                        {i + 1}
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <div className="bg-[#1D3557]/5 p-6 rounded-3xl space-y-3">
-                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">お稽古の分類</p>
-                <div className="flex items-center gap-3 text-xs font-bold text-slate-600"><div className="w-3 h-3 rounded-full bg-blue-500"></div> 個人稽古</div>
-                <div className="flex items-center gap-3 text-xs font-bold text-slate-600"><div className="w-3 h-3 rounded-full bg-orange-500"></div> グループ</div>
-                <div className="flex items-center gap-3 text-xs font-bold text-slate-600"><div className="w-3 h-3 rounded-full bg-[#E63946]"></div> 対面体験（舞バズ）</div>
-              </div>
+      {/* ヒーロービジュアル */}
+      <div className="relative h-64 md:h-80 w-full overflow-hidden">
+        <img src={school.image} alt={school.name} className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+        <div className="absolute bottom-6 left-0 w-full">
+          <div className="max-w-4xl mx-auto px-4">
+            <div className="flex items-center gap-2 text-white/70 text-xs font-bold mb-1">
+              <MapPin size={12} /> {school.location}
             </div>
+            <h1 className="text-3xl md:text-4xl font-black text-white">{school.name}</h1>
+          </div>
+        </div>
+      </div>
 
-            <div className="lg:col-span-3 space-y-6">
-              <div className="flex items-center justify-between font-black text-2xl text-[#1D3557] px-2 italic">
-                2026年 8月 1日 (土)
-              </div>
+      <main className="max-w-4xl mx-auto px-4 py-12 grid md:grid-cols-3 gap-12">
+        {/* 左側：説明 */}
+        <div className="md:col-span-2 space-y-10">
+          <section className="space-y-4">
+            <h2 className="text-2xl font-bold flex items-center gap-2 text-[#1D3557]">
+              <ShieldCheck className="text-[#E63946]" /> ハイブリッド体験パッケージ
+            </h2>
+            <p className="text-slate-600 leading-relaxed text-sm font-medium">
+              事前のオンデマンド動画で流派の歴史や作法を予習し、当日は手ぶらで60分の対面稽古に没頭する、無理のない安心パッケージです。
+            </p>
+          </section>
 
-              <div className="space-y-4">
-                {LESSONS.map((lesson) => (
-                  <Card key={lesson.id} className="border-none shadow-sm rounded-3xl overflow-hidden hover:shadow-md transition-all bg-white">
-                    <div className="flex">
-                      <div className={`w-2 ${
-                        lesson.type === '個人' ? 'bg-blue-500' : 
-                        lesson.type === 'グループ' ? 'bg-orange-500' : 'bg-[#E63946]'
-                      }`}></div>
-                      <CardContent className="p-6 flex-1 flex flex-col md:flex-row items-center justify-between gap-6">
-                        <div className="flex items-center gap-6 flex-1 w-full">
-                          <div className="text-center min-w-[100px]">
-                            <p className="text-[10px] font-black text-slate-400 mb-1 uppercase tracking-tighter"><Clock size={12} className="inline mr-1" /> Time</p>
-                            <p className="text-sm font-black text-[#1D3557]">{lesson.time}</p>
-                          </div>
-                          <div className="h-8 w-px bg-slate-100 hidden md:block"></div>
-                          <div className="flex-1">
-                            <p className="text-[10px] font-bold text-[#E63946] mb-0.5 tracking-wider">{lesson.type}</p>
-                            <h4 className="font-extrabold text-lg flex items-center gap-2 text-slate-800">
-                              {lesson.student}
-                              {lesson.status === '仮予約' && <AlertCircle size={14} className="text-orange-500" />}
-                            </h4>
-                            <div className="flex items-center gap-3 text-[10px] text-slate-400 font-bold mt-1 uppercase tracking-widest">
-                               <MapPin size={10} /> {lesson.room}
-                            </div>
-                          </div>
-                        </div>
+          <section className="bg-slate-50 p-8 rounded-3xl space-y-4 border border-slate-100">
+            <h3 className="font-bold text-lg text-[#1D3557]">体験に含まれるもの</h3>
+            <div className="grid grid-cols-2 gap-4 text-xs font-bold text-slate-600">
+              <div className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500"/> オンデマンド事前解説動画</div>
+              <div className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500"/> 稽古着・扇子レンタル一式</div>
+              <div className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500"/> 60分対面レッスン</div>
+              <div className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500"/> 振り返りノート機能</div>
+            </div>
+          </section>
+        </div>
 
-                        <div className="flex items-center gap-3 w-full md:w-auto border-t md:border-t-0 pt-4 md:pt-0">
-                          <span className={`text-[10px] font-black px-3 py-1 rounded-full ${
-                            lesson.status === '確定' ? 'bg-green-50 text-green-600' : 
-                            lesson.status === '満員' ? 'bg-slate-100 text-slate-400' : 
-                            'bg-red-50 text-[#E63946]'
-                          }`}>
-                            {lesson.status}
-                          </span>
-                          <Link href="/students">
-                            <Button variant="ghost" size="sm" className="text-xs font-bold text-slate-400 hover:text-[#1D3557]">カルテを見る</Button>
-                          </Link>
-                        </div>
-                      </CardContent>
+        {/* 右側：動的体験申込フォーム（インタラクティブ） */}
+        <div className="md:col-span-1">
+          <Card className="border-none shadow-2xl rounded-3xl overflow-hidden bg-white sticky top-24">
+            <div className="bg-[#1D3557] p-4 text-white text-center font-bold text-xs">
+              {step === 1 && "STEP 1: 日時を選択"}
+              {step === 2 && "STEP 2: お客様情報入力"}
+              {step === 3 && "申込完了"}
+            </div>
+            <CardContent className="p-6 space-y-6">
+              {step === 1 && (
+                <div className="space-y-4">
+                  <div className="text-center">
+                    <span className="text-xs text-slate-400 font-bold">全1回体験コース（事前動画付）</span>
+                    <p className="text-3xl font-black text-[#E63946]">{school.price}</p>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-slate-500">① 日付を選択</label>
+                    <Input type="date" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} className="bg-slate-50 border-none" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-slate-500">② 時間帯を選択</label>
+                    <div className="grid grid-cols-2 gap-2 text-xs">
+                      {["10:00 - 11:00", "13:00 - 14:00", "16:00 - 17:00", "19:00 - 20:00"].map((t) => (
+                        <button 
+                          key={t} 
+                          onClick={() => setSelectedTime(t)}
+                          className={`p-2.5 rounded-xl border font-bold transition-all ${selectedTime === t ? 'border-[#E63946] bg-red-50 text-[#E63946]' : 'border-slate-100 bg-slate-50 text-slate-600'}`}
+                        >
+                          {t}
+                        </button>
+                      ))}
                     </div>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          </div>
+                  </div>
+                  <Button 
+                    disabled={!selectedDate || !selectedTime} 
+                    onClick={() => setStep(2)}
+                    className="w-full bg-[#E63946] py-6 rounded-2xl font-bold text-white shadow-md disabled:opacity-50"
+                  >
+                    次へ進む
+                  </Button>
+                </div>
+              )}
+
+              {step === 2 && (
+                <div className="space-y-4">
+                  <div className="bg-slate-50 p-3 rounded-xl text-xs font-bold text-slate-600 mb-2">
+                    {selectedDate} / {selectedTime}
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-slate-500">お名前</label>
+                    <Input placeholder="山田 太郎" value={studentName} onChange={(e) => setStudentName(e.target.value)} className="bg-slate-50 border-none" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-slate-500">メールアドレス</label>
+                    <Input type="email" placeholder="example@gmail.com" value={studentEmail} onChange={(e) => setStudentEmail(e.target.value)} className="bg-slate-50 border-none" />
+                  </div>
+                  <div className="flex gap-2">
+                    <Button variant="outline" onClick={() => setStep(1)} className="w-1/3 rounded-2xl py-6 font-bold">戻る</Button>
+                    <Button 
+                      disabled={!studentName || !studentEmail} 
+                      onClick={() => setStep(3)}
+                      className="w-2/3 bg-[#E63946] py-6 rounded-2xl font-bold text-white shadow-md disabled:opacity-50"
+                    >
+                      予約を確定する
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {step === 3 && (
+                <div className="text-center py-4 space-y-4">
+                  <CheckCircle2 size={50} className="text-green-500 mx-auto" />
+                  <h3 className="font-bold text-lg">予約申込が完了しました！</h3>
+                  <div className="bg-red-50 p-4 rounded-2xl text-left space-y-2 border border-red-100">
+                    <p className="text-xs font-bold text-[#E63946] flex items-center gap-1"><Video size={14}/> 0日目：オンデマンド事前講義</p>
+                    <p className="text-[11px] text-slate-600">ご入力いただいたメールアドレスに「事前解説動画」のURLを送信しました。当日までに5分間の動画をチェックしてください。</p>
+                  </div>
+                  <Button onClick={() => setStep(1)} variant="outline" className="w-full rounded-2xl py-6 font-bold">他の日時で試す</Button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
         </div>
       </main>
-    </div>
-  );
-}
-
-function NavItem({ icon, label, active = false }: any) {
-  return (
-    <div className={`flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all ${active ? 'bg-[#E63946] text-white shadow-lg' : 'text-white/40 hover:bg-white/5 hover:text-white'}`}>
-      <span className={active ? "text-white" : "text-white/40"}>{icon}</span>
-      <span className="text-sm font-bold">{label}</span>
     </div>
   );
 }

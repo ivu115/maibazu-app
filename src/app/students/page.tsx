@@ -3,26 +3,15 @@
 import React from 'react';
 import Link from 'next/link';
 import { 
-  Users, 
-  CalendarDays, 
-  LayoutDashboard, 
-  MessageSquare, 
-  Settings,
-  Search,
-  Plus,
-  Filter,
-  MoreVertical,
-  GraduationCap,
-  History,
-  ArrowUpRight,
-  MessageCircle
+  Users, CalendarDays, LayoutDashboard, MessageSquare, Settings,
+  Search, Plus, Filter, MoreVertical, GraduationCap, History, ArrowUpRight, MessageCircle
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
 const STUDENTS = [
-  { id: 1, name: "田中 美咲", age: 22, course: "ハイブリッド体験", progress: "対面待ち", lastLesson: "オンデマンド済", status: "振り返り届く", memo: "『すり足が気持ちよかった』とノートにコメント有。" },
+  { id: 1, name: "田中 美咲", age: 22, course: "ハイブリッド体験", progress: "対面完了", lastLesson: "オンデマンド済", status: "ノート届く", memo: "『すり足が気持ちよかった』とノートにコメント有。" },
   { id: 2, name: "佐藤 健太", age: 28, course: "初級月謝", progress: "5ヶ月目", lastLesson: "2026/07/22", status: "良好", memo: "姿勢改善が目的。仕事帰りに来校。" },
   { id: 3, name: "Emily Watson", age: 25, course: "ハイブリッド体験", progress: "オンデマンド済", lastLesson: "予約済み", status: "新規", memo: "インバウンド体験。英語での補助が必要。" },
   { id: 4, name: "鈴木 花子", age: 34, course: "中級月謝", progress: "2年目", lastLesson: "2026/07/15", status: "注意(欠席気味)", memo: "仕事が忙しそう。フォロー推奨。" },
@@ -31,13 +20,11 @@ const STUDENTS = [
 export default function StudentsPage() {
   return (
     <div className="flex min-h-screen bg-[#F8FAFC]">
-      {/* 🏰 サイドバー */}
+      {/* サイドバー */}
       <aside className="w-64 bg-[#1D3557] text-white hidden md:flex flex-col">
         <div className="p-6 flex items-center gap-3">
           <Link href="/" className="flex items-center gap-3">
-            <div className="bg-[#E63946] text-white p-1 rounded grow-0">
-               <img src="/logo.png" alt="logo" className="w-6 h-6 invert brightness-0" />
-            </div>
+            <div className="bg-[#E63946] text-white p-1 rounded grow-0"><img src="/logo.png" alt="logo" className="w-6 h-6 invert brightness-0" /></div>
             <span className="font-black text-xl tracking-tighter text-white">舞バズ Admin</span>
           </Link>
         </div>
@@ -48,50 +35,29 @@ export default function StudentsPage() {
           <Link href="/sns"><NavItem icon={<MessageSquare size={20}/>} label="SNS投稿サポート" active={false} /></Link>
           <Link href="/settings"><NavItem icon={<Settings size={20}/>} label="教室設定" active={false} /></Link>
         </nav>
-        <div className="p-4 border-t border-white/10 opacity-50 text-[10px] font-bold">
-           講師：花月 士宝菊 先生
-        </div>
       </aside>
 
-      {/* 📋 メインコンテンツ */}
+      {/* メイン */}
       <main className="flex-1 overflow-y-auto text-black font-sans">
         <header className="bg-white border-b h-16 flex items-center justify-between px-8 sticky top-0 z-10">
           <div className="flex items-center gap-4 flex-1">
             <h2 className="font-extrabold text-xl text-slate-800 mr-8">生徒名簿（CRM）</h2>
-            <div className="relative max-w-sm flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-              <Input placeholder="生徒名で検索..." className="pl-10 bg-slate-50 border-none h-10 text-xs" />
-            </div>
           </div>
-          <div className="flex items-center gap-4">
-            <Link href="/search/1" target="_blank">
-              <Button size="sm" variant="outline" className="text-xs gap-1 border-slate-200 text-slate-600 font-bold">
-                公開ページを確認 <ArrowUpRight size={14} />
-              </Button>
-            </Link>
-            <Button className="bg-[#E63946] hover:bg-[#D62839] text-white gap-2 rounded-xl font-bold text-xs">
-              <Plus size={16} /> 新規登録
+          <Link href="/search/1" target="_blank">
+            <Button size="sm" variant="outline" className="text-xs gap-1 border-slate-200 text-slate-600 font-bold">
+              公開ページを確認 <ArrowUpRight size={14} />
             </Button>
-          </div>
+          </Link>
         </header>
 
         <div className="p-8 max-w-7xl mx-auto space-y-6">
-          <div className="flex justify-between items-center">
-            <div className="flex gap-2">
-              <Button variant="outline" size="sm" className="rounded-lg gap-2 text-xs font-bold border-slate-200">
-                <Filter size={14} /> 絞り込み
-              </Button>
-            </div>
-            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Total: 12 Students</p>
-          </div>
-
           <div className="grid gap-4">
             {STUDENTS.map(student => (
-              <Card key={student.id} className="border-none shadow-sm hover:shadow-md transition-all rounded-2xl overflow-hidden bg-white">
-                <CardContent className="p-0">
-                  <div className="flex flex-col md:flex-row items-stretch md:items-center p-6 gap-6">
+              <Link key={student.id} href={`/students/${student.id}`}>
+                <Card className="border-none shadow-sm hover:shadow-md transition-all rounded-2xl overflow-hidden bg-white cursor-pointer group">
+                  <CardContent className="p-6 flex flex-col md:flex-row items-center gap-6">
                     <div className="flex items-center gap-4 md:w-1/4">
-                      <div className="size-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 font-bold">
+                      <div className="size-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 font-bold group-hover:bg-[#E63946]/10 group-hover:text-[#E63946]">
                         <Users size={20} />
                       </div>
                       <div>
@@ -102,34 +68,22 @@ export default function StudentsPage() {
 
                     <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-6 border-t md:border-t-0 md:border-x px-0 md:px-8 py-4 md:py-0">
                       <div>
-                        <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-1 opacity-50">進捗状態</p>
+                        <p className="text-[10px] text-slate-400 font-black uppercase mb-1">進捗状態</p>
                         <span className="text-sm font-bold text-slate-600">{student.progress}</span>
                       </div>
                       <div>
-                        <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-1 opacity-50">最終受講日</p>
-                        <span className="text-sm font-bold text-slate-600">{student.lastLesson}</span>
-                      </div>
-                      <div className="hidden md:block">
-                        <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-1 opacity-50">Status</p>
-                        <span className={`px-3 py-1 rounded-full text-[10px] font-black ${
-                          student.status.includes('注意') ? 'bg-orange-50 text-orange-600' : 'bg-green-50 text-green-600'
-                        }`}>
-                          {student.status}
-                        </span>
+                        <p className="text-[10px] text-slate-400 font-black uppercase mb-1">Status</p>
+                        <span className="px-3 py-1 rounded-full text-[10px] font-black bg-red-50 text-[#E63946]">{student.status}</span>
                       </div>
                     </div>
 
                     <div className="md:w-1/3 flex items-center justify-between gap-4">
                       <p className="text-[11px] text-slate-500 leading-relaxed italic">“{student.memo}”</p>
-                      <Link href="/sns">
-                        <Button size="sm" variant="ghost" className="text-xs text-[#E63946] font-bold gap-1">
-                          <MessageCircle size={14} /> 返信する
-                        </Button>
-                      </Link>
+                      <Button size="sm" variant="ghost" className="text-xs text-[#E63946] font-bold">カルテ開く →</Button>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              </Link>
             ))}
           </div>
         </div>

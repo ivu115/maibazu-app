@@ -5,169 +5,157 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle2, MapPin, Clock, User, Music, Star, ChevronLeft, ShieldCheck, Camera, CreditCard } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { CheckCircle2, MapPin, User, ChevronLeft, ShieldCheck, Calendar, Clock, Video, Sparkles } from "lucide-react";
 
-// ─── 教室の詳細データ（ヒアリング内容に基づき構成） ───
 const SCHOOL_DETAILS: Record<string, any> = {
-  "1": {
-    name: "S 教室",
-    location: "大阪府 吹田市",
-    tagline: "20代・30代が8割。SNS世代のための日本舞踊。",
-    teacher: "花月 先生 (20代)",
-    style: "花月流",
-    description: "「日本舞踊って、実はSNSと相性がいいんです」。若手講師が、伝統の所作を現代の視点で分かりやすく解説。オンライン稽古も取り入れた柔軟なスタイルが特徴です。",
-    price: "15,000円",
-    points: ["20代〜30代の生徒が多数在籍", "Instagramへの投稿や撮影大歓迎", "オンラインでの予習復習サポート"],
-    image: "/lesson.jpg"
-  },
-  "2": {
-    name: "H 教室",
-    location: "兵庫県 伊丹市",
-    tagline: "手ぶらで1日。コミュニティを大切にする癒しの和室。",
-    teacher: "杉本 先生 (50代)",
-    style: "無所属（独自カリキュラム）",
-    description: "「先輩・後輩のない、フラットな関係」がモットー。自宅レッスンならではの安心感で、男性一人でも怖くない雰囲気を大切にしています。お仕事帰りのリフレッシュに最適です。",
-    price: "12,000円",
-    points: ["豊富な稽古着を無料でレンタル可能", "姿勢矯正や体幹トレーニング効果", "生徒同士の交流会も定期開催"],
-    image: "/rental.jpg"
-  },
-  "3": {
-    name: "K 教室",
-    location: "東京・世田谷",
-    tagline: "J-POPで踊る。楽しさを最優先した新しい日本舞踊。",
-    teacher: "西川 先生 (30代)",
-    style: "西川流",
-    description: "「伝統の型をJ-POPで楽しんでほしい」。難しい曲ではなく、みんなが知っている最新曲で基本を短期間に習得。お子様連れや学生も多く、笑い声の絶えない教室です。",
-    price: "18,000円",
-    points: ["最新のヒット曲に合わせた振付", "夜間21時まで対応可能", "終了後に自分専用の舞動画をプレゼント"],
-    image: "/hero.jpg"
-  }
+  "1": { name: "S 教室", location: "大阪府 吹田市", teacher: "花月 先生 (20代)", style: "花月流", price: "15,000円", image: "/lesson.jpg" },
+  "2": { name: "H 教室", location: "兵庫県 伊丹市", teacher: "杉本 先生 (50代)", style: "無所属", price: "12,000円", image: "/rental.jpg" },
+  "3": { name: "K 教室", location: "東京・世田谷", teacher: "西川 先生 (30代)", style: "西川流", price: "18,000円", image: "/hero.jpg" }
 };
 
 export default function SchoolDetailPage() {
   const params = useParams();
   const id = params.id as string;
-  const school = SCHOOL_DETAILS[id];
-  const [isBooked, setIsBooked] = useState(false);
+  const school = SCHOOL_DETAILS[id] || SCHOOL_DETAILS["1"];
 
-  if (!school) return <div className="p-20 text-center">教室が見つかりませんでした。</div>;
+  // フォーム用ステート
+  const [step, setStep] = useState(1); // 1: 日時選択, 2: 情報入力, 3: 完了
+  const [selectedTime, setSelectedTime] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+  const [studentName, setStudentName] = useState("");
+  const [studentEmail, setStudentEmail] = useState("");
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* ナビゲーション */}
+    <div className="min-h-screen bg-white text-black font-sans">
       <nav className="border-b p-4 sticky top-0 bg-white/90 backdrop-blur z-50">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <Link href="/search" className="flex items-center text-slate-400 font-bold hover:text-[#E63946] transition-colors">
-            <ChevronLeft size={20} /> 検索画面へ
+          <Link href="/search" className="flex items-center text-slate-400 font-bold hover:text-[#E63946] transition-colors text-xs">
+            <ChevronLeft size={18} /> 教室一覧へ戻る
           </Link>
-          <div className="font-black text-[#E63946]">舞バズ 認定教室</div>
+          <div className="font-black text-[#E63946] text-sm">舞バズ 認定教室</div>
         </div>
       </nav>
 
       {/* ヒーロービジュアル */}
-      <div className="relative h-64 md:h-[450px] w-full overflow-hidden">
+      <div className="relative h-64 md:h-80 w-full overflow-hidden">
         <img src={school.image} alt={school.name} className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-        <div className="absolute bottom-8 left-0 w-full">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+        <div className="absolute bottom-6 left-0 w-full">
           <div className="max-w-4xl mx-auto px-4">
-            <div className="flex items-center gap-2 text-white/70 text-sm font-bold mb-2">
-              <MapPin size={16} /> {school.location}
+            <div className="flex items-center gap-2 text-white/70 text-xs font-bold mb-1">
+              <MapPin size={12} /> {school.location}
             </div>
-            <h1 className="text-3xl md:text-5xl font-black text-white mb-2">{school.name}</h1>
-            <p className="text-white/90 font-medium md:text-xl">{school.tagline}</p>
+            <h1 className="text-3xl md:text-4xl font-black text-white">{school.name}</h1>
           </div>
         </div>
       </div>
 
-      <main className="max-w-4xl mx-auto px-4 py-12 grid md:grid-cols-3 gap-12 text-black">
-        {/* 左側：詳細情報 */}
-        <div className="md:col-span-2 space-y-12">
-          <section>
-            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-              <ShieldCheck className="text-[#E63946]" /> 教室について
+      <main className="max-w-4xl mx-auto px-4 py-12 grid md:grid-cols-3 gap-12">
+        {/* 左側：説明 */}
+        <div className="md:col-span-2 space-y-10">
+          <section className="space-y-4">
+            <h2 className="text-2xl font-bold flex items-center gap-2 text-[#1D3557]">
+              <ShieldCheck className="text-[#E63946]" /> ハイブリッド体験パッケージ
             </h2>
-            <p className="text-slate-600 leading-relaxed text-lg italic">「{school.description}」</p>
-          </section>
-
-          <section>
-            <h2 className="text-xl font-bold mb-6">舞バズ限定：3回完結カリキュラム</h2>
-            <div className="space-y-4">
-                <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 flex gap-4">
-                    <span className="font-black text-[#E63946]">Day 1</span>
-                    <div>
-                        <p className="font-bold">所作と姿勢の基本</p>
-                        <p className="text-sm text-slate-500">呼吸法と、J-POPを使った基本の足運びを体験します。</p>
-                    </div>
-                </div>
-                <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 flex gap-4">
-                    <span className="font-black text-[#E63946]">Day 2</span>
-                    <div>
-                        <p className="font-bold">扇子を使った表現</p>
-                        <p className="text-sm text-slate-500">道具の扱いを学び、サビ部分の本格的な振付を行います。</p>
-                    </div>
-                </div>
-                <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 flex gap-4">
-                    <span className="font-black text-[#E63946]">Day 3</span>
-                    <div>
-                        <p className="font-bold">撮影会とフィードバック</p>
-                        <p className="text-sm text-slate-500">成果を動画に残し、先生から今後のアドバイスをもらいます。</p>
-                    </div>
-                </div>
-            </div>
-          </section>
-
-          <section className="bg-[#1D3557] text-white p-8 rounded-[2rem]">
-            <h2 className="text-xl font-bold mb-4 flex items-center gap-2"><User /> 講師：{school.teacher}</h2>
-            <p className="opacity-80 text-sm leading-relaxed mb-4">
-                「私が一番大切にしているのは、日本舞踊を『楽しい』と思ってもらうこと。伝統は守りつつ、今の人が日常で取り入れられる美しさを伝えたいと思っています。」
+            <p className="text-slate-600 leading-relaxed text-sm font-medium">
+              事前のオンデマンド動画で流派の歴史や作法を予習し、当日は手ぶらで60分の対面稽古に没頭する、無理のない安心パッケージです。
             </p>
-            <div className="text-xs opacity-60">流派：{school.style}</div>
+          </section>
+
+          <section className="bg-slate-50 p-8 rounded-3xl space-y-4 border border-slate-100">
+            <h3 className="font-bold text-lg text-[#1D3557]">体験に含まれるもの</h3>
+            <div className="grid grid-cols-2 gap-4 text-xs font-bold text-slate-600">
+              <div className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500"/> オンデマンド事前解説動画</div>
+              <div className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500"/> 稽古着・扇子レンタル一式</div>
+              <div className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500"/> 60分対面レッスン</div>
+              <div className="flex items-center gap-2"><CheckCircle2 size={16} className="text-green-500"/> 振り返りノート機能</div>
+            </div>
           </section>
         </div>
 
-        {/* 右側：予約サイドバー */}
+        {/* 右側：動的体験申込フォーム（インタラクティブ） */}
         <div className="md:col-span-1">
-          <div className="sticky top-24 space-y-6">
-            <Card className="border-none shadow-2xl rounded-3xl overflow-hidden">
-              <div className="bg-[#E63946] p-4 text-white text-center font-bold text-sm">
-                舞バズ認定 受付中
-              </div>
-              <CardContent className="p-8">
-                <div className="text-sm text-slate-400 mb-1">体験コース（全3回）</div>
-                <div className="text-4xl font-black text-[#1D3557] mb-6">{school.price}</div>
-                
-                <div className="space-y-4 mb-8">
-                    {school.points.map((p: string) => (
-                        <div key={p} className="flex items-start gap-2 text-xs font-bold text-slate-600">
-                            <CheckCircle2 size={14} className="text-green-500 shrink-0" /> {p}
-                        </div>
-                    ))}
-                </div>
-
-                {!isBooked ? (
-                    <Button onClick={() => setIsBooked(true)} className="w-full bg-[#E63946] py-8 rounded-2xl text-lg font-bold shadow-xl shadow-red-100 hover:scale-[1.02] transition-transform">
-                        この教室で体験する
-                    </Button>
-                ) : (
-                    <div className="text-center p-4 bg-green-50 text-green-700 rounded-2xl font-bold">
-                        申込完了しました！
-                    </div>
-                )}
-                <p className="text-[10px] text-center text-slate-400 mt-4 leading-relaxed">
-                    ※事務局が間に入って日程を調整するため、<br/>流派特有の複雑な手続きは不要です。
-                </p>
-              </CardContent>
-            </Card>
-
-            <div className="flex flex-col gap-3">
-                <div className="flex items-center gap-2 text-slate-400 text-xs font-bold px-2 uppercase tracking-widest">
-                    <ShieldCheck size={14} /> Maibazu Guarantee
-                </div>
-                <div className="bg-slate-50 p-4 rounded-xl text-[10px] text-slate-500 leading-relaxed font-medium">
-                    舞バズが認定した本教室では、入会への強引な勧誘や、不透明な追加費用の発生は一切禁止されています。
-                </div>
+          <Card className="border-none shadow-2xl rounded-3xl overflow-hidden bg-white sticky top-24">
+            <div className="bg-[#1D3557] p-4 text-white text-center font-bold text-xs">
+              {step === 1 && "STEP 1: 日時を選択"}
+              {step === 2 && "STEP 2: お客様情報入力"}
+              {step === 3 && "申込完了"}
             </div>
-          </div>
+            <CardContent className="p-6 space-y-6">
+              {step === 1 && (
+                <div className="space-y-4">
+                  <div className="text-center">
+                    <span className="text-xs text-slate-400 font-bold">全1回体験コース（事前動画付）</span>
+                    <p className="text-3xl font-black text-[#E63946]">{school.price}</p>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-slate-500">① 日付を選択</label>
+                    <Input type="date" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} className="bg-slate-50 border-none" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-slate-500">② 時間帯を選択</label>
+                    <div className="grid grid-cols-2 gap-2 text-xs">
+                      {["10:00 - 11:00", "13:00 - 14:00", "16:00 - 17:00", "19:00 - 20:00"].map((t) => (
+                        <button 
+                          key={t} 
+                          onClick={() => setSelectedTime(t)}
+                          className={`p-2.5 rounded-xl border font-bold transition-all ${selectedTime === t ? 'border-[#E63946] bg-red-50 text-[#E63946]' : 'border-slate-100 bg-slate-50 text-slate-600'}`}
+                        >
+                          {t}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <Button 
+                    disabled={!selectedDate || !selectedTime} 
+                    onClick={() => setStep(2)}
+                    className="w-full bg-[#E63946] py-6 rounded-2xl font-bold text-white shadow-md disabled:opacity-50"
+                  >
+                    次へ進む
+                  </Button>
+                </div>
+              )}
+
+              {step === 2 && (
+                <div className="space-y-4">
+                  <div className="bg-slate-50 p-3 rounded-xl text-xs font-bold text-slate-600 mb-2">
+                    {selectedDate} / {selectedTime}
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-slate-500">お名前</label>
+                    <Input placeholder="山田 太郎" value={studentName} onChange={(e) => setStudentName(e.target.value)} className="bg-slate-50 border-none" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-slate-500">メールアドレス</label>
+                    <Input type="email" placeholder="example@gmail.com" value={studentEmail} onChange={(e) => setStudentEmail(e.target.value)} className="bg-slate-50 border-none" />
+                  </div>
+                  <div className="flex gap-2">
+                    <Button variant="outline" onClick={() => setStep(1)} className="w-1/3 rounded-2xl py-6 font-bold">戻る</Button>
+                    <Button 
+                      disabled={!studentName || !studentEmail} 
+                      onClick={() => setStep(3)}
+                      className="w-2/3 bg-[#E63946] py-6 rounded-2xl font-bold text-white shadow-md disabled:opacity-50"
+                    >
+                      予約を確定する
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {step === 3 && (
+                <div className="text-center py-4 space-y-4">
+                  <CheckCircle2 size={50} className="text-green-500 mx-auto" />
+                  <h3 className="font-bold text-lg">予約申込が完了しました！</h3>
+                  <div className="bg-red-50 p-4 rounded-2xl text-left space-y-2 border border-red-100">
+                    <p className="text-xs font-bold text-[#E63946] flex items-center gap-1"><Video size={14}/> 0日目：オンデマンド事前講義</p>
+                    <p className="text-[11px] text-slate-600">ご入力いただいたメールアドレスに「事前解説動画」のURLを送信しました。当日までに5分間の動画をチェックしてください。</p>
+                  </div>
+                  <Button onClick={() => setStep(1)} variant="outline" className="w-full rounded-2xl py-6 font-bold">他の日時で試す</Button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
         </div>
       </main>
     </div>
