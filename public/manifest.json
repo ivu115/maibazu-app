@@ -1,0 +1,21 @@
+{
+    "name": "舞バズ - 日本舞踊プラットフォーム",
+    "short_name": "舞バズ",
+    "description": "日本舞踊をもっと気軽にもっと手軽に",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#FAFAFA",
+    "theme_color": "#1D3557",
+    "icons": [
+      {
+        "src": "/logo.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "/logo.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
+  }
