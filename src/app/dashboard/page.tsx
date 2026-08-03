@@ -1,112 +1,98 @@
 "use client";
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation'; // 👈 追加
 import { 
   Users, 
   CalendarDays, 
-  JapaneseYen, 
   TrendingUp, 
   MessageSquare, 
   LayoutDashboard, 
   Settings,
   Bell,
-  Search,
-  CheckCircle2,
   Clock,
   ExternalLink,
-  ChevronRight,
-  Sparkles
+  Sparkles,
+  ArrowUpRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function DashboardPage() {
-  const pathname = usePathname(); // 👈 現在のパスを取得
-
   return (
-    <div className="flex min-h-screen bg-[#F8FAFC]">
-      {/* 🏰 サイドバー（共通ナビゲーション） */}
+    <div className="flex min-h-screen bg-[#F8FAFC] font-sans">
+      {/* 🏰 サイドバー */}
       <aside className="w-64 bg-[#1D3557] text-white hidden md:flex flex-col">
         <div className="p-6 flex items-center gap-3">
           <Link href="/" className="flex items-center gap-3">
             <div className="bg-[#E63946] p-1 rounded grow-0">
                <img src="/logo.png" alt="logo" className="w-6 h-6 invert brightness-0" />
             </div>
-            <span className="font-black text-xl tracking-tighter">舞バズ Admin</span>
+            <span className="font-black text-xl tracking-tighter text-white">舞バズ Admin</span>
           </Link>
         </div>
-        <nav className="flex-1 px-4 py-4 space-y-2">
-          {/* window.location.pathname から pathname に修正 */}
-          <Link href="/dashboard"><NavItem icon={<LayoutDashboard size={20}/>} label="ダッシュボード" active={pathname === '/dashboard'} /></Link>
-          <Link href="/schedule"><NavItem icon={<CalendarDays size={20}/>} label="お稽古スケジュール" active={pathname === '/schedule'} /></Link>
-          <Link href="/students"><NavItem icon={<Users size={20}/>} label="生徒名簿（CRM）" active={pathname === '/students'} /></Link>
-          <Link href="/sns"><NavItem icon={<MessageSquare size={20}/>} label="SNS投稿サポート" active={pathname === '/sns'} /></Link>
-          <Link href="/settings"><NavItem icon={<Settings size={20}/>} label="教室設定" active={pathname === '/settings'} /></Link>
+        <nav className="flex-1 px-4 py-4 space-y-1">
+          <Link href="/dashboard"><NavItem icon={<LayoutDashboard size={20}/>} label="ダッシュボード" active={true} /></Link>
+          <Link href="/schedule"><NavItem icon={<CalendarDays size={20}/>} label="お稽古スケジュール" active={false} /></Link>
+          <Link href="/students"><NavItem icon={<Users size={20}/>} label="生徒名簿（CRM）" active={false} /></Link>
+          <Link href="/sns"><NavItem icon={<MessageSquare size={20}/>} label="SNS投稿サポート" active={false} /></Link>
+          <Link href="/settings"><NavItem icon={<Settings size={20}/>} label="教室設定" active={false} /></Link>
         </nav>
-        <div className="p-4 border-t border-white/10">
-          <div className="bg-white/5 p-4 rounded-2xl text-[10px] opacity-50 font-bold">
-             ログイン中の講師：<br/>花月 士宝菊 様
-          </div>
+        <div className="p-4 border-t border-white/10 opacity-50 text-[10px] font-bold">
+           講師：花月 士宝菊 先生
         </div>
       </aside>
 
       {/* 🖥️ メインコンテンツ */}
-      <main className="flex-1 overflow-y-auto">
-        {/* 上部バー */}
+      <main className="flex-1 overflow-y-auto text-black">
         <header className="bg-white border-b h-16 flex items-center justify-between px-8 sticky top-0 z-10">
           <h2 className="font-bold text-slate-800">教室概況</h2>
           <div className="flex items-center gap-4">
-            <button className="text-slate-400 hover:text-[#E63946] relative">
-              <Bell size={20}/>
-              <span className="absolute -top-1 -right-1 w-2 h-2 bg-[#E63946] rounded-full"></span>
-            </button>
-            <div className="w-8 h-8 bg-slate-200 rounded-full overflow-hidden border">
-               <img src="/logo.png" alt="teacher" />
+            <Link href="/search/1" target="_blank">
+              <Button size="sm" variant="outline" className="text-xs gap-1 border-slate-200 text-slate-600 font-bold">
+                公開ページを確認 <ArrowUpRight size={14} />
+              </Button>
+            </Link>
+            <div className="w-8 h-8 bg-slate-100 rounded-full overflow-hidden border p-1">
+               <img src="/logo.png" alt="teacher" className="w-full h-full object-contain" />
             </div>
           </div>
         </header>
 
         <div className="p-8 max-w-7xl mx-auto space-y-8">
-          
-          {/* 📊 統計カード（経営分析） */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <StatsCard label="今月の見込み売上" value="84,000円" trend="+12%" icon={<TrendingUp className="text-green-500" size={16}/>} />
-            <StatsCard label="新規申込（未対応）" value="3名" trend="急ぎ" icon={<Clock className="text-[#E63946]" size={16}/>} />
+            <StatsCard label="新規受講・振り返り" value="3件" trend="新着あり" icon={<Clock className="text-[#E63946]" size={16}/>} />
             <StatsCard label="総生徒数" value="12名" trend="+1" icon={<Users className="text-blue-500" size={16}/>} />
-            <StatsCard label="サイト閲覧数" value="1,240" trend="+450" icon={<ExternalLink className="text-slate-400" size={16}/>} />
+            <StatsCard label="ページ閲覧数" value="1,240" trend="+450" icon={<ExternalLink className="text-slate-400" size={16}/>} />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 text-black">
-            {/* 📅 予約一覧（事務の自動化） */}
-            <Card className="lg:col-span-2 border-none shadow-sm rounded-3xl overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <Card className="lg:col-span-2 border-none shadow-sm rounded-3xl overflow-hidden bg-white text-black">
               <CardHeader className="bg-white border-b px-8 py-6">
                 <CardTitle className="text-lg font-bold flex items-center justify-between">
-                  直近の予約申込
-                  <Button variant="outline" size="sm" className="text-xs">一覧を見る</Button>
+                  届いた生徒ノート（振り返り・質問）
+                  <Link href="/students">
+                    <Button variant="outline" size="sm" className="text-xs">名簿で全員見る</Button>
+                  </Link>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="p-0">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="bg-slate-50 text-slate-400 font-bold">
-                      <th className="px-8 py-4 text-left">生徒名</th>
-                      <th className="px-4 py-4 text-left">コース</th>
-                      <th className="px-4 py-4 text-left">希望日</th>
-                      <th className="px-8 py-4 text-right">ステータス</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y">
-                    <ReservationRow name="田中 美咲 (22)" course="3回完結" date="2026/08/01" status="未対応" urgent />
-                    <ReservationRow name="佐藤 健太 (28)" course="初級月謝" date="2026/08/03" status="完了" />
-                    <ReservationRow name="Emily Watson (25)" course="3回完結" date="2026/08/05" status="未対応" />
-                  </tbody>
-                </table>
+              <CardContent className="p-6 space-y-4">
+                <div className="bg-slate-50 p-4 rounded-2xl space-y-2">
+                  <div className="flex justify-between items-center text-xs text-slate-400 font-bold">
+                    <span>田中 美咲 さん (昨日体験)</span>
+                    <span className="text-[#E63946]">未返信</span>
+                  </div>
+                  <p className="text-sm text-slate-700 font-medium">「すり足が難しかったですが、姿勢がピシッとして気持ちよかったです！家で復習する時のコツはありますか？」</p>
+                  <div className="pt-2 flex gap-2">
+                    <Link href="/students">
+                      <Button size="sm" className="bg-[#E63946] text-white text-xs rounded-xl font-bold">花マルスタンプを送る</Button>
+                    </Link>
+                  </div>
+                </div>
               </CardContent>
             </Card>
 
-            {/* ✨ AI SNSサポート（マーケティング） */}
             <Card className="border-none shadow-sm rounded-3xl bg-gradient-to-br from-[#1D3557] to-[#2A4A7A] text-white">
               <CardHeader>
                 <CardTitle className="text-lg font-bold flex items-center gap-2">
@@ -115,16 +101,17 @@ export default function DashboardPage() {
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="bg-white/10 p-4 rounded-2xl border border-white/10">
-                  <p className="text-xs opacity-70 mb-2">おすすめのテーマ：</p>
-                  <p className="text-sm font-bold">「すり足の美学」について</p>
+                  <p className="text-xs opacity-70 mb-1">おすすめテーマ：</p>
+                  <p className="text-sm font-bold">「すり足と体幹トレーニング」</p>
                 </div>
-                <div className="bg-white/5 p-4 rounded-2xl text-[13px] leading-relaxed">
-                  「伝統は、静止の中に宿る。今日は初心者コースの皆さんと『すり足』を稽古しました。派手な動きを削ぎ落とすからこそ、心が見えてくる。そんな体験をしてみませんか？ #舞バズ #日本舞踊」
-                </div>
-                <Button className="w-full bg-[#E63946] hover:bg-[#D62839] rounded-xl font-bold py-6">
-                  この文章をコピー
-                </Button>
-                <p className="text-[10px] text-center opacity-40 italic">舞バズAIがあなたの稽古記録から生成しました</p>
+                <p className="text-xs opacity-80 leading-relaxed">
+                  今日の生徒ノートを元に、AIが「すり足の姿勢改善効果」についての投稿案を作成しました。
+                </p>
+                <Link href="/sns" className="block">
+                  <Button className="w-full bg-[#E63946] hover:bg-[#D62839] rounded-xl font-bold py-6 text-white">
+                    AI作成画面へ移動する
+                  </Button>
+                </Link>
               </CardContent>
             </Card>
           </div>
@@ -134,12 +121,10 @@ export default function DashboardPage() {
   );
 }
 
-// ─── コンポーネント ───
-
 function NavItem({ icon, label, active = false }: any) {
   return (
-    <div className={`flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all ${active ? 'bg-[#E63946] text-white' : 'text-white/60 hover:bg-white/5 hover:text-white'}`}>
-      {icon}
+    <div className={`flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all ${active ? 'bg-[#E63946] text-white shadow-lg' : 'text-white/40 hover:bg-white/5 hover:text-white'}`}>
+      <span className={active ? "text-white" : "text-white/40"}>{icon}</span>
       <span className="text-sm font-bold">{label}</span>
     </div>
   );
@@ -147,32 +132,15 @@ function NavItem({ icon, label, active = false }: any) {
 
 function StatsCard({ label, value, trend, icon }: any) {
   return (
-    <Card className="border-none shadow-sm rounded-2xl">
+    <Card className="border-none shadow-sm rounded-2xl bg-white text-black">
       <CardContent className="p-6">
         <div className="flex justify-between items-start mb-4">
           <div className="p-2 bg-slate-50 rounded-lg">{icon}</div>
-          <span className={`text-[10px] font-bold px-2 py-1 rounded-full ${trend === '急ぎ' ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'}`}>
-            {trend}
-          </span>
+          <span className="text-[10px] font-bold px-2 py-1 rounded-full bg-green-50 text-green-600">{trend}</span>
         </div>
-        <p className="text-xs text-slate-400 font-bold mb-1 uppercase tracking-wider">{label}</p>
+        <p className="text-[10px] text-slate-400 font-bold mb-1 uppercase tracking-wider">{label}</p>
         <p className="text-2xl font-black text-[#1D3557]">{value}</p>
       </CardContent>
     </Card>
-  );
-}
-
-function ReservationRow({ name, course, date, status, urgent = false }: any) {
-  return (
-    <tr className="hover:bg-slate-50/50 transition-colors">
-      <td className="px-8 py-5 font-bold text-slate-700">{name}</td>
-      <td className="px-4 py-5 text-slate-500">{course}</td>
-      <td className="px-4 py-5 text-slate-500">{date}</td>
-      <td className="px-8 py-5 text-right">
-        <span className={`px-3 py-1 rounded-full text-[10px] font-bold ${status === '未対応' ? 'bg-red-50 text-[#E63946]' : 'bg-slate-100 text-slate-400'}`}>
-          {status}
-        </span>
-      </td>
-    </tr>
   );
 }
