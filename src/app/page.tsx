@@ -57,8 +57,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 🏮 日本舞踊とは */}
-      <section id="about" className="py-24 bg-white border-y border-slate-100 text-black">
+        {/* 🏮 日本舞踊のまとめセクション（詳しく・＊＊削除版） */}
+        <section id="about" className="py-24 bg-white border-y border-slate-100 text-black">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <div className="inline-flex items-center gap-2 text-[#E63946] mb-4">
              <Info size={20} />
@@ -72,7 +72,7 @@ export default function Home() {
                 ルーツは江戸時代の「究極の憧れ」
               </h3>
               <p className="leading-relaxed">
-                日本舞踊は、江戸時代に歌舞伎から独立して生まれた芸術です。かつての庶民たちが、憧れのスターの美しい所作を自ら学ぶ「お稽古事」として発展させました。
+                日本舞踊は、江戸時代に歌舞伎から独立して生まれた芸術です。かつての庶民たちは、スター俳優である歌舞伎役者の美しい所作や踊りに強く憧れ、それを自分でも学びたいという熱意から「習い事」として発展させました。つまり、日本文化の美しさが凝縮された最高峰のエンターテインメントなのです。
               </p>
             </article>
 
@@ -82,7 +82,17 @@ export default function Home() {
                 「足し算」の西洋と、「引き算」の日舞
               </h3>
               <p className="leading-relaxed">
-                西洋のダンスが「重心を高く上げ、飛び跳ねる動の美」なら、日本舞踊は「重心を下げ、地面を踏みしめる静の美」。無駄を削ぎ落とした「引き算の美学」の世界です。
+                バレエやヒップホップなどの西洋のダンスが「重心を高く上げ、飛び跳ねる、動の美」であるのに対し、日本舞踊は対極。重心をぐっと下げ、地面を踏みしめるように滑らせる「すり足」が基本です。無駄な動きをそぎ落とした先に宿る「静の美」と、一瞬の静止に宿る感情。その深みこそが、見る者を魅了し続けています。
+              </p>
+            </article>
+
+            <article>
+              <h3 className="text-xl font-bold text-[#1D3557] mb-3 flex items-center gap-2">
+                <span className="w-1.5 h-6 bg-[#E63946] rounded-full"></span>
+                「間」を感じる、日本特有のリズム感
+              </h3>
+              <p className="leading-relaxed">
+                日本舞踊において最も重要とされるのが「間（ま）」です。音と音のあいだ。動きと動きの隙間に生まれる余白。この「間」を操ることで、扇子一本だけで桜が舞い散る様子や、しとしとと降る雨、さらには繊細な恋心までをも描き出します。
               </p>
             </article>
           </div>
