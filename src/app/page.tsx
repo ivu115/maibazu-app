@@ -125,28 +125,27 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 📅 カリキュラム */}
-      <section id="course" className="py-24 bg-[#f8fbff] text-black">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div className="relative group">
-              <div className="absolute -inset-4 bg-[#E63946]/5 rounded-[3rem] scale-95 group-hover:scale-100 transition-transform"></div>
-              <img src="/rental.jpg" alt="Rich Selection" className="relative rounded-[2.5rem] shadow-xl w-full h-auto" />
-            </div>
-            <div className="space-y-8">
-              <header>
-                <h2 className="text-3xl font-black text-[#1D3557] mb-4 uppercase tracking-tighter">Starter pack</h2>
-                <p className="text-slate-500 font-medium underline decoration-[#E63946] decoration-2 underline-offset-4 tracking-wider">3回で、新しい自分に出会う。</p>
-              </header>
-              <div className="space-y-4">
-                <StepItem number="01" title="美しい立ち方とJ-POP" desc="まずは姿勢。YOASOBIなどの現代曲で足運びを体験。" />
-                <StepItem number="02" title="扇子の表現をマスター" desc="指先まで美しく。基本の扱いを習得。" />
-                <StepItem number="03" title="ショート動画撮影会" desc="修了の証に。プロ監修の照明で特別な思い出を動画で。" />
-              </div>
-            </div>
-          </div>
+/* 📅 カリキュラム */
+<section id="course" className="py-24 bg-[#f8fbff] text-black">
+  <div className="max-w-6xl mx-auto px-4">
+    <div className="grid md:grid-cols-2 gap-16 items-center">
+      <div className="relative group">
+        <img src="/rental.jpg" alt="Rich Selection" className="relative rounded-[2.5rem] shadow-xl w-full h-auto" />
+      </div>
+      <div className="space-y-8">
+        <header>
+          <h2 className="text-3xl font-black text-[#1D3557] mb-4 uppercase tracking-tighter">Hybrid Trial Pack</h2>
+          <p className="text-slate-500 font-medium underline decoration-[#E63946] decoration-2 underline-offset-4">事前動画 ＋ 対面1回完結の新しい体験</p>
+        </header>
+        <div className="space-y-4">
+          <StepItem number="STEP 1" title="自宅でオンデマンド予習（5分）" desc="歴史や作法、当日の流れを動画で事前チェック。不安ゼロで当日へ。" />
+          <StepItem number="STEP 2" title="稽古場での対面レッスン（60分）" desc="道具はすべて用意。親しみやすい本格邦楽に合わせて楽しく身体を動かします。" />
+          <StepItem number="STEP 3" title="Web振り返りノート" desc="レッスン後の感想や質問をアプリで送信。先生から一言メッセージが届きます。" />
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* 🏫 認定教室ボタン */}
       <section id="schools" className="py-24 bg-white text-center text-black">
