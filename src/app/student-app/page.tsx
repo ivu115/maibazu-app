@@ -3,15 +3,31 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { 
-  Home, BookOpen, Calendar as CalendarIcon, Music, 
-  ChevronLeft, MapPin, Clock, Video, Play, 
-  CheckCircle2, Sparkles, MessageCircle, Send, ExternalLink,
-  ChevronRight, Heart, Users, Building2, Globe
+  Home, 
+  BookOpen, 
+  Calendar as CalendarIcon, 
+  CalendarDays,
+  Music, 
+  ChevronLeft, 
+  MapPin, 
+  Video, 
+  Play, 
+  CheckCircle2, 
+  Sparkles, 
+  MessageCircle, 
+  MessageSquare,
+  Send, 
+  ExternalLink,
+  ChevronRight, 
+  Heart, 
+  Users,
+  LayoutDashboard,
+  Settings
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-// コラムデータ
+// ─── コラムデータ ───
 const COLUMNS = [
   {
     id: 1,
@@ -42,7 +58,7 @@ const COLUMNS = [
   }
 ];
 
-// お稽古帳データ
+// ─── 過去のお稽古帳データ ───
 const INITIAL_JOURNALS = [
   {
     id: 1,
@@ -98,7 +114,7 @@ export default function StudentAppPage() {
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-black font-sans pb-24">
-      {/* 📱 アプリ専用ヘッダー（Webポータルへの戻りリンク削除） */}
+      {/* 📱 ヘッダー */}
       <header className="bg-[#1D3557] text-white p-4 sticky top-0 z-50 shadow-md">
         <div className="max-w-md mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -170,9 +186,9 @@ export default function StudentAppPage() {
             </Card>
           </div>
         ) : (
-          /* C. メインタブ表示 */
+          /* C. メインタブ */
           <>
-            {/* 1. ホームタブ */}
+            {/* 1. ホーム */}
             {activeTab === 'home' && (
               <div className="space-y-6">
                 <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between">
@@ -213,7 +229,7 @@ export default function StudentAppPage() {
                   <div className="space-y-3 text-xs">
                     <div>
                       <p className="text-slate-400 text-[10px] font-bold">教室名・講師</p>
-                      <p className="font-bold text-slate-800 text-sm">S 教室（花月 士宝菊 先生）</p>
+                      <p className="font-bold text-slate-800 text-sm">S 教室（佐藤 太郎 先生）</p>
                     </div>
                     <div>
                       <p className="text-slate-400 text-[10px] font-bold">所在地・アクセス</p>
@@ -234,16 +250,16 @@ export default function StudentAppPage() {
                   </div>
                 </Card>
 
-                {/* 👇 ホームタブの最下部にひっそり配置するWebポータルリンク */}
+                {/* ポータルサイトリンク */}
                 <div className="pt-6 border-t text-center space-y-2">
-                  <Link href="/" className="inline-flex items-center gap-1 text-slate-400 hover:text-[#1D3557] text-xs font-bold transition-colors">
-                     <Globe size={14} /> 舞バズ 公式Webポータルを見る
+                  <Link href="/portal" className="inline-flex items-center gap-1 text-slate-400 hover:text-[#1D3557] text-xs font-bold transition-colors">
+                     舞バズ 公式Webポータルを見る →
                   </Link>
                 </div>
               </div>
             )}
 
-            {/* 2. コラムタブ */}
+            {/* 2. コラム */}
             {activeTab === 'media' && (
               <div className="space-y-6">
                 <h2 className="text-lg font-bold text-[#1D3557]">コラム ＆ 解説動画</h2>
@@ -290,7 +306,7 @@ export default function StudentAppPage() {
               </div>
             )}
 
-            {/* 3. カレンダータブ */}
+            {/* 3. カレンダー */}
             {activeTab === 'calendar' && (
               <div className="space-y-6">
                 <h2 className="text-lg font-bold text-[#1D3557]">お稽古カレンダー</h2>
@@ -334,7 +350,7 @@ export default function StudentAppPage() {
               </div>
             )}
 
-            {/* 4. お稽古帳タブ */}
+            {/* 4. お稽古帳 */}
             {activeTab === 'journal' && (
               <div className="space-y-6">
                 <h2 className="text-lg font-bold text-[#1D3557]">マイお稽古帳</h2>
@@ -421,14 +437,3 @@ export default function StudentAppPage() {
     </div>
   );
 }
-
-{/* 画面の一番下に追加 */}
-<nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#1D3557] text-white border-t border-white/10 z-50 p-2 shadow-2xl">
-  <div className="grid grid-cols-5 gap-1 text-center">
-    <Link href="/dashboard" className="flex flex-col items-center py-2 rounded-xl text-white/60"><LayoutDashboard size={20} /><span className="text-[10px] mt-1 font-extrabold">ホーム</span></Link>
-    <Link href="/schedule" className="flex flex-col items-center py-2 rounded-xl bg-[#E63946] font-bold text-white"><CalendarDays size={20} /><span className="text-[10px] mt-1 font-extrabold">予定</span></Link>
-    <Link href="/students" className="flex flex-col items-center py-2 rounded-xl text-white/60"><Users size={20} /><span className="text-[10px] mt-1 font-extrabold">生徒</span></Link>
-    <Link href="/sns" className="flex flex-col items-center py-2 rounded-xl text-white/60"><MessageSquare size={20} /><span className="text-[10px] mt-1 font-extrabold">AI文章</span></Link>
-    <Link href="/settings" className="flex flex-col items-center py-2 rounded-xl text-white/60"><Settings size={20} /><span className="text-[10px] mt-1 font-extrabold">設定</span></Link>
-  </div>
-</nav>
