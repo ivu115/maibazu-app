@@ -189,11 +189,12 @@ export default function Home() {
           <p className="text-sm opacity-60">© 2026 Maibazu - Japanese Dance DX Platform</p>
           
           <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-center gap-6 text-xs text-white/40">
-            <Link href="/search" className="hover:text-white transition-colors">教室検索</Link>
-            <Link href="/dashboard" className="hover:text-[#E63946] font-bold text-white/60 transition-colors underline underline-offset-4">
-               教室運営者・講師の方はこちら（舞バズ Admin）
-            </Link>
-          </div>
+  <Link href="/search" className="hover:text-white transition-colors">教室検索</Link>
+  {/* 👇 /login へ変更 */}
+  <Link href="/login" className="hover:text-[#E63946] font-bold text-white/60 transition-colors underline underline-offset-4">
+     教室運営者・講師の方はこちら（舞バズ Admin ログイン）
+  </Link>
+</div>
         </div>
       </footer>
     </div>
