@@ -3,17 +3,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { 
-  Users, 
-  CalendarDays, 
-  TrendingUp, 
-  MessageSquare, 
-  LayoutDashboard, 
-  Settings,
-  Clock,
-  ExternalLink,
-  Sparkles,
-  ArrowUpRight,
-  ChevronRight
+  Users, CalendarDays, TrendingUp, MessageSquare, LayoutDashboard, 
+  Settings, Clock, ExternalLink, Sparkles, ArrowUpRight, ChevronRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -21,7 +12,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 export default function DashboardPage() {
   return (
     <div className="flex min-h-screen bg-[#F8FAFC] pb-24 md:pb-0">
-      {/* 🏰 PC用サイドバー */}
       <aside className="w-64 bg-[#1D3557] text-white hidden md:flex flex-col">
         <div className="p-6 flex items-center gap-3">
           <Link href="/" className="flex items-center gap-3">
@@ -39,13 +29,11 @@ export default function DashboardPage() {
           <Link href="/settings"><NavItem icon={<Settings size={20}/>} label="教室設定" active={false} /></Link>
         </nav>
         <div className="p-4 border-t border-white/10 opacity-50 text-[10px] font-bold">
-           講師：花月 士宝菊 先生
+           講師：佐藤 太郎 先生
         </div>
       </aside>
 
-      {/* 🖥️ メインコンテンツ */}
-      <main className="flex-1 overflow-y-auto text-black">
-        {/* 上部ヘッダー（スマホ対応） */}
+      <main className="flex-1 overflow-y-auto text-black font-sans">
         <header className="bg-white border-b p-4 md:px-8 sticky top-0 z-10 flex items-center justify-between">
           <div>
             <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block">先生用管理画面</span>
@@ -59,8 +47,6 @@ export default function DashboardPage() {
         </header>
 
         <div className="p-4 md:p-8 max-w-7xl mx-auto space-y-6">
-          
-          {/* 📊 統計カード（大きくて見やすい数値） */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
             <StatsCard label="今月の売上" value="84,000円" trend="+12%" icon={<TrendingUp className="text-green-500" size={18}/>} />
             <StatsCard label="未対応の連絡" value="3件" trend="急ぎ" icon={<Clock className="text-[#E63946]" size={18}/>} />
@@ -69,7 +55,6 @@ export default function DashboardPage() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
-            {/* 生徒の振り返りノート一覧 */}
             <Card className="lg:col-span-2 border-none shadow-sm rounded-3xl overflow-hidden bg-white text-black">
               <CardHeader className="bg-white border-b p-5 md:px-8 md:py-6 flex flex-row items-center justify-between">
                 <CardTitle className="text-base md:text-lg font-bold">
@@ -99,7 +84,6 @@ export default function DashboardPage() {
               </CardContent>
             </Card>
 
-            {/* AI投稿サポート案内 */}
             <Card className="border-none shadow-sm rounded-3xl bg-gradient-to-br from-[#1D3557] to-[#2A4A7A] text-white p-6 space-y-4">
               <div className="flex items-center gap-2 text-[#E63946] font-bold text-sm bg-white/10 p-2.5 rounded-xl w-fit">
                 <Sparkles size={16} /> 今日のSNS文章AIサポート
@@ -117,28 +101,22 @@ export default function DashboardPage() {
         </div>
       </main>
 
-      {/* 📱 高齢の先生方向け・スマホ専用ボトムナビゲーション（手元で迷わないボタン） */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#1D3557] text-white border-t border-white/10 z-50 p-2 shadow-2xl">
         <div className="grid grid-cols-5 gap-1 text-center">
           <Link href="/dashboard" className="flex flex-col items-center py-2 rounded-xl bg-[#E63946] font-bold text-white shadow-sm">
-            <LayoutDashboard size={20} />
-            <span className="text-[10px] mt-1 font-extrabold">ホーム</span>
+            <LayoutDashboard size={20} /><span className="text-[10px] mt-1 font-extrabold">ホーム</span>
           </Link>
           <Link href="/schedule" className="flex flex-col items-center py-2 rounded-xl text-white/60 hover:text-white">
-            <CalendarDays size={20} />
-            <span className="text-[10px] mt-1 font-extrabold">予定</span>
+            <CalendarDays size={20} /><span className="text-[10px] mt-1 font-extrabold">予定</span>
           </Link>
           <Link href="/students" className="flex flex-col items-center py-2 rounded-xl text-white/60 hover:text-white">
-            <Users size={20} />
-            <span className="text-[10px] mt-1 font-extrabold">生徒</span>
+            <Users size={20} /><span className="text-[10px] mt-1 font-extrabold">生徒</span>
           </Link>
           <Link href="/sns" className="flex flex-col items-center py-2 rounded-xl text-white/60 hover:text-white">
-            <MessageSquare size={20} />
-            <span className="text-[10px] mt-1 font-extrabold">AI文章</span>
+            <MessageSquare size={20} /><span className="text-[10px] mt-1 font-extrabold">AI文章</span>
           </Link>
           <Link href="/settings" className="flex flex-col items-center py-2 rounded-xl text-white/60 hover:text-white">
-            <Settings size={20} />
-            <span className="text-[10px] mt-1 font-extrabold">設定</span>
+            <Settings size={20} /><span className="text-[10px] mt-1 font-extrabold">設定</span>
           </Link>
         </div>
       </nav>

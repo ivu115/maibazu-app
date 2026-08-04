@@ -4,24 +4,22 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { 
   Users, CalendarDays, LayoutDashboard, MessageSquare, Settings,
-  Camera, Save, ShieldCheck, Zap, Globe, Smartphone, Check, ArrowUpRight, Sparkles
+  Camera, Save, ShieldCheck, Zap, Globe, Smartphone, Check, ArrowUpRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
 export default function SettingsPage() {
   const [success, setSuccess] = useState(false);
 
-  // 設定項目のステート（初期値）
   const [schoolName, setSchoolName] = useState("S 教室");
-  const [teacherName, setTeacherName] = useState("花月 士宝菊");
+  const [teacherName, setTeacherName] = useState("佐藤 太郎");
   const [tagline, setTagline] = useState("20代・30代が8割。SNS世代のための日本舞踊。");
   const [price, setPrice] = useState("15,000円");
   const [features, setFeatures] = useState("20代〜30代の生徒が多数在籍。若手講師が伝統の所作を分かりやすく指導します。");
   const [tags, setTags] = useState("20代30代中心, 初心者特化");
 
-  // 初回読み込み時に保存済みデータをセット
   useEffect(() => {
     const saved = localStorage.getItem('maibazu_school_1');
     if (saved) {
@@ -37,7 +35,6 @@ export default function SettingsPage() {
     }
   }, []);
 
-  // 保存処理（ローカルストレージへ保存）
   const handleSave = () => {
     const customData = {
       name: schoolName,
@@ -53,8 +50,7 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-[#F8FAFC]">
-      {/* サイドバー */}
+    <div className="flex min-h-screen bg-[#F8FAFC] pb-24 md:pb-0">
       <aside className="w-64 bg-[#1D3557] text-white hidden md:flex flex-col">
         <div className="p-6 flex items-center gap-3">
           <Link href="/" className="flex items-center gap-3">
@@ -69,9 +65,11 @@ export default function SettingsPage() {
           <Link href="/sns"><NavItem icon={<MessageSquare size={20}/>} label="SNS投稿サポート" active={false} /></Link>
           <Link href="/settings"><NavItem icon={<Settings size={20}/>} label="教室設定" active={true} /></Link>
         </nav>
+        <div className="p-4 border-t border-white/10 opacity-50 text-[10px] font-bold">
+           講師：佐藤 太郎 先生
+        </div>
       </aside>
 
-      {/* メイン */}
       <main className="flex-1 overflow-y-auto text-black font-sans">
         <header className="bg-white border-b h-16 flex items-center justify-between px-8 sticky top-0 z-10">
           <h2 className="font-extrabold text-xl text-slate-800">教室設定</h2>
@@ -145,6 +143,16 @@ export default function SettingsPage() {
           </section>
         </div>
       </main>
+
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#1D3557] text-white border-t border-white/10 z-50 p-2 shadow-2xl">
+        <div className="grid grid-cols-5 gap-1 text-center">
+          <Link href="/dashboard" className="flex flex-col items-center py-2 rounded-xl text-white/60"><LayoutDashboard size={20} /><span className="text-[10px] mt-1 font-extrabold">ホーム</span></Link>
+          <Link href="/schedule" className="flex flex-col items-center py-2 rounded-xl text-white/60"><CalendarDays size={20} /><span className="text-[10px] mt-1 font-extrabold">予定</span></Link>
+          <Link href="/students" className="flex flex-col items-center py-2 rounded-xl text-white/60"><Users size={20} /><span className="text-[10px] mt-1 font-extrabold">生徒</span></Link>
+          <Link href="/sns" className="flex flex-col items-center py-2 rounded-xl text-white/60"><MessageSquare size={20} /><span className="text-[10px] mt-1 font-extrabold">AI文章</span></Link>
+          <Link href="/settings" className="flex flex-col items-center py-2 rounded-xl bg-[#E63946] font-bold text-white shadow-sm"><Settings size={20} /><span className="text-[10px] mt-1 font-extrabold">設定</span></Link>
+        </div>
+      </nav>
     </div>
   );
 }
@@ -169,14 +177,3 @@ function SettingToggle({ label, checked = false }: any) {
     </div>
   );
 }
-
-{/* 画面の一番下に追加 */}
-<nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#1D3557] text-white border-t border-white/10 z-50 p-2 shadow-2xl">
-  <div className="grid grid-cols-5 gap-1 text-center">
-    <Link href="/dashboard" className="flex flex-col items-center py-2 rounded-xl text-white/60"><LayoutDashboard size={20} /><span className="text-[10px] mt-1 font-extrabold">ホーム</span></Link>
-    <Link href="/schedule" className="flex flex-col items-center py-2 rounded-xl bg-[#E63946] font-bold text-white"><CalendarDays size={20} /><span className="text-[10px] mt-1 font-extrabold">予定</span></Link>
-    <Link href="/students" className="flex flex-col items-center py-2 rounded-xl text-white/60"><Users size={20} /><span className="text-[10px] mt-1 font-extrabold">生徒</span></Link>
-    <Link href="/sns" className="flex flex-col items-center py-2 rounded-xl text-white/60"><MessageSquare size={20} /><span className="text-[10px] mt-1 font-extrabold">AI文章</span></Link>
-    <Link href="/settings" className="flex flex-col items-center py-2 rounded-xl text-white/60"><Settings size={20} /><span className="text-[10px] mt-1 font-extrabold">設定</span></Link>
-  </div>
-</nav>
