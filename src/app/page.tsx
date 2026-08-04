@@ -16,10 +16,12 @@ export default function Home() {
               <span className="text-xl font-black tracking-tighter text-[#1D3557]">舞バズ</span>
             </Link>
           </div>
-          <nav className="hidden md:flex gap-8 font-medium text-sm text-slate-500">
+          <nav className="hidden md:flex gap-8 font-medium text-sm text-slate-500 items-center">
             <a href="#about" className="hover:text-[#E63946] transition-colors">日本舞踊とは</a>
             <a href="#benefits" className="hover:text-[#E63946] transition-colors">メリット</a>
             <Link href="/search" className="hover:text-[#E63946] transition-colors font-bold text-[#1D3557]">教室を探す</Link>
+            <Link href="/login" className="hover:text-[#E63946] transition-colors font-bold text-slate-500 text-xs">ログイン</Link>
+            <Link href="/login" className="bg-slate-100 hover:bg-slate-200 text-[#1D3557] px-3 py-1.5 rounded-full text-xs font-bold transition-all">新規登録</Link>
           </nav>
           <Link href="/search">
             <Button className="bg-[#E63946] hover:bg-[#D62839] text-white rounded-full px-6 transition-all hover:scale-105 active:scale-95 text-xs font-bold shadow-md">
@@ -38,12 +40,12 @@ export default function Home() {
             </div>
             <h1 className="text-4xl md:text-6xl font-black leading-tight mb-8">
               日本舞踊を<br />
-              <span className="text-[#E63946]">もっと気軽</span>に<br />
-              <span className="text-[#E63946]">もっと手軽</span>に
+              <span className="text-[#E63946]">もっと気軽</span>に、<br />
+              <span className="text-[#E63946]">もっと手軽</span>に。
             </h1>
             <p className="text-base md:text-lg text-slate-500 mb-10 leading-relaxed max-w-md mx-auto md:mx-0 font-medium">
-              舞バズ認定教室は、不透明な費用は一切なし。<br/>
-              表示価格のみ、事前解説動画・着物レンタルセット付きで安心して体験できます。
+              「やってみたい」という直感を大切にしたいから。<br/>
+              流派の壁や道具の準備、不透明な費用をすべて取り払いました。
             </p>
             <Link href="/search">
               <Button size="lg" className="text-lg px-10 py-8 bg-[#1D3557] text-white hover:shadow-2xl transition-all hover:-translate-y-1 rounded-2xl font-bold gap-2">
@@ -133,7 +135,7 @@ export default function Home() {
             <FeatureCard 
               icon={<Music size={32} className="text-[#E63946]" />} 
               title="楽しみ方は自由" 
-              desc="親しみやすい本格邦楽で基本をマスター。" 
+              desc="J-POPに頼らず、親しみやすい本格邦楽で基本をマスター。" 
             />
           </div>
         </div>
@@ -179,28 +181,25 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ☕ Footer（★ロゴ表示を丸バッジ化して完全綺麗に修正） */}
+      {/* ☕ Footer（★受講生・講師の双方とも /login へ誘導するよう統一） */}
       <footer className="py-16 bg-[#1D3557] text-white text-center">
         <div className="max-w-4xl mx-auto px-4 space-y-8">
-          {/* 白い円形のバッジでロゴをきれいに囲むデザイン */}
           <div className="w-16 h-16 rounded-full bg-white p-1.5 mx-auto overflow-hidden shadow-lg flex items-center justify-center">
             <img src="/logo.png" alt="logo" className="w-full h-full object-contain" />
           </div>
           <p className="text-sm opacity-60">© 2026 Maibazu - Japanese Dance DX Platform</p>
           
-          {/* フッター内リンク部分 */}
-<div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-center gap-6 text-xs text-white/50">
-  <Link href="/search" className="hover:text-white transition-colors">教室検索</Link>
-  
-  {/* 👇 生徒用アプリへのリンクを追加 */}
-  <Link href="/student-app" className="hover:text-[#E63946] font-bold text-white/80 transition-colors underline underline-offset-4">
-     受講生の方はこちら（生徒用アプリ）
-  </Link>
-
-  <Link href="/login" className="hover:text-[#E63946] font-bold text-white/60 transition-colors underline underline-offset-4">
-     教室運営者・講師の方はこちら（舞バズ Admin）
-  </Link>
-</div>
+          <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-center gap-6 text-xs text-white/50">
+            <Link href="/search" className="hover:text-white transition-colors">教室検索</Link>
+            
+            {/* 👇 生徒側・先生側の両方のリンク先を /login に集約 */}
+            <Link href="/login" className="hover:text-[#E63946] font-bold text-white/80 transition-colors underline underline-offset-4">
+               受講生の方はこちら（アプリログイン）
+            </Link>
+            <Link href="/login" className="hover:text-[#E63946] font-bold text-white/80 transition-colors underline underline-offset-4">
+               教室運営者・講師の方はこちら（Adminログイン）
+            </Link>
+          </div>
         </div>
       </footer>
     </div>
