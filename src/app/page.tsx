@@ -1,185 +1,178 @@
-import React from 'react';
+"use client";
+
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, Music, ShoppingBag, MapPin, Sparkles, Heart, Scroll, Zap, Info, ArrowRight, LogIn } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Lock, Mail, ArrowRight, ShieldCheck, User, Users, UserPlus, LogIn, Compass } from "lucide-react";
 
-export default function PortalPage() {
+export default function EntryPage() {
+  const router = useRouter();
+  
+  // モード切替: 'login' (ログイン) | 'signup' (新規登録)
+  const [mode, setMode] = useState<'login' | 'signup'>('login');
+  // 役割切替: 'student' (生徒) | 'teacher' (講師)
+  const [role, setRole] = useState<'student' | 'teacher'>('student');
+  
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("student@maibazu.jp");
+  const [password, setPassword] = useState("••••••••");
+
+  const handleRoleChange = (selectedRole: 'student' | 'teacher') => {
+    setRole(selectedRole);
+    if (mode === 'login') {
+      setEmail(selectedRole === 'student' ? "student@maibazu.jp" : "teacher@maibazu.jp");
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (role === 'student') {
+      router.push('/student-app'); // 生徒用アプリへ
+    } else {
+      router.push('/dashboard'); // 講師用Adminへ
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-[#FAFAFA] text-[#1D3557] font-sans">
-      {/* 🚀 ヘッダー */}
-      <header className="sticky top-0 z-50 w-full border-b bg-white/90 backdrop-blur-md text-black">
-        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Link href="/portal" className="flex items-center gap-2">
-              <img src="/logo.png" alt="舞バズ ロゴ" className="h-10 w-10 object-contain rounded-full" />
-              <span className="text-xl font-black tracking-tighter text-[#1D3557]">舞バズ</span>
-            </Link>
+    <div className="min-h-screen bg-[#1D3557] flex items-center justify-center p-4 font-sans text-black">
+      <Card className="max-w-md w-full border-none shadow-2xl rounded-[2.5rem] bg-white overflow-hidden">
+        <CardHeader className="pt-10 pb-4 text-center space-y-4">
+          <div className="inline-block mx-auto">
+            <img src="/logo.png" alt="舞バズ" className="w-20 h-20 object-contain mx-auto" />
           </div>
-          <nav className="hidden md:flex gap-8 font-medium text-sm text-slate-500 items-center">
-            <a href="#about" className="hover:text-[#E63946] transition-colors">日本舞踊とは</a>
-            <a href="#benefits" className="hover:text-[#E63946] transition-colors">メリット</a>
-            <Link href="/search" className="hover:text-[#E63946] transition-colors font-bold text-[#1D3557]">教室を探す</Link>
-          </nav>
-          {/* 👈 ログイン画面（トップ / ）へ飛ぶボタン */}
-          <Link href="/">
-            <Button className="bg-[#1D3557] hover:bg-[#2A4A7A] text-white rounded-full px-6 transition-all text-xs font-bold gap-1 shadow-md">
-              <LogIn size={14}/> ログイン / 新規登録
-            </Button>
-          </Link>
-        </div>
-      </header>
-
-      {/* 🌸 ヒーローセクション */}
-      <section className="relative overflow-hidden pt-12 pb-16 md:pt-28 md:pb-24 text-black">
-        <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
-          <div className="z-10 text-center md:text-left">
-            <div className="inline-flex items-center gap-2 bg-red-50 text-[#E63946] px-4 py-1.5 rounded-full text-xs font-bold mb-6 tracking-widest uppercase border border-red-100">
-              <Sparkles size={14} /> Traditional Culture DX
-            </div>
-            <h1 className="text-4xl md:text-6xl font-black leading-tight mb-8">
-              日本舞踊を<br />
-              <span className="text-[#E63946]">もっと気軽</span>に、<br />
-              <span className="text-[#E63946]">もっと手軽</span>に。
-            </h1>
-            <p className="text-base md:text-lg text-slate-500 mb-10 leading-relaxed max-w-md mx-auto md:mx-0 font-medium">
-              「やってみたい」という直感を大切にしたいから。<br/>
-              流派の壁や道具の準備、不透明な費用をすべて取り払いました。
-            </p>
-            <Link href="/search">
-              <Button size="lg" className="text-lg px-10 py-8 bg-[#E63946] hover:bg-[#D62839] text-white transition-all rounded-2xl font-bold gap-2 shadow-xl shadow-red-200">
-                1日体験に申し込む <ArrowRight size={20} />
-              </Button>
-            </Link>
-          </div>
-          <div className="relative">
-            <img src="/group.jpg" alt="Enjoy Japanese Dance" className="relative aspect-[4/3] rounded-[2.5rem] overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500 object-cover w-full h-auto" />
-          </div>
-        </div>
-      </section>
-
-      {/* 🏮 3分でわかる日本舞踊の魅力 */}
-      <section id="about" className="py-24 bg-white border-y border-slate-100 text-black">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <div className="inline-flex items-center gap-2 text-[#E63946] mb-4">
-             <Info size={20} />
-             <span className="text-sm font-black uppercase tracking-[0.2em]">What is Maibazu?</span>
-          </div>
-          <h2 className="text-3xl font-bold mb-12">3分でわかる日本舞踊の魅力</h2>
-          <div className="space-y-10 text-slate-600 text-left bg-slate-50 p-8 md:p-14 rounded-[3rem]">
-            <article>
-              <h3 className="text-xl font-bold text-[#1D3557] mb-3 flex items-center gap-2">
-                <span className="w-1.5 h-6 bg-[#E63946] rounded-full"></span>
-                ルーツは江戸時代の「究極の憧れ」
-              </h3>
-              <p className="leading-relaxed">
-                日本舞踊は、江戸時代に歌舞伎から独立して生まれた芸術です。かつての庶民たちは、スター俳優である歌舞伎役者の美しい所作や踊りに強く憧れ、それを自分でも学びたいという熱意から「習い事」として発展させました。つまり、日本文化の美しさが凝縮された最高峰のエンターテインメントなのです。
-              </p>
-            </article>
-
-            <article>
-              <h3 className="text-xl font-bold text-[#1D3557] mb-3 flex items-center gap-2">
-                <span className="w-1.5 h-6 bg-[#E63946] rounded-full"></span>
-                「足し算」の西洋と、「引き算」の日舞
-              </h3>
-              <p className="leading-relaxed">
-                バレエやヒップホップなどの西洋のダンスが「重心を高く上げ、飛び跳ねる、動の美」であるのに対し、日本舞踊は対極。重心をぐっと下げ、地面を踏みしめるように滑らせる「すり足」が基本です。無駄な動きをそぎ落とした先に宿る「静の美」と、一瞬の静止に宿る感情。その深みこそが、見る者を魅了し続けています。
-              </p>
-            </article>
-
-            <article>
-              <h3 className="text-xl font-bold text-[#1D3557] mb-3 flex items-center gap-2">
-                <span className="w-1.5 h-6 bg-[#E63946] rounded-full"></span>
-                「間」を感じる、日本特有のリズム感
-              </h3>
-              <p className="leading-relaxed">
-                日本舞踊において最も重要とされるのが「間（ま）」です。音と音のあいだ。動きと動きの隙間に生まれる余白。この「間」を操ることで、扇子一本だけで桜が舞い散る様子や、しとしとと降る雨、さらには繊細な恋心までをも描き出します。
-              </p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      {/* 💎 メリットセクション */}
-      <section id="benefits" className="py-24 bg-[#1D3557] text-white">
-        <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 italic">Benefits of Japanese Dance</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <BenefitCard icon={<Zap size={28} className="text-[#E63946]" />} title="姿勢と体幹の向上" desc="基本姿勢（腰を入れる）により、デスクワークで崩れがちな姿勢が矯正されます。" />
-            <BenefitCard icon={<Scroll size={28} className="text-[#E63946]" />} title="教養としての日本文化" desc="演目の背景にある古典文学や季節の移ろいを知ることで、大人の教養が身につきます。" />
-            <BenefitCard icon={<Heart size={28} className="text-[#E63946]" />} title="日常の所作が美しくなる" desc="歩き方、お辞儀、物の受け渡し。稽古で培った指先の意識が日常を上品に変えます。" />
-          </div>
-        </div>
-      </section>
-
-      {/* 🏫 認定教室ボタン */}
-      <section id="schools" className="py-24 bg-white text-center text-black">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-4 tracking-tight">提携中の認定教室</h2>
-          <p className="text-slate-400 mb-16 italic">クリックで各教室の詳細をご覧いただけます。</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
-            <SchoolCard id="1" name="S 教室" location="大阪・吹田" tags={["20代30代中心", "初心者特化"]} price="15,000円" img="/lesson.jpg" />
-            <SchoolCard id="2" name="H 教室" location="兵庫・伊丹" tags={["手ぶらOK", "SNS歓迎"]} price="12,000円" img="/rental.jpg" />
-            <SchoolCard id="3" name="K 教室" location="東京・世田谷" tags={["夜間対応", "親切指導"]} price="18,000円" img="/hero.jpg" />
-          </div>
-          <div className="mt-20">
-            <Link href="/search">
-              <Button size="lg" className="rounded-full px-16 py-8 bg-[#1D3557] text-white font-bold hover:bg-[#E63946] transition-all text-lg shadow-xl">
-                条件を指定して教室を探す
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="py-16 bg-[#1D3557] text-white text-center">
-        <div className="max-w-4xl mx-auto px-4 space-y-8">
-          <div className="w-16 h-16 rounded-full bg-white p-1.5 mx-auto overflow-hidden shadow-lg flex items-center justify-center">
-            <img src="/logo.png" alt="logo" className="w-full h-full object-contain" />
-          </div>
-          <p className="text-sm opacity-60">© 2026 Maibazu - Japanese Dance DX Platform</p>
           
-          <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-center gap-6 text-xs text-white/50">
-            <Link href="/search" className="hover:text-white transition-colors">教室検索</Link>
-            <Link href="/" className="hover:text-[#E63946] font-bold text-white/80 transition-colors underline underline-offset-4">
-               アプリログイン画面へ（受講生・講師）
-            </Link>
+          <div className="space-y-1">
+            <h1 className="text-2xl font-black text-[#1D3557]">
+              {mode === 'login' ? '舞バズ ログイン' : '舞バズ アカウント作成'}
+            </h1>
+            <p className="text-xs text-slate-400 font-bold">
+              {mode === 'login' ? '日本舞踊をもっと気軽にもっと手軽に' : '無料で今すぐ始めよう'}
+            </p>
           </div>
-        </div>
-      </footer>
-    </div>
-  );
-}
 
-function BenefitCard({ icon, title, desc }: any) {
-  return (
-    <div className="bg-white/5 border border-white/10 p-8 rounded-[2rem] backdrop-blur hover:bg-white/10 transition-colors">
-      <div className="bg-white w-14 h-14 min-w-[56px] min-h-[56px] flex items-center justify-center rounded-2xl mb-6 shadow-lg text-[#E63946]">{icon}</div>
-      <h3 className="text-xl font-bold mb-4">{title}</h3>
-      <p className="text-white/70 text-sm leading-relaxed font-medium">{desc}</p>
-    </div>
-  );
-}
+          {/* モード切替（ログイン ⇆ 新規登録） */}
+          <div className="flex border-b border-slate-100 pt-2">
+            <button
+              type="button"
+              onClick={() => setMode('login')}
+              className={`flex-1 py-3 text-xs font-bold border-b-2 transition-all flex items-center justify-center gap-1.5 ${
+                mode === 'login' ? 'border-[#E63946] text-[#E63946]' : 'border-transparent text-slate-400 hover:text-slate-600'
+              }`}
+            >
+              <LogIn size={14} /> ログイン
+            </button>
+            <button
+              type="button"
+              onClick={() => setMode('signup')}
+              className={`flex-1 py-3 text-xs font-bold border-b-2 transition-all flex items-center justify-center gap-1.5 ${
+                mode === 'signup' ? 'border-[#E63946] text-[#E63946]' : 'border-transparent text-slate-400 hover:text-slate-600'
+              }`}
+            >
+              <UserPlus size={14} /> 新規登録
+            </button>
+          </div>
 
-function SchoolCard({ id, name, location, tags, price, img }: any) {
-  return (
-    <Link href={`/search/${id}`}>
-      <Card className="rounded-[2rem] overflow-hidden hover:shadow-2xl transition-all cursor-pointer border-none bg-white group shadow-sm text-black">
-        <div className="aspect-[4/3] bg-slate-200 overflow-hidden relative">
-           <img src={img} alt={name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-           <div className="absolute top-4 left-4 bg-white/95 backdrop-blur px-4 py-1.5 rounded-full text-[10px] font-black text-[#E63946] flex items-center gap-1 shadow-sm uppercase tracking-widest">
-              <MapPin size={10} /> {location}
-           </div>
-        </div>
-        <CardHeader className="p-6">
-          <CardTitle className="text-xl font-black mb-4 tracking-tight">{name}</CardTitle>
-          <div className="flex justify-between items-center pt-4 border-t border-slate-100">
-            <span className="text-[10px] font-bold text-[#1D3557]/40 uppercase tracking-widest">Hybrid Trial</span>
-            <span className="text-xl font-black text-[#E63946]">{price}</span>
+          {/* 役割選択（生徒 ⇆ 講師） */}
+          <div className="grid grid-cols-2 p-1 bg-slate-100 rounded-2xl gap-1">
+            <button
+              type="button"
+              onClick={() => handleRoleChange('student')}
+              className={`py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all ${
+                role === 'student' ? 'bg-[#E63946] text-white shadow-md' : 'text-slate-500 hover:text-slate-800'
+              }`}
+            >
+              <User size={15} /> 生徒（受講生）
+            </button>
+            <button
+              type="button"
+              onClick={() => handleRoleChange('teacher')}
+              className={`py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all ${
+                role === 'teacher' ? 'bg-[#1D3557] text-white shadow-md' : 'text-slate-500 hover:text-slate-800'
+              }`}
+            >
+              <Users size={15} /> 講師（運営者）
+            </button>
           </div>
         </CardHeader>
+
+        <CardContent className="p-8 pt-2 space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {mode === 'signup' && (
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-slate-500 flex items-center gap-1">
+                  <User size={14} /> お名前
+                </label>
+                <Input 
+                  type="text" 
+                  placeholder={role === 'student' ? "山田 太郎" : "花月 士宝菊"}
+                  value={name} 
+                  onChange={(e) => setName(e.target.value)}
+                  className="bg-slate-50 border-none h-12 text-sm font-bold"
+                  required
+                />
+              </div>
+            )}
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-slate-500 flex items-center gap-1">
+                <Mail size={14} /> メールアドレス / ID
+              </label>
+              <Input 
+                type="email" 
+                value={email} 
+                onChange={(e) => setEmail(e.target.value)}
+                className="bg-slate-50 border-none h-12 text-sm font-bold"
+                required
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-slate-500 flex items-center gap-1">
+                <Lock size={14} /> パスワード
+              </label>
+              <Input 
+                type="password" 
+                value={password} 
+                onChange={(e) => setPassword(e.target.value)}
+                className="bg-slate-50 border-none h-12 text-sm font-bold"
+                required
+              />
+            </div>
+
+            <Button 
+              type="submit" 
+              className={`w-full text-white py-7 rounded-2xl font-bold text-base gap-2 shadow-lg transition-all hover:scale-[1.02] ${
+                role === 'student' ? 'bg-[#E63946] hover:bg-[#D62839]' : 'bg-[#1D3557] hover:bg-[#2A4A7A]'
+              }`}
+            >
+              {mode === 'login' 
+                ? (role === 'student' ? '生徒用アプリへ進む' : '管理画面（Admin）へ進む') 
+                : (role === 'student' ? 'アカウントを作成して始める' : '講師登録を完了する')} 
+              <ArrowRight size={18} />
+            </Button>
+          </form>
+
+          {/* デモ用注記 */}
+          <div className="bg-slate-50 p-3.5 rounded-2xl text-[11px] text-slate-400 space-y-1 border border-slate-100">
+            <p className="font-bold text-[#1D3557] flex items-center gap-1">
+              <ShieldCheck size={14} className="text-green-500"/> デモ用アカウント選択中
+            </p>
+            <p>ボタンを押すと、自動的に「{role === 'student' ? '生徒用アプリ' : '講師用ダッシュボード'}」へ遷移します。</p>
+          </div>
+
+          {/* 🌐 ポータルサイト・教室検索への誘導（ログインしない人用） */}
+          <div className="text-center pt-2 border-t space-y-3">
+            <div>
+              <Link href="/portal" className="inline-flex items-center gap-1.5 text-xs text-[#E63946] font-bold hover:underline">
+                 <Compass size={14} /> ログインせずに教室を探す（公式ポータル） →
+              </Link>
+            </div>
+          </div>
+        </CardContent>
       </Card>
-    </Link>
+    </div>
   );
 }
