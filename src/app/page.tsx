@@ -12,7 +12,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Link href="/" className="flex items-center gap-2">
-              <img src="/logo.png" alt="舞バズ ロゴ" className="h-10 w-10 object-contain" />
+              <img src="/logo.png" alt="舞バズ ロゴ" className="h-10 w-10 object-contain rounded-full" />
               <span className="text-xl font-black tracking-tighter text-[#1D3557]">舞バズ</span>
             </Link>
           </div>
@@ -21,7 +21,6 @@ export default function Home() {
             <a href="#benefits" className="hover:text-[#E63946] transition-colors">メリット</a>
             <Link href="/search" className="hover:text-[#E63946] transition-colors font-bold text-[#1D3557]">教室を探す</Link>
           </nav>
-          {/* 👈 右上ボタンを「1日体験に申し込む」に変更 */}
           <Link href="/search">
             <Button className="bg-[#E63946] hover:bg-[#D62839] text-white rounded-full px-6 transition-all hover:scale-105 active:scale-95 text-xs font-bold shadow-md">
               1日体験に申し込む
@@ -58,7 +57,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 🏮 3分でわかる日本舞踊の魅力（指定コードに完全差し替え） */}
+      {/* 🏮 3分でわかる日本舞踊の魅力 */}
       <section id="about" className="py-24 bg-white border-y border-slate-100 text-black">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <div className="inline-flex items-center gap-2 text-[#E63946] mb-4">
@@ -100,7 +99,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 💎 メリットセクション（アイコン完全表示対策） */}
+      {/* 💎 メリットセクション */}
       <section id="benefits" className="py-24 bg-[#1D3557] text-white">
         <div className="max-w-7xl mx-auto px-4 relative z-10">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 italic">Benefits of Japanese Dance</h2>
@@ -112,7 +111,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ✨ 舞バズの3つの約束（アイコン表示を完全保証） */}
+      {/* ✨ 舞バズの3つの約束 */}
       <section id="concept" className="py-24 bg-white text-black">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
@@ -180,10 +179,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
+      {/* ☕ Footer（★ロゴ表示を丸バッジ化して完全綺麗に修正） */}
       <footer className="py-16 bg-[#1D3557] text-white text-center">
         <div className="max-w-4xl mx-auto px-4 space-y-8">
-          <img src="/logo.png" alt="logo" className="w-16 h-16 mx-auto invert brightness-0 opacity-80" />
+          {/* 白い円形のバッジでロゴをきれいに囲むデザイン */}
+          <div className="w-16 h-16 rounded-full bg-white p-1.5 mx-auto overflow-hidden shadow-lg flex items-center justify-center">
+            <img src="/logo.png" alt="logo" className="w-full h-full object-contain" />
+          </div>
           <p className="text-sm opacity-60">© 2026 Maibazu - Japanese Dance DX Platform</p>
           
           <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-center gap-6 text-xs text-white/40">
@@ -198,7 +200,7 @@ export default function Home() {
   );
 }
 
-// 🎨 アイコンが絶対に消えないコンポーネント定義
+// コンポーネント
 function BenefitCard({ icon, title, desc }: any) {
   return (
     <div className="bg-white/5 border border-white/10 p-8 rounded-[2rem] backdrop-blur hover:bg-white/10 transition-colors">
