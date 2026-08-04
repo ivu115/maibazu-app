@@ -42,8 +42,8 @@ export default function Home() {
               <span className="text-[#E63946]">もっと手軽</span>に。
             </h1>
             <p className="text-base md:text-lg text-slate-500 mb-10 leading-relaxed max-w-md mx-auto md:mx-0 font-medium">
-              「やってみたい」という直感を大切にしたいから。<br/>
-              流派の壁や道具の準備、不透明な費用をすべて取り払いました。
+              舞バズ認定教室は、不透明な費用は一切なし。<br/>
+              表示価格のみ、事前解説動画・着物レンタルセット付きで安心して体験できます。
             </p>
             <Link href="/search">
               <Button size="lg" className="text-lg px-10 py-8 bg-[#1D3557] text-white hover:shadow-2xl transition-all hover:-translate-y-1 rounded-2xl font-bold gap-2">
@@ -133,7 +133,7 @@ export default function Home() {
             <FeatureCard 
               icon={<Music size={32} className="text-[#E63946]" />} 
               title="楽しみ方は自由" 
-              desc="J-POPに頼らず、親しみやすい本格邦楽で基本をマスター。" 
+              desc="親しみやすい本格邦楽で基本をマスター。" 
             />
           </div>
         </div>

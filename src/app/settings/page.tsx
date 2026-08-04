@@ -1,21 +1,10 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { 
-  Users, 
-  CalendarDays, 
-  LayoutDashboard, 
-  MessageSquare, 
-  Settings,
-  Camera,
-  Save,
-  ShieldCheck,
-  Zap,
-  Globe,
-  Smartphone,
-  Check,
-  ArrowUpRight
+  Users, CalendarDays, LayoutDashboard, MessageSquare, Settings,
+  Camera, Save, ShieldCheck, Zap, Globe, Smartphone, Check, ArrowUpRight, Sparkles
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -24,20 +13,52 @@ import { Input } from "@/components/ui/input";
 export default function SettingsPage() {
   const [success, setSuccess] = useState(false);
 
+  // 設定項目のステート（初期値）
+  const [schoolName, setSchoolName] = useState("S 教室");
+  const [teacherName, setTeacherName] = useState("花月 士宝菊");
+  const [tagline, setTagline] = useState("20代・30代が8割。SNS世代のための日本舞踊。");
+  const [price, setPrice] = useState("15,000円");
+  const [features, setFeatures] = useState("20代〜30代の生徒が多数在籍。若手講師が伝統の所作を分かりやすく指導します。");
+  const [tags, setTags] = useState("20代30代中心, 初心者特化");
+
+  // 初回読み込み時に保存済みデータをセット
+  useEffect(() => {
+    const saved = localStorage.getItem('maibazu_school_1');
+    if (saved) {
+      try {
+        const data = JSON.parse(saved);
+        if (data.name) setSchoolName(data.name);
+        if (data.teacher) setTeacherName(data.teacher);
+        if (data.tagline) setTagline(data.tagline);
+        if (data.price) setPrice(data.price);
+        if (data.desc) setFeatures(data.desc);
+        if (data.tags) setTags(data.tags.join(', '));
+      } catch (e) {}
+    }
+  }, []);
+
+  // 保存処理（ローカルストレージへ保存）
   const handleSave = () => {
+    const customData = {
+      name: schoolName,
+      teacher: teacherName,
+      tagline: tagline,
+      price: price,
+      desc: features,
+      tags: tags.split(',').map(t => t.trim()).filter(Boolean)
+    };
+    localStorage.setItem('maibazu_school_1', JSON.stringify(customData));
     setSuccess(true);
     setTimeout(() => setSuccess(false), 3000);
   };
 
   return (
     <div className="flex min-h-screen bg-[#F8FAFC]">
-      {/* 🏰 サイドバー */}
+      {/* サイドバー */}
       <aside className="w-64 bg-[#1D3557] text-white hidden md:flex flex-col">
         <div className="p-6 flex items-center gap-3">
           <Link href="/" className="flex items-center gap-3">
-            <div className="bg-[#E63946] p-1 rounded grow-0">
-               <img src="/logo.png" alt="logo" className="w-6 h-6 invert brightness-0" />
-            </div>
+            <div className="bg-[#E63946] p-1 rounded grow-0"><img src="/logo.png" alt="logo" className="w-6 h-6 invert brightness-0" /></div>
             <span className="font-black text-xl tracking-tighter text-white">舞バズ Admin</span>
           </Link>
         </div>
@@ -48,12 +69,9 @@ export default function SettingsPage() {
           <Link href="/sns"><NavItem icon={<MessageSquare size={20}/>} label="SNS投稿サポート" active={false} /></Link>
           <Link href="/settings"><NavItem icon={<Settings size={20}/>} label="教室設定" active={true} /></Link>
         </nav>
-        <div className="p-4 border-t border-white/10 opacity-50 text-[10px] font-bold">
-           講師：花月 士宝菊 先生
-        </div>
       </aside>
 
-      {/* ⚙️ メインコンテンツ */}
+      {/* メイン */}
       <main className="flex-1 overflow-y-auto text-black font-sans">
         <header className="bg-white border-b h-16 flex items-center justify-between px-8 sticky top-0 z-10">
           <h2 className="font-extrabold text-xl text-slate-800">教室設定</h2>
@@ -64,7 +82,7 @@ export default function SettingsPage() {
               </Button>
             </Link>
             <Button onClick={handleSave} className="bg-[#E63946] hover:bg-[#D62839] gap-2 rounded-xl px-6 font-bold text-white shadow-lg shadow-red-100">
-              {success ? <><Check size={18} /> 保存しました</> : <><Save size={18} /> 設定を保存</>}
+              <Save size={18} /> {success ? "保存して公開ページへ反映しました！" : "設定を保存して反映"}
             </Button>
           </div>
         </header>
@@ -73,25 +91,39 @@ export default function SettingsPage() {
           <section className="space-y-4">
             <div className="flex items-center gap-2 px-2">
               <Zap className="text-[#E63946]" size={18} />
-              <h3 className="font-black text-slate-400 text-xs uppercase tracking-[0.2em]">Profile</h3>
+              <h3 className="font-black text-slate-400 text-xs uppercase tracking-[0.2em]">教室プロフィール編集</h3>
             </div>
             <Card className="border-none shadow-sm rounded-3xl bg-white">
-              <CardContent className="p-8 space-y-8">
-                <div className="flex flex-col md:flex-row gap-8 items-start">
-                  <div className="flex flex-col items-center gap-4">
-                    <div className="size-24 rounded-[2rem] bg-slate-50 flex items-center justify-center text-slate-300 border-2 border-dashed border-slate-200 group relative overflow-hidden">
-                      <img src="/logo.png" alt="Profile" className="w-full h-full object-contain p-4 opacity-40" />
-                    </div>
+              <CardContent className="p-8 space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">教室名</label>
+                    <Input value={schoolName} onChange={e => setSchoolName(e.target.value)} className="bg-slate-50 border-none h-12 text-black font-bold" />
                   </div>
-                  <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">教室名</label>
-                      <Input defaultValue="S 教室" className="bg-slate-50 border-none h-12 text-black" />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">講師名</label>
-                      <Input defaultValue="花月 士宝菊" className="bg-slate-50 border-none h-12 text-black" />
-                    </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">講師名</label>
+                    <Input value={teacherName} onChange={e => setTeacherName(e.target.value)} className="bg-slate-50 border-none h-12 text-black font-bold" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">1日体験コース料金</label>
+                    <Input value={price} onChange={e => setPrice(e.target.value)} className="bg-slate-50 border-none h-12 text-black font-bold" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">タグ（カンマ区切り）</label>
+                    <Input value={tags} onChange={e => setTags(e.target.value)} className="bg-slate-50 border-none h-12 text-black font-bold" />
+                  </div>
+                  <div className="md:col-span-2 space-y-2">
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">キャッチコピー</label>
+                    <Input value={tagline} onChange={e => setTagline(e.target.value)} className="bg-slate-50 border-none h-12 text-black font-bold" />
+                  </div>
+                  <div className="md:col-span-2 space-y-2">
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">教室の特徴・アピールポイント（公開ページに反映）</label>
+                    <textarea 
+                      value={features} 
+                      onChange={e => setFeatures(e.target.value)} 
+                      rows={4}
+                      className="w-full bg-slate-50 border-none p-4 rounded-2xl text-xs font-bold text-slate-700 outline-none focus:ring-2 focus:ring-[#E63946]" 
+                    />
                   </div>
                 </div>
               </CardContent>
@@ -101,14 +133,11 @@ export default function SettingsPage() {
           <section className="space-y-4">
             <div className="flex items-center gap-2 px-2">
               <ShieldCheck className="text-[#E63946]" size={18} />
-              <h3 className="font-black text-slate-400 text-xs uppercase tracking-[0.2em]">Maibazu Policy</h3>
+              <h3 className="font-black text-slate-400 text-xs uppercase tracking-[0.2em]">舞バズ認定ポリシー</h3>
             </div>
             <Card className="border-none shadow-sm rounded-3xl bg-[#1D3557] text-white">
-              <CardHeader className="px-8 pt-8">
-                <CardTitle className="text-lg font-bold">舞バズ認定条件の設定</CardTitle>
-              </CardHeader>
-              <CardContent className="p-8 pt-4 space-y-3">
-                <SettingToggle label="完全明朗会計（一律 15,000円）" checked />
+              <CardContent className="p-8 space-y-3">
+                <SettingToggle label="完全明朗会計（後からの追加請求なし）" checked />
                 <SettingToggle label="手ぶら・衣装レンタル完全無料" checked />
                 <SettingToggle label="初心者向け短尺邦楽（本格派）での稽古" checked />
               </CardContent>
