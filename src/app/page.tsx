@@ -38,8 +38,8 @@ export default function Home() {
             </div>
             <h1 className="text-4xl md:text-6xl font-black leading-tight mb-8">
               日本舞踊を<br />
-              <span className="text-[#E63946]">もっと気軽</span>に、<br />
-              <span className="text-[#E63946]">もっと手軽</span>に。
+              <span className="text-[#E63946]">もっと気軽</span>に<br />
+              <span className="text-[#E63946]">もっと手軽</span>に
             </h1>
             <p className="text-base md:text-lg text-slate-500 mb-10 leading-relaxed max-w-md mx-auto md:mx-0 font-medium">
               舞バズ認定教室は、不透明な費用は一切なし。<br/>
@@ -188,11 +188,17 @@ export default function Home() {
           </div>
           <p className="text-sm opacity-60">© 2026 Maibazu - Japanese Dance DX Platform</p>
           
-          <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-center gap-6 text-xs text-white/40">
+          {/* フッター内リンク部分 */}
+<div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-center gap-6 text-xs text-white/50">
   <Link href="/search" className="hover:text-white transition-colors">教室検索</Link>
-  {/* 👇 /login へ変更 */}
+  
+  {/* 👇 生徒用アプリへのリンクを追加 */}
+  <Link href="/student-app" className="hover:text-[#E63946] font-bold text-white/80 transition-colors underline underline-offset-4">
+     受講生の方はこちら（生徒用アプリ）
+  </Link>
+
   <Link href="/login" className="hover:text-[#E63946] font-bold text-white/60 transition-colors underline underline-offset-4">
-     教室運営者・講師の方はこちら（舞バズ Admin ログイン）
+     教室運営者・講師の方はこちら（舞バズ Admin）
   </Link>
 </div>
         </div>
