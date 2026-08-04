@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { 
   Home, BookOpen, Calendar as CalendarIcon, Music, 
-  ChevronLeft, MapPin, Clock, Video, Play, 
+  ChevronLeft, MapPin, Video, Play, 
   CheckCircle2, Sparkles, MessageCircle, Send, ExternalLink,
-  Info, ChevronRight, FileText, User, Heart, Building2
+  ChevronRight, Heart, Users
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -20,15 +20,7 @@ const COLUMNS = [
     summary: "西洋のダンスとの最大の違いは「すり足」。腰を入れる姿勢がデスクワークの姿勢改善に効果的な理由を解説。",
     date: "2026/07/25",
     readTime: "3分で読める",
-    content: `日本舞踊を始めるとき、最初に習うのが「腰を入れる（重心を下げる）」という姿勢です。
-
-西洋のバレエやヒップホップが「上へ上へと飛び跳ねる、動の美」を追求するのに対し、日本舞踊は「地面を踏みしめ、骨盤を安定させる、静の美」を極めます。
-
-【デスクワーク世代に効果的な理由】
-現代人の多くはスマホやPC作業により、骨盤が歪み、猫背になっています。
-日本舞踊の「すり足」は、腹筋・背筋・体幹（インナーマッスル）を自然に使用するため、身体に無理な負荷をかけずに姿勢を美しく矯正できます。
-
-稽古のあとに「背筋がピシッと伸びて肩こりが楽になった」と感じる生徒さんが多いのは、この理にかなった身体技法のおかげなのです。`
+    content: "日本舞踊を始めるとき、最初に習うのが「腰を入れる（重心を下げる）」という姿勢です。\n\n西洋のバレエやヒップホップが「上へ上へと飛び跳ねる、動の美」を追求するのに対し、日本舞踊は「地面を踏みしめ、骨盤を安定させる、静の美」を極めます。\n\n【デスクワーク世代に効果的な理由】\n現代人の多くはスマホやPC作業により、骨盤が歪み、猫背になっています。\n日本舞踊の「すり足」は、腹筋・背筋・体幹（インナーマッスル）を自然に使用するため、身体に無理な負荷をかけずに姿勢を美しく矯正できます。\n\n稽古のあとに「背筋がピシッと伸びて肩こりが楽になった」と感じる生徒さんが多いのは、この理にかなった身体技法のおかげなのです。"
   },
   {
     id: 2,
@@ -37,9 +29,7 @@ const COLUMNS = [
     summary: "歌舞伎役者の美しい所作に憧れた庶民たちが、日常の「習い事」として発展させた日本舞踊の成り立ち。",
     date: "2026/07/20",
     readTime: "2分で読める",
-    content: `日本舞踊のルーツは江戸時代にさかのぼります。当時のスーパースターであった歌舞伎役者の美しい踊りや所作に強く憧れた庶民たちが、「自分もあの美しい立ち振る舞いを身につけたい！」と稽古を始めたのが始まりです。
-
-敷居が高いと思われがちですが、本来は「日常を粋に楽しむための庶民のレッスン」でした。舞バズではその原点に立ち返り、現代の誰もが気軽に楽しめる入り口を提供しています。`
+    content: "日本舞踊のルーツは江戸時代にさかのぼります。当時のスーパースターであった歌舞伎役者の美しい踊りや所作に強く憧れた庶民たちが、「自分もあの美しい立ち振る舞いを身につけたい！」と稽古を始めたのが始まりです。\n\n敷居が高いと思われがちですが、本来は「日常を粋に楽しむための庶民のレッスン」でした。舞バズではその原点に立ち返り、現代の誰もが気軽に楽しめる入り口を提供しています。"
   },
   {
     id: 3,
@@ -48,21 +38,19 @@ const COLUMNS = [
     summary: "扇子一本で桜や雨を表現する「引き算の美学」。指先の美しい意識の持ち方。",
     date: "2026/07/15",
     readTime: "2分で読める",
-    content: `扇子は単なる小道具ではなく、あなたの「心の動き」を広げる体の一部です。
-
-親指と人差し指で軽く支え、力を抜いて扱うことで、風や波、時には盃（おさけの器）に見立てることができます。無駄な動きを削ぎ落とした「引き算の美学」を体感してみてください。`
+    content: "扇子は単なる小道具ではなく、あなたの「心の動き」を広げる体の一部です。\n\n親指と人差し指で軽く支え、力を抜いて扱うことで、風や波、時には盃（おさけの器）に見立てることができます。無駄な動きを削ぎ落とした「引き算の美学」を体感してみてください。"
   }
 ];
 
 // ─── 過去のお稽古帳データ ───
-const JOURNALS = [
+const INITIAL_JOURNALS = [
   {
     id: 1,
     date: "2026/07/20",
     song: "さくらさくら",
     progress: "70%",
     stamp: "💮 花丸",
-    studentNote: "すり足が難しかったですが、自分の姿勢がピンと伸びる感覚があってすごくスッキリしました！自宅で復習する時の注意点はありますか？",
+    studentNote: "すり足が難しかったですが、自分の姿勢がピンと伸びる感覚があってすごくスッキリしました！自宅で復習する時のコツはありますか？",
     teacherComment: "ミサキさん、立ち姿が本当に素晴らしかったです！自宅では鏡を見ながら、肩の力を抜いて深呼吸する練習をしてみてくださいね。次回は扇子の持ち方を深めましょう！",
     keyPoints: ["基本姿勢（腰を入れる）", "すり足の重心移動", "目線の配り方"]
   },
@@ -83,16 +71,27 @@ export default function StudentAppPage() {
   const [isPlayingVideo, setIsPlayingVideo] = useState(false);
   const [selectedMonthDay, setSelectedMonthDay] = useState(1);
 
-  // 詳細ページ用ステート
   const [selectedColumn, setSelectedColumn] = useState<any>(null);
   const [selectedJournal, setSelectedJournal] = useState<any>(null);
 
-  // ノート新規投稿用
   const [reflectionText, setReflectionText] = useState("");
   const [noteSent, setNoteSent] = useState(false);
+  const [history, setHistory] = useState(INITIAL_JOURNALS);
 
   const handleSendNote = () => {
     if (!reflectionText) return;
+    const newEntry = {
+      id: Date.now(),
+      date: "2026/08/01 (本日)",
+      song: "さくらさくら",
+      progress: "70%",
+      studentNote: reflectionText,
+      stamp: "送信済み（返信待ち）",
+      teacherComment: "先生がノートを確認中です...",
+      keyPoints: ["振り返り送信完了"]
+    };
+    setHistory([newEntry, ...history]);
+    setReflectionText("");
     setNoteSent(true);
     setTimeout(() => setNoteSent(false), 3000);
   };
@@ -117,9 +116,9 @@ export default function StudentAppPage() {
 
       <main className="max-w-md mx-auto p-4 space-y-6">
 
-        {/* ─── A. コラム詳細画面（全画面オーバーレイ表示） ─── */}
+        {/* ─── A. コラム詳細 ─── */}
         {selectedColumn ? (
-          <div className="space-y-6 animate-fadeIn">
+          <div className="space-y-6">
             <Button variant="ghost" onClick={() => setSelectedColumn(null)} className="text-xs font-bold text-slate-500 p-0">
               <ChevronLeft size={16} /> コラム一覧へ戻る
             </Button>
@@ -136,8 +135,8 @@ export default function StudentAppPage() {
             </Card>
           </div>
         ) : selectedJournal ? (
-          /* ─── B. お稽古帳・詳細画面（全画面オーバーレイ表示） ─── */
-          <div className="space-y-6 animate-fadeIn">
+          /* ─── B. お稽古帳詳細 ─── */
+          <div className="space-y-6">
             <Button variant="ghost" onClick={() => setSelectedJournal(null)} className="text-xs font-bold text-slate-500 p-0">
               <ChevronLeft size={16} /> お稽古帳一覧へ戻る
             </Button>
@@ -151,23 +150,22 @@ export default function StudentAppPage() {
                 <span className="text-2xl">{selectedJournal.stamp}</span>
               </div>
 
-              {/* 習得ポイント */}
-              <div className="space-y-2">
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">本日学んだポイント</p>
-                <div className="flex flex-wrap gap-2">
-                  {selectedJournal.keyPoints.map((kp: string) => (
-                    <span key={kp} className="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-xl font-bold">✓ {kp}</span>
-                  ))}
+              {selectedJournal.keyPoints && selectedJournal.keyPoints.length > 0 && (
+                <div className="space-y-2">
+                  <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">本日学んだポイント</p>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedJournal.keyPoints.map((kp: string) => (
+                      <span key={kp} className="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-xl font-bold">✓ {kp}</span>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
-              {/* 生徒の振り返り */}
               <div className="space-y-2 bg-slate-50 p-4 rounded-2xl">
                 <p className="text-xs font-bold text-slate-400">あなたのノート</p>
                 <p className="text-xs text-slate-700 leading-relaxed font-medium">“{selectedJournal.studentNote}”</p>
               </div>
 
-              {/* 先生のコメント */}
               <div className="space-y-2 bg-red-50/60 p-5 rounded-2xl border border-red-100">
                 <p className="text-xs font-bold text-[#E63946] flex items-center gap-1"><Heart size={14}/> 先生からのアドバイス</p>
                 <p className="text-xs text-slate-800 leading-relaxed font-bold">{selectedJournal.teacherComment}</p>
@@ -175,9 +173,9 @@ export default function StudentAppPage() {
             </Card>
           </div>
         ) : (
-          /* ─── C. メインタブ表示 ─── */
+          /* ─── C. メインタブ ─── */
           <>
-            {/* 1. ホームタブ */}
+            {/* 1. ホーム */}
             {activeTab === 'home' && (
               <div className="space-y-6">
                 <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between">
@@ -188,7 +186,6 @@ export default function StudentAppPage() {
                   <span className="text-[10px] bg-green-50 text-green-600 font-bold px-3 py-1 rounded-full">受講中</span>
                 </div>
 
-                {/* 次回チケット（QRコード削除版） */}
                 <Card className="border-none shadow-md rounded-3xl bg-gradient-to-br from-[#1D3557] to-[#2A4A7A] text-white overflow-hidden">
                   <CardHeader className="p-6 pb-2">
                     <CardTitle className="text-xs font-bold uppercase tracking-widest opacity-60 flex items-center gap-1">
@@ -207,11 +204,11 @@ export default function StudentAppPage() {
                   </CardContent>
                 </Card>
 
-                {/* 🏠 所属教室の情報カード */}
+                {/* 所属教室情報 */}
                 <Card className="border-none shadow-sm rounded-3xl bg-white p-6 space-y-4">
                   <div className="flex items-center justify-between border-b pb-3">
                     <h3 className="font-bold text-sm text-[#1D3557] flex items-center gap-2">
-                      <Building2 className="text-[#E63946]" size={18} /> 所属教室の情報
+                      <Users className="text-[#E63946]" size={18} /> 所属教室の情報
                     </h3>
                     <span className="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded font-bold">公認教室</span>
                   </div>
@@ -242,7 +239,7 @@ export default function StudentAppPage() {
               </div>
             )}
 
-            {/* 2. コラム・動画タブ */}
+            {/* 2. コラム */}
             {activeTab === 'media' && (
               <div className="space-y-6">
                 <h2 className="text-lg font-bold text-[#1D3557]">コラム ＆ 解説動画</h2>
@@ -271,9 +268,8 @@ export default function StudentAppPage() {
                   </CardContent>
                 </Card>
 
-                {/* 📚 コラム記事一覧（タップで個別詳細へ） */}
                 <div className="space-y-4">
-                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest">舞バズ 文化コラム（タップで読める）</h3>
+                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest">舞バズ 文化コラム</h3>
                   {COLUMNS.map(col => (
                     <Card key={col.id} onClick={() => setSelectedColumn(col)} className="border-none shadow-sm rounded-2xl bg-white p-5 space-y-2 cursor-pointer hover:shadow-md transition-all">
                       <div className="flex justify-between items-center">
@@ -290,7 +286,7 @@ export default function StudentAppPage() {
               </div>
             )}
 
-            {/* 3. カレンダータブ */}
+            {/* 3. カレンダー */}
             {activeTab === 'calendar' && (
               <div className="space-y-6">
                 <h2 className="text-lg font-bold text-[#1D3557]">お稽古カレンダー</h2>
@@ -334,12 +330,11 @@ export default function StudentAppPage() {
               </div>
             )}
 
-            {/* 4. お稽古帳（Journal）タブ */}
+            {/* 4. お稽古帳 */}
             {activeTab === 'journal' && (
               <div className="space-y-6">
                 <h2 className="text-lg font-bold text-[#1D3557]">マイお稽古帳</h2>
 
-                {/* 習得進捗 */}
                 <Card className="border-none shadow-sm rounded-3xl bg-white p-6 space-y-4">
                   <h3 className="font-bold text-xs text-slate-400 uppercase tracking-widest flex items-center gap-1">
                     <Music size={14} className="text-[#E63946]" /> 稽古曲の進捗度
@@ -355,7 +350,6 @@ export default function StudentAppPage() {
                   </div>
                 </Card>
 
-                {/* 新規振り返り送信 */}
                 <Card className="border-none shadow-sm rounded-3xl bg-white p-6 space-y-3">
                   <h3 className="font-bold text-xs text-slate-400 uppercase tracking-widest flex items-center gap-1">
                     <MessageCircle size={14} className="text-[#E63946]" /> 今日の振り返り・質問を書く
@@ -377,9 +371,8 @@ export default function StudentAppPage() {
                   )}
                 </Card>
 
-                {/* 📜 過去の稽古履歴（タップで詳細表示） */}
                 <div className="space-y-4">
-                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest">これまでの稽古記録（タップで詳細）</h3>
+                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest">これまでの稽古記録</h3>
                   {history.map((item, idx) => (
                     <Card key={idx} onClick={() => setSelectedJournal(item)} className="border-none shadow-sm rounded-3xl bg-white p-6 space-y-3 cursor-pointer hover:shadow-md transition-all">
                       <div className="flex justify-between items-center text-xs border-b pb-2">
