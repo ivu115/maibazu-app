@@ -4,14 +4,14 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { 
   Home, BookOpen, Calendar as CalendarIcon, Music, 
-  ChevronLeft, MapPin, Video, Play, 
+  ChevronLeft, MapPin, Clock, Video, Play, 
   CheckCircle2, Sparkles, MessageCircle, Send, ExternalLink,
-  ChevronRight, Heart, Users
+  ChevronRight, Heart, Users, Building2, Globe
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-// ─── コラムデータ ───
+// コラムデータ
 const COLUMNS = [
   {
     id: 1,
@@ -42,7 +42,7 @@ const COLUMNS = [
   }
 ];
 
-// ─── 過去のお稽古帳データ ───
+// お稽古帳データ
 const INITIAL_JOURNALS = [
   {
     id: 1,
@@ -98,12 +98,9 @@ export default function StudentAppPage() {
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-black font-sans pb-24">
-      {/* 📱 ヘッダー */}
+      {/* 📱 アプリ専用ヘッダー（Webポータルへの戻りリンク削除） */}
       <header className="bg-[#1D3557] text-white p-4 sticky top-0 z-50 shadow-md">
         <div className="max-w-md mx-auto flex items-center justify-between">
-          <Link href="/" className="text-white/60 hover:text-white flex items-center text-xs font-bold">
-            <ChevronLeft size={16} /> ポータル
-          </Link>
           <div className="flex items-center gap-2">
             <img src="/logo.png" alt="logo" className="w-6 h-6 invert brightness-0" />
             <span className="font-black text-lg tracking-tighter">舞バズ Student</span>
@@ -116,7 +113,7 @@ export default function StudentAppPage() {
 
       <main className="max-w-md mx-auto p-4 space-y-6">
 
-        {/* ─── A. コラム詳細 ─── */}
+        {/* A. コラム詳細画面 */}
         {selectedColumn ? (
           <div className="space-y-6">
             <Button variant="ghost" onClick={() => setSelectedColumn(null)} className="text-xs font-bold text-slate-500 p-0">
@@ -135,7 +132,7 @@ export default function StudentAppPage() {
             </Card>
           </div>
         ) : selectedJournal ? (
-          /* ─── B. お稽古帳詳細 ─── */
+          /* B. お稽古帳詳細画面 */
           <div className="space-y-6">
             <Button variant="ghost" onClick={() => setSelectedJournal(null)} className="text-xs font-bold text-slate-500 p-0">
               <ChevronLeft size={16} /> お稽古帳一覧へ戻る
@@ -173,9 +170,9 @@ export default function StudentAppPage() {
             </Card>
           </div>
         ) : (
-          /* ─── C. メインタブ ─── */
+          /* C. メインタブ表示 */
           <>
-            {/* 1. ホーム */}
+            {/* 1. ホームタブ */}
             {activeTab === 'home' && (
               <div className="space-y-6">
                 <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between">
@@ -236,10 +233,17 @@ export default function StudentAppPage() {
                     </a>
                   </div>
                 </Card>
+
+                {/* 👇 ホームタブの最下部にひっそり配置するWebポータルリンク */}
+                <div className="pt-6 border-t text-center space-y-2">
+                  <Link href="/" className="inline-flex items-center gap-1 text-slate-400 hover:text-[#1D3557] text-xs font-bold transition-colors">
+                     <Globe size={14} /> 舞バズ 公式Webポータルを見る
+                  </Link>
+                </div>
               </div>
             )}
 
-            {/* 2. コラム */}
+            {/* 2. コラムタブ */}
             {activeTab === 'media' && (
               <div className="space-y-6">
                 <h2 className="text-lg font-bold text-[#1D3557]">コラム ＆ 解説動画</h2>
@@ -286,7 +290,7 @@ export default function StudentAppPage() {
               </div>
             )}
 
-            {/* 3. カレンダー */}
+            {/* 3. カレンダータブ */}
             {activeTab === 'calendar' && (
               <div className="space-y-6">
                 <h2 className="text-lg font-bold text-[#1D3557]">お稽古カレンダー</h2>
@@ -330,7 +334,7 @@ export default function StudentAppPage() {
               </div>
             )}
 
-            {/* 4. お稽古帳 */}
+            {/* 4. お稽古帳タブ */}
             {activeTab === 'journal' && (
               <div className="space-y-6">
                 <h2 className="text-lg font-bold text-[#1D3557]">マイお稽古帳</h2>
