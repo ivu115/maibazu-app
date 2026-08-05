@@ -4,14 +4,15 @@ import React from 'react';
 import Link from 'next/link';
 import { 
   Users, CalendarDays, TrendingUp, MessageSquare, LayoutDashboard, 
-  Settings, Clock, ExternalLink, Sparkles, ArrowUpRight, ChevronRight
-} from "lucide-react";
+  Settings, Clock, ExternalLink, Sparkles, ArrowUpRight, ChevronRight, Home
+} from "lucide-react"; // 👈 Home アイコンを追加しました
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function DashboardPage() {
   return (
     <div className="flex min-h-screen bg-[#F8FAFC] pb-24 md:pb-0">
+      {/* PC用サイドバー */}
       <aside className="w-64 bg-[#1D3557] text-white hidden md:flex flex-col">
         <div className="p-6 flex items-center gap-3">
           <Link href="/" className="flex items-center gap-3">
@@ -33,25 +34,24 @@ export default function DashboardPage() {
         </div>
       </aside>
 
+      {/* メインコンテンツ */}
       <main className="flex-1 overflow-y-auto text-black font-sans">
-      // ヘッダー部分にホームへ戻るボタンを追加した更新
-<header className="bg-white border-b p-4 md:px-8 sticky top-0 z-10 flex items-center justify-between">
-  <div className="flex items-center gap-4">
-    {/* 👈 ホーム画面へ戻るボタン */}
-    <Link href="/" className="flex items-center gap-1 text-slate-400 hover:text-[#E63946] text-xs font-bold transition-colors">
-      <Home size={16} /> ホームへ
-    </Link>
-    <div>
-      <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block">先生用管理画面</span>
-      <h2 className="font-black text-lg md:text-xl text-[#1D3557]">教室の概況</h2>
-    </div>
-  </div>
-  <Link href="/search/1" target="_blank">
-    <Button size="sm" className="bg-[#E63946] hover:bg-[#D62839] text-white text-xs font-bold gap-1 rounded-xl py-5 shadow-sm">
-      生徒用ページを確認 <ArrowUpRight size={14} />
-    </Button>
-  </Link>
-</header>
+        <header className="bg-white border-b p-4 md:px-8 sticky top-0 z-10 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <Link href="/" className="flex items-center gap-1 text-slate-400 hover:text-[#E63946] text-xs font-bold transition-colors">
+              <Home size={16} /> ホームへ
+            </Link>
+            <div>
+              <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block">先生用管理画面</span>
+              <h2 className="font-black text-lg md:text-xl text-[#1D3557]">教室の概況</h2>
+            </div>
+          </div>
+          <Link href="/search/1" target="_blank">
+            <Button size="sm" className="bg-[#E63946] hover:bg-[#D62839] text-white text-xs font-bold gap-1 rounded-xl py-5 shadow-sm">
+              生徒用ページを確認 <ArrowUpRight size={14} />
+            </Button>
+          </Link>
+        </header>
 
         <div className="p-4 md:p-8 max-w-7xl mx-auto space-y-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
@@ -108,6 +108,7 @@ export default function DashboardPage() {
         </div>
       </main>
 
+      {/* スマホ専用ボトムナビゲーション */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#1D3557] text-white border-t border-white/10 z-50 p-2 shadow-2xl">
         <div className="grid grid-cols-5 gap-1 text-center">
           <Link href="/dashboard" className="flex flex-col items-center py-2 rounded-xl bg-[#E63946] font-bold text-white shadow-sm">
