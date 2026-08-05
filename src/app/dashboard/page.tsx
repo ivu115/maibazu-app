@@ -34,17 +34,24 @@ export default function DashboardPage() {
       </aside>
 
       <main className="flex-1 overflow-y-auto text-black font-sans">
-        <header className="bg-white border-b p-4 md:px-8 sticky top-0 z-10 flex items-center justify-between">
-          <div>
-            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block">先生用管理画面</span>
-            <h2 className="font-black text-lg md:text-xl text-[#1D3557]">教室の概況</h2>
-          </div>
-          <Link href="/search/1" target="_blank">
-            <Button size="sm" className="bg-[#E63946] hover:bg-[#D62839] text-white text-xs font-bold gap-1 rounded-xl py-5 shadow-sm">
-              生徒用ページを確認 <ArrowUpRight size={14} />
-            </Button>
-          </Link>
-        </header>
+      // ヘッダー部分にホームへ戻るボタンを追加した更新
+<header className="bg-white border-b p-4 md:px-8 sticky top-0 z-10 flex items-center justify-between">
+  <div className="flex items-center gap-4">
+    {/* 👈 ホーム画面へ戻るボタン */}
+    <Link href="/" className="flex items-center gap-1 text-slate-400 hover:text-[#E63946] text-xs font-bold transition-colors">
+      <Home size={16} /> ホームへ
+    </Link>
+    <div>
+      <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block">先生用管理画面</span>
+      <h2 className="font-black text-lg md:text-xl text-[#1D3557]">教室の概況</h2>
+    </div>
+  </div>
+  <Link href="/search/1" target="_blank">
+    <Button size="sm" className="bg-[#E63946] hover:bg-[#D62839] text-white text-xs font-bold gap-1 rounded-xl py-5 shadow-sm">
+      生徒用ページを確認 <ArrowUpRight size={14} />
+    </Button>
+  </Link>
+</header>
 
         <div className="p-4 md:p-8 max-w-7xl mx-auto space-y-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">

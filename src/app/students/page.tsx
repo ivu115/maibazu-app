@@ -4,10 +4,11 @@ import React from 'react';
 import Link from 'next/link';
 import { 
   Users, CalendarDays, LayoutDashboard, MessageSquare, Settings,
-  Search, Plus, Filter, MoreVertical, GraduationCap, History, ArrowUpRight
+  Search, Plus, Filter, MoreVertical, GraduationCap, History, ArrowUpRight, Home
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 
 const STUDENTS = [
   { id: 1, name: "田中 美咲", age: 22, course: "ハイブリッド体験", progress: "対面完了", lastLesson: "2026/07/20", status: "ノート届く", memo: "『姿勢がピンと伸びる感覚がスッキリした』とコメント有。" },
@@ -33,11 +34,21 @@ export default function StudentsPage() {
           <Link href="/sns"><NavItem icon={<MessageSquare size={20}/>} label="SNS投稿サポート" active={false} /></Link>
           <Link href="/settings"><NavItem icon={<Settings size={20}/>} label="教室設定" active={false} /></Link>
         </nav>
+        <div className="p-4 border-t border-white/10 space-y-2">
+          <div className="opacity-50 text-[10px] font-bold text-white">講師：佐藤 太郎 先生</div>
+          <Link href="/" className="inline-flex items-center gap-1 text-[11px] text-[#E63946] font-bold hover:underline">
+             <Home size={12} /> ホーム画面へ戻る
+          </Link>
+        </div>
       </aside>
 
-      <main className="flex-1 overflow-y-auto text-black font-sans">
+      <main className="flex-1 overflow-y-auto text-black font-sans pb-24 md:pb-0">
         <header className="bg-white border-b h-16 flex items-center justify-between px-8 sticky top-0 z-10">
           <div className="flex items-center gap-4 flex-1">
+            {/* 👈 ホーム画面へ戻るボタンを追加 */}
+            <Link href="/" className="flex items-center gap-1 text-slate-400 hover:text-[#E63946] text-xs font-bold mr-2 transition-colors">
+              <Home size={16} /> ホームへ戻る
+            </Link>
             <h2 className="font-extrabold text-xl text-slate-800 mr-8">生徒名簿（CRM）</h2>
           </div>
           <Link href="/search/1" target="_blank">
@@ -85,6 +96,16 @@ export default function StudentsPage() {
           </div>
         </div>
       </main>
+
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#1D3557] text-white border-t border-white/10 z-50 p-2 shadow-2xl">
+        <div className="grid grid-cols-5 gap-1 text-center">
+          <Link href="/dashboard" className="flex flex-col items-center py-2 rounded-xl text-white/60"><LayoutDashboard size={20} /><span className="text-[10px] mt-1 font-extrabold">ホーム</span></Link>
+          <Link href="/schedule" className="flex flex-col items-center py-2 rounded-xl text-white/60"><CalendarDays size={20} /><span className="text-[10px] mt-1 font-extrabold">予定</span></Link>
+          <Link href="/students" className="flex flex-col items-center py-2 rounded-xl bg-[#E63946] font-bold text-white shadow-sm"><Users size={20} /><span className="text-[10px] mt-1 font-extrabold">生徒</span></Link>
+          <Link href="/sns" className="flex flex-col items-center py-2 rounded-xl text-white/60"><MessageSquare size={20} /><span className="text-[10px] mt-1 font-extrabold">AI文章</span></Link>
+          <Link href="/settings" className="flex flex-col items-center py-2 rounded-xl text-white/60"><Settings size={20} /><span className="text-[10px] mt-1 font-extrabold">設定</span></Link>
+        </div>
+      </nav>
     </div>
   );
 }
@@ -97,14 +118,3 @@ function NavItem({ icon, label, active = false }: any) {
     </div>
   );
 }
-
-{/* 画面の一番下に追加 */}
-<nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#1D3557] text-white border-t border-white/10 z-50 p-2 shadow-2xl">
-  <div className="grid grid-cols-5 gap-1 text-center">
-    <Link href="/dashboard" className="flex flex-col items-center py-2 rounded-xl text-white/60"><LayoutDashboard size={20} /><span className="text-[10px] mt-1 font-extrabold">ホーム</span></Link>
-    <Link href="/schedule" className="flex flex-col items-center py-2 rounded-xl bg-[#E63946] font-bold text-white"><CalendarDays size={20} /><span className="text-[10px] mt-1 font-extrabold">予定</span></Link>
-    <Link href="/students" className="flex flex-col items-center py-2 rounded-xl text-white/60"><Users size={20} /><span className="text-[10px] mt-1 font-extrabold">生徒</span></Link>
-    <Link href="/sns" className="flex flex-col items-center py-2 rounded-xl text-white/60"><MessageSquare size={20} /><span className="text-[10px] mt-1 font-extrabold">AI文章</span></Link>
-    <Link href="/settings" className="flex flex-col items-center py-2 rounded-xl text-white/60"><Settings size={20} /><span className="text-[10px] mt-1 font-extrabold">設定</span></Link>
-  </div>
-</nav>
