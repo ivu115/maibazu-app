@@ -58,10 +58,10 @@ export default function StudentDetailPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-[#F8FAFC]">
+    <div className="flex min-h-screen bg-[#F8FAFC] pb-24 md:pb-0">
       <aside className="w-64 bg-[#1D3557] text-white hidden md:flex flex-col">
         <div className="p-6 flex items-center gap-3">
-          <Link href="/" className="flex items-center gap-3">
+          <Link href="/dashboard" className="flex items-center gap-3">
             <div className="bg-[#E63946] p-1 rounded grow-0"><img src="/logo.png" alt="logo" className="w-6 h-6 invert brightness-0" /></div>
             <span className="font-black text-xl tracking-tighter text-white">舞バズ Admin</span>
           </Link>
@@ -75,41 +75,41 @@ export default function StudentDetailPage() {
         </nav>
       </aside>
 
-      <main className="flex-1 overflow-y-auto text-black font-sans pb-24 md:pb-0">
-        <header className="bg-white border-b h-16 flex items-center justify-between px-8 sticky top-0 z-10">
-          <div className="flex items-center gap-4">
-            {/* 👈 ホーム画面へ戻るボタンを追加 */}
-            <Link href="/" className="flex items-center text-slate-400 font-bold hover:text-[#E63946] text-xs mr-2 transition-colors">
+      <main className="flex-1 overflow-y-auto text-black font-sans">
+        <header className="bg-white border-b h-16 flex items-center justify-between px-4 md:px-8 sticky top-0 z-10">
+          <div className="flex items-center gap-3">
+            {/* 👈 ダッシュボードへ戻る */}
+            <Link href="/dashboard" className="flex items-center text-slate-400 font-bold hover:text-[#E63946] text-xs transition-colors">
               <Home size={16} /> ホームへ
             </Link>
             <Link href="/students" className="flex items-center text-slate-400 font-bold hover:text-[#E63946] text-xs transition-colors">
-              <ChevronLeft size={16} /> 名簿へ戻る
+              <ChevronLeft size={16} /> 名簿へ
             </Link>
           </div>
-          <h2 className="font-extrabold text-xl text-slate-800">生徒カルテ</h2>
+          <h2 className="font-extrabold text-base md:text-xl text-slate-800">生徒カルテ</h2>
         </header>
 
-        <div className="p-8 max-w-5xl mx-auto space-y-8">
-          <Card className="border-none shadow-sm rounded-3xl p-8 bg-white flex flex-col md:flex-row items-center gap-8">
-            <div className="size-20 rounded-full bg-red-50 text-[#E63946] flex items-center justify-center font-black text-2xl border-2 border-red-100 shrink-0">
+        <div className="p-4 md:p-8 max-w-5xl mx-auto space-y-6 md:space-y-8">
+          <Card className="border-none shadow-sm rounded-3xl p-6 md:p-8 bg-white flex flex-col md:flex-row items-center gap-6">
+            <div className="size-16 md:size-20 rounded-full bg-red-50 text-[#E63946] flex items-center justify-center font-black text-xl md:text-2xl border-2 border-red-100 shrink-0">
               {student.name.charAt(0)}
             </div>
-            <div className="flex-1 text-center md:text-left space-y-2">
-              <div className="flex items-center justify-center md:justify-start gap-3">
-                <h1 className="text-2xl font-black">{student.name} 様</h1>
-                <span className={`text-xs font-bold px-3 py-1 rounded-full ${student.paymentStatus.includes('完了') ? 'bg-green-50 text-green-600' : 'bg-orange-50 text-orange-600'}`}>
+            <div className="flex-1 text-center md:text-left space-y-1">
+              <div className="flex items-center justify-center md:justify-start gap-2">
+                <h1 className="text-xl md:text-2xl font-black">{student.name} 様</h1>
+                <span className={`text-[10px] md:text-xs font-bold px-2.5 py-0.5 rounded-full ${student.paymentStatus.includes('完了') ? 'bg-green-50 text-green-600' : 'bg-orange-50 text-orange-600'}`}>
                   {student.paymentStatus}
                 </span>
               </div>
-              <p className="text-xs text-slate-400 font-bold">{student.age}歳 / {student.course} / 受講開始: {student.joinDate}</p>
+              <p className="text-xs text-slate-400 font-bold">{student.age}歳 / {student.course}</p>
             </div>
           </Card>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-6 md:gap-8">
             <div className="md:col-span-2 space-y-6">
               <Card className="border-none shadow-sm rounded-3xl bg-white p-6 space-y-6">
                 <div className="flex items-center justify-between border-b pb-4">
-                  <h3 className="font-bold text-base flex items-center gap-2 text-[#1D3557]">
+                  <h3 className="font-bold text-sm md:text-base flex items-center gap-2 text-[#1D3557]">
                     <Music className="text-[#E63946]" size={18} /> 稽古曲と進捗度（先生入力欄）
                   </h3>
                   <Button onClick={handleSaveProgress} size="sm" className="bg-[#1D3557] text-white text-xs rounded-xl font-bold gap-1">
@@ -117,13 +117,13 @@ export default function StudentDetailPage() {
                   </Button>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs font-bold">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-bold">
                   <div>
-                    <label className="text-slate-400 block mb-2">稽古中の演目 / 曲名</label>
+                    <label className="text-slate-400 block mb-1">稽古中の演目 / 曲名</label>
                     <Input value={songName} onChange={(e) => setSongName(e.target.value)} className="bg-slate-50 border-none h-11 text-slate-800 font-bold" />
                   </div>
                   <div>
-                    <label className="text-slate-400 block mb-2">習得進捗度 ({progressVal}%)</label>
+                    <label className="text-slate-400 block mb-1">習得進捗度 ({progressVal}%)</label>
                     <input type="range" min="0" max="100" value={progressVal} onChange={(e) => setProgressVal(Number(e.target.value))} className="w-full accent-[#E63946] cursor-pointer mt-2" />
                   </div>
                 </div>
@@ -135,37 +135,37 @@ export default function StudentDetailPage() {
               </Card>
 
               <Card className="border-none shadow-sm rounded-3xl bg-white p-6 space-y-6">
-                <h3 className="font-bold text-base flex items-center gap-2 text-[#1D3557]">
+                <h3 className="font-bold text-sm md:text-base flex items-center gap-2 text-[#1D3557]">
                   <MessageCircle className="text-[#E63946]" size={18} /> 生徒からの振り返りノート
                 </h3>
                 
-                <div className="bg-slate-50 p-6 rounded-2xl space-y-4 border border-slate-100">
+                <div className="bg-slate-50 p-5 md:p-6 rounded-2xl space-y-4 border border-slate-100">
                   <div className="flex justify-between items-center text-xs text-slate-400 font-bold">
                     <span>投稿日: {student.noteDate}</span>
                     <span className="text-[#E63946]">未返信</span>
                   </div>
-                  <p className="text-sm text-slate-700 leading-relaxed font-medium">“{student.note}”</p>
+                  <p className="text-xs md:text-sm text-slate-700 leading-relaxed font-medium break-words">“{student.note}”</p>
 
                   <div className="pt-4 border-t border-slate-200 space-y-4">
                     <p className="text-xs font-bold text-slate-500">① スタンプを選択</p>
                     <div className="flex flex-wrap gap-2 text-xs">
                       {["💮 花丸", "🌸 大変よくできました", "⭐ グッド", "👍 バッチリ"].map((stamp) => (
-                        <button key={stamp} onClick={() => setSelectedStamp(stamp)} className={`px-4 py-2 rounded-xl border font-bold transition-all ${selectedStamp === stamp ? 'bg-red-50 border-[#E63946] text-[#E63946] shadow-sm' : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-100'}`}>
+                        <button key={stamp} onClick={() => setSelectedStamp(stamp)} className={`px-3 py-2 rounded-xl border font-bold transition-all ${selectedStamp === stamp ? 'bg-red-50 border-[#E63946] text-[#E63946]' : 'bg-white border-slate-200 text-slate-600'}`}>
                           {stamp}
                         </button>
                       ))}
                     </div>
 
-                    <p className="text-xs font-bold text-slate-500 pt-2">② 一言メッセージ（手動入力）</p>
-                    <textarea value={replyMessage} onChange={(e) => setReplyMessage(e.target.value)} placeholder="例：自宅では鏡を見て、肩の力を抜く練習をしてみてくださいね！" className="w-full h-24 p-3 bg-white border border-slate-200 rounded-xl text-xs outline-none focus:border-[#E63946]" />
+                    <p className="text-xs font-bold text-slate-500 pt-1">② 一言メッセージ（手動入力）</p>
+                    <textarea value={replyMessage} onChange={(e) => setReplyMessage(e.target.value)} placeholder="例：肩の力を抜く練習をしてみてくださいね！" className="w-full h-20 p-3 bg-white border border-slate-200 rounded-xl text-xs outline-none focus:border-[#E63946]" />
 
                     {!replySent ? (
-                      <Button onClick={handleSendReply} className="w-full bg-[#E63946] text-white text-xs font-bold py-6 rounded-xl gap-2">
+                      <Button onClick={handleSendReply} className="w-full bg-[#E63946] text-white text-xs font-bold py-5 rounded-xl gap-2">
                         「{selectedStamp}」とメッセージを送る
                       </Button>
                     ) : (
-                      <div className="bg-green-50 text-green-700 p-4 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
-                        <CheckCircle2 size={18} /> 返信と「{selectedStamp}」スタンプを送信しました！
+                      <div className="bg-green-50 text-green-700 p-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
+                        <CheckCircle2 size={16} /> 送信完了しました！
                       </div>
                     )}
                   </div>
@@ -176,16 +176,25 @@ export default function StudentDetailPage() {
             <div className="space-y-6">
               <Card className="border-none shadow-sm rounded-3xl bg-white p-6 space-y-4">
                 <h3 className="font-bold text-xs text-slate-400 uppercase tracking-widest">お稽古ログ</h3>
-                <div className="space-y-3 text-xs font-bold">
+                <div className="space-y-2 text-xs font-bold">
                   <div className="flex items-center justify-between p-3 bg-slate-50 rounded-xl text-slate-600"><span>0日目：オンデマンド予習</span><span className="text-green-500">視聴済</span></div>
-                  <div className="flex items-center justify-between p-3 bg-slate-50 rounded-xl text-slate-600"><span>1日目：対面60分稽古</span><span className="text-green-500">受講済</span></div>
-                  <div className="flex items-center justify-between p-3 bg-slate-50 rounded-xl text-slate-600"><span>振り返りノート</span><span className="text-[#E63946]">届いています</span></div>
+                  <div className="flex items-center justify-between p-3 bg-slate-50 rounded-xl text-slate-600"><span>1日目：対面稽古</span><span className="text-green-500">受講済</span></div>
                 </div>
               </Card>
             </div>
           </div>
         </div>
       </main>
+
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#1D3557] text-white border-t border-white/10 z-50 p-2 shadow-2xl">
+        <div className="grid grid-cols-5 gap-1 text-center">
+          <Link href="/dashboard" className="flex flex-col items-center py-2 rounded-xl text-white/60"><LayoutDashboard size={20} /><span className="text-[10px] mt-1 font-extrabold">ホーム</span></Link>
+          <Link href="/schedule" className="flex flex-col items-center py-2 rounded-xl text-white/60"><CalendarDays size={20} /><span className="text-[10px] mt-1 font-extrabold">予定</span></Link>
+          <Link href="/students" className="flex flex-col items-center py-2 rounded-xl bg-[#E63946] font-bold text-white shadow-sm"><Users size={20} /><span className="text-[10px] mt-1 font-extrabold">生徒</span></Link>
+          <Link href="/sns" className="flex flex-col items-center py-2 rounded-xl text-white/60"><MessageSquare size={20} /><span className="text-[10px] mt-1 font-extrabold">AI文章</span></Link>
+          <Link href="/settings" className="flex flex-col items-center py-2 rounded-xl text-white/60"><Settings size={20} /><span className="text-[10px] mt-1 font-extrabold">設定</span></Link>
+        </div>
+      </nav>
     </div>
   );
 }

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { 
   Users, CalendarDays, LayoutDashboard, MessageSquare, Settings,
-  Plus, ChevronLeft, ChevronRight, Clock, MapPin, AlertCircle, X, ArrowUpRight
+  Plus, ChevronLeft, ChevronRight, Clock, MapPin, AlertCircle, X, ArrowUpRight, Home
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -50,10 +50,9 @@ export default function SchedulePage() {
 
   return (
     <div className="flex min-h-screen bg-[#F8FAFC] pb-24 md:pb-0">
-      {/* PC用サイドバー */}
       <aside className="w-64 bg-[#1D3557] text-white hidden md:flex flex-col">
         <div className="p-6 flex items-center gap-3">
-          <Link href="/" className="flex items-center gap-3">
+          <Link href="/dashboard" className="flex items-center gap-3">
             <div className="bg-[#E63946] p-1 rounded grow-0"><img src="/logo.png" alt="logo" className="w-6 h-6 invert brightness-0" /></div>
             <span className="font-black text-xl tracking-tighter text-white">舞バズ Admin</span>
           </Link>
@@ -70,24 +69,24 @@ export default function SchedulePage() {
         </div>
       </aside>
 
-      {/* メイン */}
       <main className="flex-1 overflow-y-auto text-black font-sans">
         <header className="bg-white border-b p-4 md:px-8 sticky top-0 z-10 flex items-center justify-between">
-          <h2 className="font-extrabold text-xl text-slate-800">お稽古スケジュール</h2>
-          <div className="flex items-center gap-4">
-            <Link href="/search/1" target="_blank">
-              <Button size="sm" variant="outline" className="text-xs gap-1 border-slate-200 text-slate-600 font-bold">
-                公開ページを確認 <ArrowUpRight size={14} />
-              </Button>
+          <div className="flex items-center gap-3">
+            {/* 👈 ホーム（ダッシュボード）へ移動 */}
+            <Link href="/dashboard" className="flex items-center gap-1 text-slate-400 hover:text-[#E63946] text-xs font-bold transition-colors">
+              <Home size={16} /> ホームへ
             </Link>
-            <Button onClick={() => setIsModalOpen(true)} className="bg-[#E63946] hover:bg-[#D62839] text-white gap-2 rounded-xl font-bold">
-              <Plus size={18} /> お稽古枠を追加
+            <h2 className="font-extrabold text-base md:text-xl text-slate-800">お稽古スケジュール</h2>
+          </div>
+          <div className="flex items-center gap-2 md:gap-4">
+            <Button onClick={() => setIsModalOpen(true)} className="bg-[#E63946] hover:bg-[#D62839] text-white gap-1 md:gap-2 rounded-xl font-bold text-xs py-5">
+              <Plus size={16} /> 枠追加
             </Button>
           </div>
         </header>
 
-        <div className="p-4 md:p-8 max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div className="p-4 md:p-8 max-w-6xl mx-auto space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 md:gap-8">
             <div className="lg:col-span-1 space-y-6">
               <Card className="border-none shadow-sm rounded-3xl overflow-hidden bg-white">
                 <CardHeader className="bg-[#1D3557] text-white p-4">
@@ -127,31 +126,31 @@ export default function SchedulePage() {
               </Card>
             </div>
 
-            <div className="lg:col-span-3 space-y-6">
-              <div className="flex items-center justify-between font-black text-2xl text-[#1D3557] px-2 italic">
-                2026年 8月 {selectedDay}日 のお稽古
+            <div className="lg:col-span-3 space-y-4 md:space-y-6">
+              <div className="flex items-center justify-between font-black text-xl md:text-2xl text-[#1D3557] px-2 italic">
+                8月 {selectedDay}日 のお稽古
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-3 md:space-y-4">
                 {(lessons[selectedDay] || []).length > 0 ? (
                   lessons[selectedDay].map((lesson) => (
                     <Card key={lesson.id} className="border-none shadow-sm rounded-3xl overflow-hidden bg-white">
                       <div className="flex">
-                        <div className={`w-2 ${lesson.type === '個人稽古' ? 'bg-blue-500' : lesson.type === 'グループ' ? 'bg-orange-500' : 'bg-[#E63946]'}`}></div>
-                        <CardContent className="p-6 flex-1 flex items-center justify-between gap-6">
-                          <div>
-                            <p className="text-[10px] font-black text-slate-400 mb-1"><Clock size={12} className="inline mr-1" /> {lesson.time}</p>
-                            <h4 className="font-extrabold text-lg text-slate-800">{lesson.student}</h4>
-                            <p className="text-xs text-[#E63946] font-bold">{lesson.type}</p>
+                        <div className={`w-2 shrink-0 ${lesson.type === '個人稽古' ? 'bg-blue-500' : lesson.type === 'グループ' ? 'bg-orange-500' : 'bg-[#E63946]'}`}></div>
+                        <CardContent className="p-4 md:p-6 flex-1 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                          <div className="space-y-1">
+                            <p className="text-[10px] font-black text-slate-400"><Clock size={12} className="inline mr-1" /> {lesson.time}</p>
+                            <h4 className="font-extrabold text-base md:text-lg text-slate-800">{lesson.student}</h4>
+                            <p className="text-xs text-[#E63946] font-bold">{lesson.type}（{lesson.room}）</p>
                           </div>
-                          <span className="text-xs font-black px-3 py-1 rounded-full bg-slate-100 text-slate-600">{lesson.status}</span>
+                          <span className="text-xs font-black px-3 py-1 rounded-full bg-slate-100 text-slate-600 self-end md:self-auto">{lesson.status}</span>
                         </CardContent>
                       </div>
                     </Card>
                   ))
                 ) : (
-                  <div className="bg-white p-12 rounded-3xl text-center text-slate-400 font-bold border border-dashed">
-                    この日のお稽古予定はありません。「お稽古枠を追加」ボタンから受付を開始できます。
+                  <div className="bg-white p-8 md:p-12 rounded-3xl text-center text-slate-400 text-xs font-bold border border-dashed">
+                    予定はありません。「お稽古枠を追加」から受付を開始できます。
                   </div>
                 )}
               </div>
@@ -159,12 +158,12 @@ export default function SchedulePage() {
           </div>
         </div>
 
-        {/* 追加モーダル */}
+        {/* モーダル */}
         {isModalOpen && (
           <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-3xl p-8 max-w-md w-full space-y-6 shadow-2xl">
+            <div className="bg-white rounded-3xl p-6 md:p-8 max-w-md w-full space-y-6 shadow-2xl">
               <div className="flex justify-between items-center border-b pb-4">
-                <h3 className="font-bold text-lg">8月{selectedDay}日にお稽古枠を追加</h3>
+                <h3 className="font-bold text-base">8月{selectedDay}日に枠を追加</h3>
                 <button onClick={() => setIsModalOpen(false)}><X size={20} className="text-slate-400"/></button>
               </div>
               <div className="space-y-4 text-xs font-bold">
@@ -185,17 +184,17 @@ export default function SchedulePage() {
                   <Input value={newStudent} onChange={e => setNewStudent(e.target.value)} className="bg-slate-50 border-none h-11" />
                 </div>
               </div>
-              <Button onClick={handleAddLesson} className="w-full bg-[#E63946] py-6 rounded-2xl font-bold text-white">この枠を登録する</Button>
+              <Button onClick={handleAddLesson} className="w-full bg-[#E63946] py-6 rounded-2xl font-bold text-white">登録する</Button>
             </div>
           </div>
         )}
       </main>
 
-      {/* 📱 スマホ専用ボトムナビゲーション */}
+      {/* スマホボトムバー */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#1D3557] text-white border-t border-white/10 z-50 p-2 shadow-2xl">
         <div className="grid grid-cols-5 gap-1 text-center">
           <Link href="/dashboard" className="flex flex-col items-center py-2 rounded-xl text-white/60"><LayoutDashboard size={20} /><span className="text-[10px] mt-1 font-extrabold">ホーム</span></Link>
-          <Link href="/schedule" className="flex flex-col items-center py-2 rounded-xl bg-[#E63946] font-bold text-white"><CalendarDays size={20} /><span className="text-[10px] mt-1 font-extrabold">予定</span></Link>
+          <Link href="/schedule" className="flex flex-col items-center py-2 rounded-xl bg-[#E63946] font-bold text-white shadow-sm"><CalendarDays size={20} /><span className="text-[10px] mt-1 font-extrabold">予定</span></Link>
           <Link href="/students" className="flex flex-col items-center py-2 rounded-xl text-white/60"><Users size={20} /><span className="text-[10px] mt-1 font-extrabold">生徒</span></Link>
           <Link href="/sns" className="flex flex-col items-center py-2 rounded-xl text-white/60"><MessageSquare size={20} /><span className="text-[10px] mt-1 font-extrabold">AI文章</span></Link>
           <Link href="/settings" className="flex flex-col items-center py-2 rounded-xl text-white/60"><Settings size={20} /><span className="text-[10px] mt-1 font-extrabold">設定</span></Link>

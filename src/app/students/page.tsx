@@ -4,11 +4,10 @@ import React from 'react';
 import Link from 'next/link';
 import { 
   Users, CalendarDays, LayoutDashboard, MessageSquare, Settings,
-  Search, Plus, Filter, MoreVertical, GraduationCap, History, ArrowUpRight, Home
+  Plus, Filter, MoreVertical, GraduationCap, History, ArrowUpRight, Home
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 
 const STUDENTS = [
   { id: 1, name: "田中 美咲", age: 22, course: "ハイブリッド体験", progress: "対面完了", lastLesson: "2026/07/20", status: "ノート届く", memo: "『姿勢がピンと伸びる感覚がスッキリした』とコメント有。" },
@@ -19,11 +18,11 @@ const STUDENTS = [
 
 export default function StudentsPage() {
   return (
-    <div className="flex min-h-screen bg-[#F8FAFC]">
+    <div className="flex min-h-screen bg-[#F8FAFC] pb-24 md:pb-0">
       <aside className="w-64 bg-[#1D3557] text-white hidden md:flex flex-col">
         <div className="p-6 flex items-center gap-3">
-          <Link href="/" className="flex items-center gap-3">
-            <div className="bg-[#E63946] text-white p-1 rounded grow-0"><img src="/logo.png" alt="logo" className="w-6 h-6 invert brightness-0" /></div>
+          <Link href="/dashboard" className="flex items-center gap-3">
+            <div className="bg-[#E63946] p-1 rounded grow-0"><img src="/logo.png" alt="logo" className="w-6 h-6 invert brightness-0" /></div>
             <span className="font-black text-xl tracking-tighter text-white">舞バズ Admin</span>
           </Link>
         </div>
@@ -34,60 +33,54 @@ export default function StudentsPage() {
           <Link href="/sns"><NavItem icon={<MessageSquare size={20}/>} label="SNS投稿サポート" active={false} /></Link>
           <Link href="/settings"><NavItem icon={<Settings size={20}/>} label="教室設定" active={false} /></Link>
         </nav>
-        <div className="p-4 border-t border-white/10 space-y-2">
-          <div className="opacity-50 text-[10px] font-bold text-white">講師：佐藤 太郎 先生</div>
-          <Link href="/" className="inline-flex items-center gap-1 text-[11px] text-[#E63946] font-bold hover:underline">
-             <Home size={12} /> ホーム画面へ戻る
-          </Link>
-        </div>
       </aside>
 
-      <main className="flex-1 overflow-y-auto text-black font-sans pb-24 md:pb-0">
-        <header className="bg-white border-b h-16 flex items-center justify-between px-8 sticky top-0 z-10">
-          <div className="flex items-center gap-4 flex-1">
-            {/* 👈 ホーム画面へ戻るボタンを追加 */}
-            <Link href="/" className="flex items-center gap-1 text-slate-400 hover:text-[#E63946] text-xs font-bold mr-2 transition-colors">
-              <Home size={16} /> ホームへ戻る
+      <main className="flex-1 overflow-y-auto text-black font-sans">
+        <header className="bg-white border-b p-4 md:px-8 sticky top-0 z-10 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            {/* 👈 ホーム（ダッシュボード）へ移動 */}
+            <Link href="/dashboard" className="flex items-center gap-1 text-slate-400 hover:text-[#E63946] text-xs font-bold transition-colors">
+              <Home size={16} /> ホームへ
             </Link>
-            <h2 className="font-extrabold text-xl text-slate-800 mr-8">生徒名簿（CRM）</h2>
+            <h2 className="font-extrabold text-base md:text-xl text-slate-800">生徒名簿（CRM）</h2>
           </div>
           <Link href="/search/1" target="_blank">
             <Button size="sm" variant="outline" className="text-xs gap-1 border-slate-200 text-slate-600 font-bold">
-              公開ページを確認 <ArrowUpRight size={14} />
+              公開画面 <ArrowUpRight size={14} />
             </Button>
           </Link>
         </header>
 
-        <div className="p-8 max-w-7xl mx-auto space-y-6">
+        <div className="p-4 md:p-8 max-w-7xl mx-auto space-y-6">
           <div className="grid gap-4">
             {STUDENTS.map(student => (
               <Link key={student.id} href={`/students/${student.id}`}>
                 <Card className="border-none shadow-sm hover:shadow-md transition-all rounded-2xl overflow-hidden bg-white cursor-pointer group">
-                  <CardContent className="p-6 flex flex-col md:flex-row items-center gap-6">
+                  <CardContent className="p-5 md:p-6 flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6">
                     <div className="flex items-center gap-4 md:w-1/4">
-                      <div className="size-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 font-bold group-hover:bg-[#E63946]/10 group-hover:text-[#E63946]">
-                        <Users size={20} />
+                      <div className="size-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 font-bold shrink-0">
+                        <Users size={18} />
                       </div>
                       <div>
-                        <p className="font-extrabold text-slate-800">{student.name}</p>
+                        <p className="font-extrabold text-slate-800 text-base">{student.name}</p>
                         <p className="text-[10px] text-slate-400 font-bold">{student.age}歳 / {student.course}</p>
                       </div>
                     </div>
 
-                    <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-6 border-t md:border-t-0 md:border-x px-0 md:px-8 py-4 md:py-0">
+                    <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-4 border-t md:border-t-0 md:border-x pt-3 md:pt-0 md:px-6 w-full">
                       <div>
-                        <p className="text-[10px] text-slate-400 font-black uppercase mb-1">進捗状態</p>
-                        <span className="text-sm font-bold text-slate-600">{student.progress}</span>
+                        <p className="text-[10px] text-slate-400 font-black uppercase mb-0.5">進捗</p>
+                        <span className="text-xs md:text-sm font-bold text-slate-600">{student.progress}</span>
                       </div>
                       <div>
-                        <p className="text-[10px] text-slate-400 font-black uppercase mb-1">Status</p>
-                        <span className="px-3 py-1 rounded-full text-[10px] font-black bg-red-50 text-[#E63946]">{student.status}</span>
+                        <p className="text-[10px] text-slate-400 font-black uppercase mb-0.5">状態</p>
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-red-50 text-[#E63946]">{student.status}</span>
                       </div>
                     </div>
 
-                    <div className="md:w-1/3 flex items-center justify-between gap-4">
-                      <p className="text-[11px] text-slate-500 leading-relaxed italic">“{student.memo}”</p>
-                      <Button size="sm" variant="ghost" className="text-xs text-[#E63946] font-bold">カルテ開く →</Button>
+                    <div className="md:w-1/3 flex items-center justify-between gap-2 w-full pt-2 md:pt-0 border-t md:border-t-0">
+                      <p className="text-xs text-slate-500 leading-relaxed italic break-words line-clamp-1">“{student.memo}”</p>
+                      <Button size="sm" variant="ghost" className="text-xs text-[#E63946] font-bold shrink-0">カルテ →</Button>
                     </div>
                   </CardContent>
                 </Card>

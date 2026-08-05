@@ -3,17 +3,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { 
-  Users, 
-  CalendarDays, 
-  LayoutDashboard, 
-  MessageSquare, 
-  Settings,
-  Sparkles,
-  Camera,
-  Copy,
-  Check,
-  Loader2,
-  ArrowUpRight
+  Users, CalendarDays, LayoutDashboard, MessageSquare, Settings,
+  Sparkles, Copy, Check, Loader2, Home, ArrowUpRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -33,7 +24,7 @@ export default function SnsSupportPage() {
       if (inputText.includes("すり足")) {
         result = "日本舞踊の基本『すり足』。西洋のダンスが重心を上げるのに対し、日舞は極限まで重心を下げて地面を踏みしめます。この地味な動きが、実は体幹を鍛え、日常の歩き姿を上品に変えてくれるんです。あなたも『静の美』を体験しませんか？✨ #舞バズ #日本舞踊 #姿勢改善";
       } else if (inputText.includes("扇子")) {
-        result = "扇子一本で、桜が舞い散る様子やしとしと降る雨を表現する。日本舞踊は、無駄を削ぎ落とす『引き算の美学』の世界です。難しいルールは抜きにして、まずは指先の美しさから始めてみましょう🌸 #舞バズ #和の心 #丁寧な暮らし";
+        result = "扇子一本で、桜が舞い散る様子やしとしと降る雨を表現する。日本舞踊は、無駄を削ぎ落とする『引き算の美学』の世界です。難しいルールは抜きにして、まずは指先の美しさから始めてみましょう🌸 #舞バズ #和の心 #丁寧な暮らし";
       } else {
         result = `${inputText}についてお稽古しました！日本舞踊って、意外とハードだけど終わった後のスッキリ感が最高です。20代・30代の仲間と一緒に、新しい自分を見つけてみませんか？まずは手ぶらでオンデマンド予習からどうぞ！🍵 #舞バズ #趣味探し #自分磨き`;
       }
@@ -49,14 +40,11 @@ export default function SnsSupportPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-[#F8FAFC]">
-      {/* 🏰 サイドバー */}
+    <div className="flex min-h-screen bg-[#F8FAFC] pb-24 md:pb-0">
       <aside className="w-64 bg-[#1D3557] text-white hidden md:flex flex-col">
         <div className="p-6 flex items-center gap-3">
-          <Link href="/" className="flex items-center gap-3">
-            <div className="bg-[#E63946] p-1 rounded grow-0">
-               <img src="/logo.png" alt="logo" className="w-6 h-6 invert brightness-0" />
-            </div>
+          <Link href="/dashboard" className="flex items-center gap-3">
+            <div className="bg-[#E63946] p-1 rounded grow-0"><img src="/logo.png" alt="logo" className="w-6 h-6 invert brightness-0" /></div>
             <span className="font-black text-xl tracking-tighter text-white">舞バズ Admin</span>
           </Link>
         </div>
@@ -67,85 +55,74 @@ export default function SnsSupportPage() {
           <Link href="/sns"><NavItem icon={<MessageSquare size={20}/>} label="SNS投稿サポート" active={true} /></Link>
           <Link href="/settings"><NavItem icon={<Settings size={20}/>} label="教室設定" active={false} /></Link>
         </nav>
-        <div className="p-4 border-t border-white/10 opacity-50 text-[10px] font-bold">
-           講師：花月 士宝菊 先生
-        </div>
       </aside>
 
-      {/* 📱 メインコンテンツ */}
       <main className="flex-1 overflow-y-auto text-black font-sans">
-        <header className="bg-white border-b h-16 flex items-center justify-between px-8 sticky top-0 z-10">
-          <h2 className="font-extrabold text-xl text-slate-800">SNS投稿サポート AI</h2>
+        <header className="bg-white border-b h-16 flex items-center justify-between px-4 md:px-8 sticky top-0 z-10">
+          <div className="flex items-center gap-3">
+            <Link href="/dashboard" className="flex items-center gap-1 text-slate-400 hover:text-[#E63946] text-xs font-bold transition-colors">
+              <Home size={16} /> ホームへ
+            </Link>
+            <h2 className="font-extrabold text-base md:text-xl text-slate-800">SNS投稿サポート AI</h2>
+          </div>
           <Link href="/search/1" target="_blank">
             <Button size="sm" variant="outline" className="text-xs gap-1 border-slate-200 text-slate-600 font-bold">
-              公開ページを確認 <ArrowUpRight size={14} />
+              公開画面 <ArrowUpRight size={14} />
             </Button>
           </Link>
         </header>
 
-        <div className="p-8 max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="p-4 md:p-8 max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
           <div className="space-y-6">
-            <Card className="border-none shadow-sm rounded-3xl bg-white">
-              <CardHeader>
-                <CardTitle className="text-lg font-bold">今日の稽古キーワードを入れるだけ</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-[10px] text-[#E63946] font-black uppercase bg-red-50 px-2 py-1 rounded w-fit">ヒント：すり足、扇子など</p>
-                <textarea 
-                  className="w-full h-32 p-4 bg-slate-50 rounded-2xl border-none text-sm focus:ring-2 focus:ring-[#E63946] outline-none"
-                  placeholder="例：今日はすり足を重点的に稽古しました。"
-                  value={inputText}
-                  onChange={(e) => setInputText(e.target.value)}
-                />
-                <Button 
-                  onClick={handleGenerate} 
-                  disabled={isGenerating || !inputText}
-                  className="w-full bg-[#1D3557] hover:bg-[#2A4A7A] py-7 rounded-2xl font-bold gap-2 text-white"
-                >
-                  {isGenerating ? <><Loader2 className="animate-spin" /> 生成中...</> : <><Sparkles className="text-[#E63946]" /> 20代に刺さる文章に変換</>}
-                </Button>
-              </CardContent>
+            <Card className="border-none shadow-sm rounded-3xl bg-white p-6 space-y-4">
+              <h3 className="text-base font-bold">今日の稽古キーワードを入力</h3>
+              <p className="text-[10px] text-[#E63946] font-black uppercase bg-red-50 px-2 py-1 rounded w-fit">ヒント：すり足、扇子など</p>
+              <textarea 
+                className="w-full h-28 p-3 bg-slate-50 rounded-2xl border-none text-xs outline-none focus:ring-2 focus:ring-[#E63946]"
+                placeholder="例：今日はすり足を重点的に稽古しました。"
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+              />
+              <Button 
+                onClick={handleGenerate} 
+                disabled={isGenerating || !inputText}
+                className="w-full bg-[#1D3557] hover:bg-[#2A4A7A] py-6 rounded-2xl font-bold gap-2 text-white text-xs"
+              >
+                {isGenerating ? <><Loader2 className="animate-spin" size={16}/> 生成中...</> : <><Sparkles className="text-[#E63946]" size={16}/> 20代に刺さる文章に変換</>}
+              </Button>
             </Card>
-
-            <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100">
-               <p className="font-bold text-sm text-[#1D3557] mb-2 flex items-center gap-2">
-                 <Sparkles size={16} className="text-[#E63946]" /> 舞バズAIの強み
-               </p>
-               <p className="text-xs text-slate-500 leading-relaxed font-medium">
-                 単なる文章作成ではなく、マーケティング論に基づいた「日本舞踊のベネフィット（姿勢や教養）」を若者に伝わる言葉に変換します。
-               </p>
-            </div>
           </div>
 
           <div className="space-y-6">
-            <Card className="border-none shadow-xl rounded-[3rem] overflow-hidden bg-white">
-              <CardHeader className="bg-slate-50 py-3 px-6 border-b border-slate-100">
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Instagram Preview</span>
-              </CardHeader>
-              <CardContent className="p-0">
-                <div className="aspect-square bg-slate-100 relative">
-                  <img src="/group.jpg" alt="preview" className="w-full h-full object-cover" />
-                </div>
-                <div className="p-6 space-y-4">
-                  <div className="flex items-center gap-2">
-                    <img src="/logo.png" alt="icon" className="size-6 object-contain" />
-                    <span className="text-xs font-black italic">maibazu_official</span>
-                  </div>
-                  <p className={`text-sm text-slate-600 leading-relaxed min-h-[100px] ${isGenerating ? 'opacity-20' : 'opacity-100'} transition-opacity`}>
-                    {generatedText}
-                  </p>
-                  <Button 
-                    onClick={handleCopy}
-                    className={`w-full py-6 rounded-xl font-bold transition-all text-white ${copied ? 'bg-green-500' : 'bg-[#E63946] hover:bg-[#D62839]'}`}
-                  >
-                    {copied ? <><Check size={18} className="mr-2" /> コピー完了</> : <><Copy size={18} className="mr-2" /> 本文をコピーする</>}
-                  </Button>
-                </div>
+            <Card className="border-none shadow-xl rounded-[2.5rem] overflow-hidden bg-white">
+              <div className="bg-slate-50 py-3 px-6 border-b text-[10px] font-black text-slate-400 uppercase">
+                Instagram Preview
+              </div>
+              <CardContent className="p-6 space-y-4">
+                <p className={`text-xs md:text-sm text-slate-600 leading-relaxed min-h-[100px] break-words ${isGenerating ? 'opacity-20' : 'opacity-100'}`}>
+                  {generatedText}
+                </p>
+                <Button 
+                  onClick={handleCopy}
+                  className={`w-full py-5 rounded-xl font-bold text-xs text-white ${copied ? 'bg-green-500' : 'bg-[#E63946]'}`}
+                >
+                  {copied ? <><Check size={16} className="mr-1" /> コピー完了</> : <><Copy size={16} className="mr-1" /> 本文をコピーする</>}
+                </Button>
               </CardContent>
             </Card>
           </div>
         </div>
       </main>
+
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#1D3557] text-white border-t border-white/10 z-50 p-2 shadow-2xl">
+        <div className="grid grid-cols-5 gap-1 text-center">
+          <Link href="/dashboard" className="flex flex-col items-center py-2 rounded-xl text-white/60"><LayoutDashboard size={20} /><span className="text-[10px] mt-1 font-extrabold">ホーム</span></Link>
+          <Link href="/schedule" className="flex flex-col items-center py-2 rounded-xl text-white/60"><CalendarDays size={20} /><span className="text-[10px] mt-1 font-extrabold">予定</span></Link>
+          <Link href="/students" className="flex flex-col items-center py-2 rounded-xl text-white/60"><Users size={20} /><span className="text-[10px] mt-1 font-extrabold">生徒</span></Link>
+          <Link href="/sns" className="flex flex-col items-center py-2 rounded-xl bg-[#E63946] font-bold text-white shadow-sm"><MessageSquare size={20} /><span className="text-[10px] mt-1 font-extrabold">AI文章</span></Link>
+          <Link href="/settings" className="flex flex-col items-center py-2 rounded-xl text-white/60"><Settings size={20} /><span className="text-[10px] mt-1 font-extrabold">設定</span></Link>
+        </div>
+      </nav>
     </div>
   );
 }
