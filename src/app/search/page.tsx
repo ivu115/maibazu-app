@@ -5,35 +5,46 @@ import Link from 'next/link';
 import { Card, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { MapPin, Search, ChevronRight, Map, List, ExternalLink } from "lucide-react";
+import { MapPin, Search, ChevronRight, Map, List, ExternalLink, ShoppingBag, Video } from "lucide-react";
 
+// BPO手ぶらコミコミ対応の提携教室リスト（価格改定版）
 const INITIAL_SCHOOLS = [
-  { id: 1, name: "S 教室 (大阪・吹田)", location: "大阪府 吹田市", mapQuery: "大阪府吹田市", mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52425.26388484931!2d135.4800366!3d34.760161!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000e3954201be7b%3A0x867087fb2559599d!2zT3Nha2EsIFN1aXRh!5e0!3m2!1sen!2sjp!4v1700000000000", tags: ["20代30代中心", "初心者歓迎"], price: "15,000円", intro: "ITやSNSに関心のある若手講師が運営する、非常にモダンな教室です。" },
-  { id: 2, name: "H 教室 (兵庫・伊丹)", location: "兵庫県 伊丹市", mapQuery: "兵庫県伊丹市", mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52431.109848529!2d135.378902!3d34.783102!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000f074d284fb15%3A0x9d4a46efb7ef5d89!2sItami%2C%20Hyogo!5e0!3m2!1sen!2sjp!4v1700000000000", tags: ["女性専用", "手ぶら特化"], price: "12,000円", intro: "「日本舞踊を身近に」をモットーに、Tシャツでの稽古も公認されている教室です。" },
-  { id: 3, name: "K 教室 (東京・世田谷)", location: "東京都 世田谷区", mapQuery: "東京都世田谷区", mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d103730.93294829!2d139.601502!3d35.646502!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6018f3a388e4e94d%3A0x6b453e0205096531!2sSetagaya%20City%2C%20Tokyo!5e0!3m2!1sen!2sjp!4v1700000000000", tags: ["夜間対応", "親切指導"], price: "18,000円", intro: "伝統を大切にしつつ、最新のヒット曲で踊る楽しさを伝える新しいスタイルの教室です。" },
+  { 
+    id: 1, 
+    name: "S 教室 (大阪・吹田)", 
+    location: "大阪府 吹田市", 
+    mapQuery: "大阪府吹田市", 
+    mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52425.26388484931!2d135.4800366!3d34.760161!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000e3954201be7b%3A0x867087fb2559599d!2zT3Nha2EsIFN1aXRh!5e0!3m2!1sen!2sjp!4v1700000000000", 
+    tags: ["着物コミコミ", "20代30代中心", "初心者特化"], 
+    price: "3,980円", 
+    intro: "手ぶらでOK！浴衣・着物一式レンタル代込み。若手講師が姿勢や所作の美しさを丁寧に指導します。" 
+  },
+  { 
+    id: 2, 
+    name: "H 教室 (兵庫・伊丹)", 
+    location: "兵庫県 伊丹市", 
+    mapQuery: "兵庫県伊丹市", 
+    mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52431.109848529!2d135.378902!3d34.783102!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000f074d284fb15%3A0x9d4a46efb7ef5d89!2sItami%2C%20Hyogo!5e0!3m2!1sen!2sjp!4v1700000000000", 
+    tags: ["手ぶらOK", "事前動画あり", "大人の教養"], 
+    price: "4,500円", 
+    intro: "「和の心を身近に」をモットーに、手ぶらで本格的な日本舞踊を1日完結で体験できるお教室です。" 
+  },
+  { 
+    id: 3, 
+    name: "K 教室 (東京・世田谷)", 
+    location: "東京都 世田谷区", 
+    mapQuery: "東京都世田谷区", 
+    mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d103730.93294829!2d139.601502!3d35.646502!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6018f3a388e4e94d%3A0x6b453e0205096531!2sSetagaya%20City%2C%20Tokyo!5e0!3m2!1sen!2sjp!4v1700000000000", 
+    tags: ["着物コミコミ", "インバウンド対応", "夜間稽古"], 
+    price: "4,980円", 
+    intro: "お仕事帰りにも手ぶらで立ち寄れる洗練された世田谷の稽古場。丁寧なマンツーマン指導が人気です。" 
+  },
 ];
 
 export default function SearchPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [viewMode, setViewMode] = useState<"list" | "map">("list");
   const [schools, setSchools] = useState(INITIAL_SCHOOLS);
-
-  // ローカルストレージからの変更読み込み
-  useEffect(() => {
-    const saved = localStorage.getItem('maibazu_school_1');
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        setSchools(prev => prev.map(s => s.id === 1 ? {
-          ...s,
-          name: parsed.name ? `${parsed.name} (大阪・吹田)` : s.name,
-          intro: parsed.desc || s.intro,
-          price: parsed.price || s.price,
-          tags: parsed.tags && parsed.tags.length > 0 ? parsed.tags : s.tags
-        } : s));
-      } catch (e) {}
-    }
-  }, []);
 
   const filteredSchools = schools.filter(school => 
     school.name.includes(searchQuery) || school.location.includes(searchQuery)
@@ -50,8 +61,8 @@ export default function SearchPage() {
           <div className="relative flex-1 max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
             <Input 
-              placeholder="エリアで検索..." 
-              className="pl-10 h-11 bg-slate-50 border-none text-sm"
+              placeholder="地域やエリア名で検索..." 
+              className="pl-10 h-11 bg-slate-50 border-none text-xs font-bold"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -68,8 +79,8 @@ export default function SearchPage() {
       </header>
 
       <main className="max-w-5xl mx-auto p-4 mt-8">
-        <h1 className="text-xl font-bold mb-6 flex items-center justify-between">
-          <span>舞バズ認定：体験対応教室</span>
+        <h1 className="text-xl font-bold mb-6 flex items-center justify-between text-[#1D3557]">
+          <span>舞バズ認定：手ぶら体験対応教室</span>
           <span className="text-xs text-slate-400 font-normal">該当 {filteredSchools.length} 件</span>
         </h1>
 
@@ -87,9 +98,12 @@ export default function SearchPage() {
                   <iframe title={school.name} src={school.mapEmbed} width="100%" height="100%" style={{ border: 0 }} allowFullScreen={false} loading="lazy" />
                 </div>
                 <div className="flex justify-between items-center pt-2">
-                  <span className="text-xs font-bold text-slate-400">{school.location}</span>
+                  <div>
+                    <span className="text-xs font-bold text-slate-400 block">{school.location}</span>
+                    <span className="text-sm font-black text-[#E63946]">{school.price} (着物込み)</span>
+                  </div>
                   <Link href={`/search/${school.id}`}>
-                    <Button size="sm" className="bg-[#E63946] text-white rounded-xl text-xs font-bold">詳細・予約へ</Button>
+                    <Button size="sm" className="bg-[#E63946] text-white rounded-xl text-xs font-bold">手ぶら体験予約</Button>
                   </Link>
                 </div>
               </Card>
@@ -98,27 +112,27 @@ export default function SearchPage() {
         ) : (
           <div className="grid gap-6">
             {filteredSchools.map(school => (
-              <Card key={school.id} className="hover:shadow-md transition-all border-none bg-white shadow-sm overflow-hidden group">
+              <Card key={school.id} className="hover:shadow-md transition-all border-none bg-white shadow-sm overflow-hidden group rounded-3xl">
                 <div className="p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 text-slate-400 text-xs mb-1 font-bold">
                       <span className="flex items-center gap-1 text-[#E63946]"><MapPin size={14} /> {school.location}</span>
                     </div>
-                    <CardTitle className="text-xl mb-2 group-hover:text-[#E63946] transition-colors">{school.name}</CardTitle>
-                    <p className="text-slate-500 text-sm mb-4 leading-relaxed">{school.intro}</p>
+                    <CardTitle className="text-xl mb-2 group-hover:text-[#E63946] transition-colors text-[#1D3557] font-black">{school.name}</CardTitle>
+                    <p className="text-slate-500 text-sm mb-4 leading-relaxed font-medium">{school.intro}</p>
                     <div className="flex flex-wrap gap-2">
                       {school.tags.map(tag => (
-                        <span key={tag} className="text-[10px] bg-slate-50 text-slate-500 px-3 py-1 rounded-full font-bold border border-slate-100">#{tag}</span>
+                        <span key={tag} className="text-[10px] bg-red-50/50 text-[#E63946] px-3 py-1 rounded-full font-bold border border-red-100">#{tag}</span>
                       ))}
                     </div>
                   </div>
                   
-                  <div className="text-right w-full md:w-auto md:min-w-[180px] border-t md:border-t-0 md:border-l pt-4 md:pt-0 md:pl-8">
-                    <div className="text-xs text-slate-400 mb-1 font-bold opacity-60">1日体験・予習動画付</div>
-                    <div className="text-3xl font-black text-[#1D3557] mb-4 tracking-tighter">{school.price}</div>
+                  <div className="text-right w-full md:w-auto md:min-w-[200px] border-t md:border-t-0 md:border-l pt-4 md:pt-0 md:pl-8">
+                    <div className="text-xs text-slate-400 mb-1 font-bold">手ぶら・着物代込み事前決済</div>
+                    <div className="text-3xl font-black text-[#E63946] mb-4 tracking-tighter">{school.price}</div>
                     <Link href={`/search/${school.id}`}>
-                      <Button className="bg-[#1D3557] w-full md:w-32 hover:bg-[#E63946] transition-all rounded-full flex items-center justify-center gap-2 text-white font-bold">
-                        詳細を見る <ChevronRight size={16} />
+                      <Button className="bg-[#1D3557] w-full md:w-36 hover:bg-[#E63946] transition-all rounded-full flex items-center justify-center gap-2 text-white font-bold text-xs shadow-md">
+                        体験を予約する <ChevronRight size={16} />
                       </Button>
                     </Link>
                   </div>
