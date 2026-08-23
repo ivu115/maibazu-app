@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Lock, Mail, ArrowRight, ShieldCheck, User, Building2, UserPlus, LogIn, Compass } from "lucide-react";
+import { Lock, Mail, ArrowRight, ShieldCheck, User, Building2, UserPlus, LogIn, Compass, ChevronLeft } from "lucide-react";
 
 export default function EntryPage() {
   const router = useRouter();
@@ -14,10 +14,10 @@ export default function EntryPage() {
   // モード切替: 'login' (ログイン) | 'signup' (新規登録)
   const [mode, setMode] = useState<'login' | 'signup'>('login');
   // 役割切替: 'student' (生徒) | 'admin' (舞バズ事務局 / BPOスタッフ)
-  const [role, setRole] = useState<'student' | 'admin'>('student');
+  const [role, setRole] = useState<'student' | 'admin'>('admin');
   
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("student@maibazu.jp");
+  const [email, setEmail] = useState("admin@maibazu.jp");
   const [password, setPassword] = useState("••••••••");
 
   const handleRoleChange = (selectedRole: 'student' | 'admin') => {
@@ -32,16 +32,23 @@ export default function EntryPage() {
     if (role === 'student') {
       router.push('/student-app'); // 生徒用ポータル・アプリへ
     } else {
-      router.push('/admin'); // 舞バズ事務局用 BPO統合管理画面へ
+      router.push('/dashboard'); // 舞バズ事務局用 BPO統合管理画面へ
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#1D3557] flex items-center justify-center p-4 font-sans text-black">
+    <div className="min-h-screen bg-[#1D3557] flex flex-col items-center justify-center p-4 font-sans text-black">
+      {/* 🌐 上部：公式ポータルへのダイレクト戻りボタン */}
+      <div className="max-w-md w-full mb-4 flex justify-between items-center px-2">
+        <Link href="/portal" className="inline-flex items-center gap-1.5 text-xs text-white/80 hover:text-white font-bold transition-colors bg-white/10 px-4 py-2 rounded-full backdrop-blur">
+          <ChevronLeft size={14} /> 舞バズ 公式ポータルTOPへ
+        </Link>
+      </div>
+
       <Card className="max-w-md w-full border-none shadow-2xl rounded-[2.5rem] bg-white overflow-hidden">
-        <CardHeader className="pt-10 pb-4 text-center space-y-4">
+        <CardHeader className="pt-8 pb-4 text-center space-y-4">
           <div className="inline-block mx-auto">
-            <img src="/logo.png" alt="舞バズ" className="w-20 h-20 object-contain mx-auto" />
+            <img src="/logo.png" alt="舞バズ" className="w-16 h-16 object-contain mx-auto" />
           </div>
           
           <div className="space-y-1">
@@ -166,7 +173,7 @@ export default function EntryPage() {
           {/* 🌐 ポータルサイト・教室検索への誘導 */}
           <div className="text-center pt-2 border-t space-y-3">
             <div>
-              <Link href="/" className="inline-flex items-center gap-1.5 text-xs text-[#E63946] font-bold hover:underline">
+              <Link href="/portal" className="inline-flex items-center gap-1.5 text-xs text-[#E63946] font-bold hover:underline">
                  <Compass size={14} /> ログインせずに教室を探す（公式ポータル） →
               </Link>
             </div>
