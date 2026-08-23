@@ -6,35 +6,33 @@ import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Lock, Mail, ArrowRight, ShieldCheck, User, Users, UserPlus, LogIn } from "lucide-react";
+import { Lock, Mail, ArrowRight, ShieldCheck, User, Building2, UserPlus, LogIn, Compass } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
   
   // モード切替: 'login' (ログイン) | 'signup' (新規登録)
   const [mode, setMode] = useState<'login' | 'signup'>('login');
-  // 役割切替: 'student' (生徒) | 'teacher' (講師)
-  const [role, setRole] = useState<'student' | 'teacher'>('student');
+  // 役割切替: 'student' (生徒) | 'admin' (舞バズ事務局 / BPOスタッフ)
+  const [role, setRole] = useState<'student' | 'admin'>('admin');
   
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("student@maibazu.jp");
+  const [email, setEmail] = useState("admin@maibazu.jp");
   const [password, setPassword] = useState("••••••••");
 
-  // 役割切り替え時の初期値調整
-  const handleRoleChange = (selectedRole: 'student' | 'teacher') => {
+  const handleRoleChange = (selectedRole: 'student' | 'admin') => {
     setRole(selectedRole);
     if (mode === 'login') {
-      setEmail(selectedRole === 'student' ? "student@maibazu.jp" : "teacher@maibazu.jp");
+      setEmail(selectedRole === 'student' ? "student@maibazu.jp" : "admin@maibazu.jp");
     }
   };
 
-  // 送信処理
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (role === 'student') {
-      router.push('/student-app'); // 生徒用アプリへ
+      router.push('/student-app'); // 生徒用ポータル・アプリへ
     } else {
-      router.push('/dashboard'); // 講師用Adminへ
+      router.push('/dashboard'); // ⭕ 舞バズ事務局用 BPO統合管理画面(/dashboard)へ遷移
     }
   };
 
@@ -42,20 +40,20 @@ export default function LoginPage() {
     <div className="min-h-screen bg-[#1D3557] flex items-center justify-center p-4 font-sans text-black">
       <Card className="max-w-md w-full border-none shadow-2xl rounded-[2.5rem] bg-white overflow-hidden">
         <CardHeader className="pt-10 pb-4 text-center space-y-4">
-          <Link href="/" className="inline-block mx-auto">
-            <img src="/logo.png" alt="舞バズ" className="w-16 h-16 object-contain mx-auto" />
-          </Link>
+          <div className="inline-block mx-auto">
+            <img src="/logo.png" alt="舞バズ" className="w-20 h-20 object-contain mx-auto" />
+          </div>
           
           <div className="space-y-1">
             <h1 className="text-2xl font-black text-[#1D3557]">
-              {mode === 'login' ? '舞バズ ログイン' : '舞バズ 新規登録'}
+              {mode === 'login' ? '舞バズ ログイン' : '舞バズ アカウント作成'}
             </h1>
             <p className="text-xs text-slate-400 font-bold">
-              {mode === 'login' ? 'アカウントを選択してログインしてください' : 'アカウントを作成して舞バズを始めよう'}
+              {mode === 'login' ? '日本舞踊をもっと気軽にもっと手軽に' : '無料で今すぐ始めよう'}
             </p>
           </div>
 
-          {/* 1. モード切替タブ（ログイン ⇆ 新規登録） */}
+          {/* モード切替（ログイン ⇆ 新規登録） */}
           <div className="flex border-b border-slate-100 pt-2">
             <button
               type="button"
@@ -73,11 +71,11 @@ export default function LoginPage() {
                 mode === 'signup' ? 'border-[#E63946] text-[#E63946]' : 'border-transparent text-slate-400 hover:text-slate-600'
               }`}
             >
-              <UserPlus size={14} /> 新規登録（無料）
+              <UserPlus size={14} /> 新規登録
             </button>
           </div>
 
-          {/* 2. 役割選択ボタン (生徒 ⇆ 講師) */}
+          {/* 役割選択（生徒 ⇆ 舞バズ事務局BPO） */}
           <div className="grid grid-cols-2 p-1 bg-slate-100 rounded-2xl gap-1">
             <button
               type="button"
@@ -90,19 +88,18 @@ export default function LoginPage() {
             </button>
             <button
               type="button"
-              onClick={() => handleRoleChange('teacher')}
+              onClick={() => handleRoleChange('admin')}
               className={`py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all ${
-                role === 'teacher' ? 'bg-[#1D3557] text-white shadow-md' : 'text-slate-500 hover:text-slate-800'
+                role === 'admin' ? 'bg-[#1D3557] text-white shadow-md' : 'text-slate-500 hover:text-slate-800'
               }`}
             >
-              <Users size={15} /> 講師（運営者）
+              <Building2 size={15} /> 事務局 (BPO Admin)
             </button>
           </div>
         </CardHeader>
 
         <CardContent className="p-8 pt-2 space-y-6">
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* 新規登録時の名前入力欄 */}
             {mode === 'signup' && (
               <div className="space-y-1.5">
                 <label className="text-xs font-bold text-slate-500 flex items-center gap-1">
@@ -110,7 +107,7 @@ export default function LoginPage() {
                 </label>
                 <Input 
                   type="text" 
-                  placeholder={role === 'student' ? "山田 太郎" : "花月 士宝菊"}
+                  placeholder={role === 'student' ? "山田 太郎" : "舞バズ 担当スタッフ"}
                   value={name} 
                   onChange={(e) => setName(e.target.value)}
                   className="bg-slate-50 border-none h-12 text-sm font-bold"
@@ -152,33 +149,25 @@ export default function LoginPage() {
               }`}
             >
               {mode === 'login' 
-                ? (role === 'student' ? '生徒用アプリへ進む' : '管理画面（Admin）へ進む') 
-                : (role === 'student' ? 'アカウントを作成して始める' : '講師登録を完了する')} 
+                ? (role === 'student' ? '生徒用アプリへ進む' : 'BPO管理画面（Admin）へ進む') 
+                : (role === 'student' ? 'アカウントを作成して始める' : '事務局スタッフ登録を完了')} 
               <ArrowRight size={18} />
             </Button>
           </form>
 
-          {/* 切り替え案内 */}
-          <div className="text-center pt-2 border-t space-y-2">
-            {mode === 'login' ? (
-              <p className="text-xs text-slate-400 font-bold">
-                アカウントをお持ちでない方は{' '}
-                <button type="button" onClick={() => setMode('signup')} className="text-[#E63946] underline font-extrabold">
-                  新規登録はこちら
-                </button>
-              </p>
-            ) : (
-              <p className="text-xs text-slate-400 font-bold">
-                すでにアカウントをお持ちの方は{' '}
-                <button type="button" onClick={() => setMode('login')} className="text-[#1D3557] underline font-extrabold">
-                  ログインはこちら
-                </button>
-              </p>
-            )}
+          {/* デモ用注記 */}
+          <div className="bg-slate-50 p-3.5 rounded-2xl text-[11px] text-slate-400 space-y-1 border border-slate-100">
+            <p className="font-bold text-[#1D3557] flex items-center gap-1">
+              <ShieldCheck size={14} className="text-green-500"/> デモ用アカウント選択中
+            </p>
+            <p>ボタンを押すと、自動的に「{role === 'student' ? '生徒用アプリ' : '複数教室を管理するBPO統合Console'}」へ遷移します。</p>
+          </div>
 
+          {/* 🌐 ポータルサイト・教室検索への誘導 */}
+          <div className="text-center pt-2 border-t space-y-3">
             <div>
-              <Link href="/" className="text-xs text-slate-400 hover:text-slate-600 transition-colors inline-block mt-2">
-                ← 公式Webポータルへ戻る
+              <Link href="/portal" className="inline-flex items-center gap-1.5 text-xs text-[#E63946] font-bold hover:underline">
+                 <Compass size={14} /> ログインせずに教室を探す（公式ポータル） →
               </Link>
             </div>
           </div>
