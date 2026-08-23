@@ -210,3 +210,16 @@ function NavItem({ icon, label, active = false }: any) {
     </div>
   );
 }
+
+function StatsCard({ label, value, trend, icon }: any) {
+  return (
+    <Card className="border-none shadow-sm rounded-2xl bg-white text-black p-4 md:p-6">
+      <div className="flex justify-between items-start mb-2 md:mb-4">
+        <div className="p-1.5 bg-slate-50 rounded-lg">{icon}</div>
+        <span className="text-[9px] md:text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-50 text-green-600">{trend}</span>
+      </div>
+      <p className="text-[10px] text-slate-400 font-bold mb-1">{label}</p>
+      <p className="text-lg md:text-2xl font-black text-[#1D3557]">{value}</p>
+    </Card>
+  );
+}
