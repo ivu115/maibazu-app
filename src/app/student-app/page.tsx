@@ -21,20 +21,20 @@ import {
   ChevronRight, 
   Heart, 
   Users,
-  LayoutDashboard,
-  Settings
+  CreditCard,
+  ShoppingBag
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-// ─── コラムデータ ───
+// ─── 文化コラムデータ ───
 const COLUMNS = [
   {
     id: 1,
     category: "身体の科学",
     title: "なぜ日本舞踊は『重心を落とす』のか？",
     summary: "西洋のダンスとの最大の違いは「すり足」。腰を入れる姿勢がデスクワークの姿勢改善に効果的な理由を解説。",
-    date: "2026/07/25",
+    date: "2026/08/10",
     readTime: "3分で読める",
     content: "日本舞踊を始めるとき、最初に習うのが「腰を入れる（重心を下げる）」という姿勢です。\n\n西洋のバレエやヒップホップが「上へ上へと飛び跳ねる、動の美」を追求するのに対し、日本舞踊は「地面を踏みしめ、骨盤を安定させる、静の美」を極めます。\n\n【デスクワーク世代に効果的な理由】\n現代人の多くはスマホやPC作業により、骨盤が歪み、猫背になっています。\n日本舞踊の「すり足」は、腹筋・背筋・体幹（インナーマッスル）を自然に使用するため、身体に無理な負荷をかけずに姿勢を美しく矯正できます。\n\n稽古のあとに「背筋がピシッと伸びて肩こりが楽になった」と感じる生徒さんが多いのは、この理にかなった身体技法のおかげなのです。"
   },
@@ -43,49 +43,39 @@ const COLUMNS = [
     category: "歴史ルーツ",
     title: "歌舞伎から生まれた、江戸庶民の憧れエンタメ",
     summary: "歌舞伎役者の美しい所作に憧れた庶民たちが、日常の「習い事」として発展させた日本舞踊の成り立ち。",
-    date: "2026/07/20",
+    date: "2026/08/05",
     readTime: "2分で読める",
-    content: "日本舞踊のルーツは江戸時代にさかのぼります。当時のスーパースターであった歌舞伎役者の美しい踊りや所作に強く憧れた庶民たちが、「自分もあの美しい立ち振る舞いを身につけたい！」と稽古を始めたのが始まりです。\n\n敷居が高いと思われがちですが、本来は「日常を粋に楽しむための庶民のレッスン」でした。舞バズではその原点に立ち返り、現代の誰もが気軽に楽しめる入り口を提供しています。"
+    content: "日本舞踊のルーツは江戸時代にさかのぼります。当時のスーパースターであった歌舞伎役者の美しい踊りや所作に強く憧れた庶民たちが、「自分もあの美しい立ち振る舞いを身につけたい！」と稽古を始めたのが始まりです。\n\n敷居が高いと思われがちですが、本来は「日常を粋に楽しむための庶民のレッスン」でした。舞バズではその原点に立ち返り、手ぶらで誰もが気軽に楽しめる入り口を提供しています。"
   },
   {
     id: 3,
     category: "道具と作法",
     title: "初心者でも安心！扇子を美しく扱うコツ",
     summary: "扇子一本で桜や雨を表現する「引き算の美学」。指先の美しい意識の持ち方。",
-    date: "2026/07/15",
+    date: "2026/08/01",
     readTime: "2分で読める",
     content: "扇子は単なる小道具ではなく、あなたの「心の動き」を広げる体の一部です。\n\n親指と人差し指で軽く支え、力を抜いて扱うことで、風や波、時には盃（おさけの器）に見立てることができます。無駄な動きを削ぎ落とした「引き算の美学」を体感してみてください。"
   }
 ];
 
-// ─── 過去のお稽古帳データ ───
+// ─── お稽古帳データ ───
 const INITIAL_JOURNALS = [
   {
     id: 1,
-    date: "2026/07/20",
+    date: "2026/08/20",
     song: "さくらさくら",
-    progress: "70%",
+    progress: "100%",
     stamp: "💮 花丸",
-    studentNote: "すり足が難しかったですが、自分の姿勢がピンと伸びる感覚があってすごくスッキリしました！自宅で復習する時のコツはありますか？",
-    teacherComment: "ミサキさん、立ち姿が本当に素晴らしかったです！自宅では鏡を見ながら、肩の力を抜いて深呼吸する練習をしてみてくださいね。次回は扇子の持ち方を深めましょう！",
-    keyPoints: ["基本姿勢（腰を入れる）", "すり足の重心移動", "目線の配り方"]
-  },
-  {
-    id: 2,
-    date: "2026/07/05",
-    song: "基本所作（体験稽古）",
-    progress: "30%",
-    stamp: "🌸 大変よくできました",
-    studentNote: "初めての稽古で緊張しましたが、手ぶらで気楽に参加できて楽しかったです。",
-    teacherComment: "ようこそ舞バズへ！基本の立ち姿がとても美しかったです。和の楽しさをこれから一緒に深めていきましょう！",
-    keyPoints: ["お辞儀の作法", "立ち上がり方", "扇子の基本保持"]
+    studentNote: "浴衣も貸していただけて手ぶらで楽しめました！すり足で姿勢がピシッと伸びる感覚があってスッキリしました！",
+    teacherComment: "ミサキさん、立ち姿が本当に素晴らしかったです！自宅では鏡を見ながら、肩の力を抜いて深呼吸する練習をしてみてくださいね！",
+    keyPoints: ["基本姿勢（腰を入れる）", "すり足の重心移動", "手ぶら着付け完了"]
   }
 ];
 
 export default function StudentAppPage() {
   const [activeTab, setActiveTab] = useState<'home' | 'media' | 'calendar' | 'journal'>('home');
   const [isPlayingVideo, setIsPlayingVideo] = useState(false);
-  const [selectedMonthDay, setSelectedMonthDay] = useState(1);
+  const [selectedMonthDay, setSelectedMonthDay] = useState(20);
 
   const [selectedColumn, setSelectedColumn] = useState<any>(null);
   const [selectedJournal, setSelectedJournal] = useState<any>(null);
@@ -98,12 +88,12 @@ export default function StudentAppPage() {
     if (!reflectionText) return;
     const newEntry = {
       id: Date.now(),
-      date: "2026/08/01 (本日)",
+      date: "2026/08/23 (本日)",
       song: "さくらさくら",
-      progress: "70%",
+      progress: "100%",
       studentNote: reflectionText,
       stamp: "送信済み（返信待ち）",
-      teacherComment: "先生がノートを確認中です...",
+      teacherComment: "舞バズ事務局がノートを確認中です...",
       keyPoints: ["振り返り送信完了"]
     };
     setHistory([newEntry, ...history]);
@@ -180,7 +170,7 @@ export default function StudentAppPage() {
               </div>
 
               <div className="space-y-2 bg-red-50/60 p-5 rounded-2xl border border-red-100">
-                <p className="text-xs font-bold text-[#E63946] flex items-center gap-1"><Heart size={14}/> 先生からのアドバイス</p>
+                <p className="text-xs font-bold text-[#E63946] flex items-center gap-1"><Heart size={14}/> 先生からのメッセージ</p>
                 <p className="text-xs text-slate-800 leading-relaxed font-bold">{selectedJournal.teacherComment}</p>
               </div>
             </Card>
@@ -196,48 +186,59 @@ export default function StudentAppPage() {
                     <p className="text-xs text-slate-400 font-bold">受講生マイページ</p>
                     <h1 className="text-xl font-black text-[#1D3557]">田中 美咲 様</h1>
                   </div>
-                  <span className="text-[10px] bg-green-50 text-green-600 font-bold px-3 py-1 rounded-full">受講中</span>
+                  <span className="text-[10px] bg-emerald-50 text-emerald-600 font-bold px-3 py-1 rounded-full border border-emerald-200">予約・事前決済完了</span>
                 </div>
 
+                {/* 次回予約カード */}
                 <Card className="border-none shadow-md rounded-3xl bg-gradient-to-br from-[#1D3557] to-[#2A4A7A] text-white overflow-hidden">
                   <CardHeader className="p-6 pb-2">
                     <CardTitle className="text-xs font-bold uppercase tracking-widest opacity-60 flex items-center gap-1">
-                      <CalendarIcon size={14} /> Next Lesson
+                      <CalendarIcon size={14} /> Next Experience
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="p-6 pt-0 space-y-3">
                     <div>
-                      <p className="text-2xl font-black">2026年 8月 1日 (土)</p>
-                      <p className="text-lg font-bold text-[#E63946]">10:00 - 11:00 (対面稽古)</p>
+                      <p className="text-2xl font-black">2026年 8月20日 (木)</p>
+                      <p className="text-lg font-bold text-[#E63946]">14:00 - 15:00 (手ぶら1日体験)</p>
                     </div>
                     <div className="flex items-center justify-between pt-3 border-t border-white/10 text-xs">
-                      <span className="flex items-center gap-1 opacity-80"><MapPin size={12}/> S教室 (お座敷A)</span>
-                      <span className="bg-white/10 px-3 py-1 rounded-full font-bold">手ぶらOK</span>
+                      <span className="flex items-center gap-1 opacity-80"><MapPin size={12}/> S教室 (大阪・吹田)</span>
+                      <span className="bg-white/10 px-3 py-1 rounded-full font-bold flex items-center gap-1"><ShoppingBag size={10}/> 浴衣・着物一式レンタル込</span>
                     </div>
                   </CardContent>
                 </Card>
+
+                {/* 事前決済 ＆ 手ぶら案内バナー */}
+                <div className="bg-emerald-50 p-4 rounded-2xl border border-emerald-200 text-xs space-y-1">
+                  <p className="font-bold text-emerald-900 flex items-center gap-1">
+                    <CreditCard size={14} className="text-emerald-600" /> 事前クレカ決済完了 (¥3,980)
+                  </p>
+                  <p className="text-emerald-700 font-medium text-[11px]">
+                    現地での現金のお支払いは一切ありません。当日は手ぶらでお越しください。
+                  </p>
+                </div>
 
                 {/* 所属教室情報 */}
                 <Card className="border-none shadow-sm rounded-3xl bg-white p-6 space-y-4">
                   <div className="flex items-center justify-between border-b pb-3">
                     <h3 className="font-bold text-sm text-[#1D3557] flex items-center gap-2">
-                      <Users className="text-[#E63946]" size={18} /> 所属教室の情報
+                      <Users className="text-[#E63946]" size={18} /> 受講教室の情報
                     </h3>
-                    <span className="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded font-bold">公認教室</span>
+                    <span className="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded font-bold">舞バズ認定教室</span>
                   </div>
 
                   <div className="space-y-3 text-xs">
                     <div>
                       <p className="text-slate-400 text-[10px] font-bold">教室名・講師</p>
-                      <p className="font-bold text-slate-800 text-sm">S 教室（佐藤 太郎 先生）</p>
+                      <p className="font-bold text-slate-800 text-sm">S 教室（〇〇 先生）</p>
                     </div>
                     <div>
                       <p className="text-slate-400 text-[10px] font-bold">所在地・アクセス</p>
                       <p className="font-medium text-slate-700">大阪府吹田市 ◯◯ 1-2-3（阪急吹田駅 徒歩5分）</p>
                     </div>
                     <div>
-                      <p className="text-slate-400 text-[10px] font-bold">お稽古ルール</p>
-                      <p className="font-medium text-slate-700">・手ぶら着付けセット完備（Tシャツ参加OK）<br/>・完全明朗会計（事前決済完了済み）</p>
+                      <p className="text-slate-400 text-[10px] font-bold">手ぶら体験のルール</p>
+                      <p className="font-medium text-slate-700">・着物・浴衣一式は教室でご用意しています<br/>・事前に以下の「解説動画」をご覧いただくとスムーズです</p>
                     </div>
                     <a 
                       href="https://www.google.com/maps/search/?api=1&query=大阪府吹田市" 
@@ -251,23 +252,23 @@ export default function StudentAppPage() {
                 </Card>
 
                 {/* ポータルサイトリンク */}
-                <div className="pt-6 border-t text-center space-y-2">
-                  <Link href="/portal" className="inline-flex items-center gap-1 text-slate-400 hover:text-[#1D3557] text-xs font-bold transition-colors">
+                <div className="pt-4 text-center">
+                  <Link href="/" className="inline-flex items-center gap-1 text-slate-400 hover:text-[#1D3557] text-xs font-bold transition-colors">
                      舞バズ 公式Webポータルを見る →
                   </Link>
                 </div>
               </div>
             )}
 
-            {/* 2. コラム */}
+            {/* 2. コラム ＆ 事前解説動画 */}
             {activeTab === 'media' && (
               <div className="space-y-6">
-                <h2 className="text-lg font-bold text-[#1D3557]">コラム ＆ 解説動画</h2>
+                <h2 className="text-lg font-bold text-[#1D3557]">0日目 事前動画 ＆ 文化コラム</h2>
 
                 <Card className="border-none shadow-sm rounded-3xl bg-white overflow-hidden">
                   <CardHeader className="p-6 pb-2">
                     <CardTitle className="text-sm font-bold flex items-center gap-2 text-[#1D3557]">
-                      <Video className="text-[#E63946]" size={16} /> 0日目：事前解説動画
+                      <Video className="text-[#E63946]" size={16} /> 0日目：体験前 オンデマンド解説動画
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="p-6 pt-2 space-y-3">
@@ -281,7 +282,7 @@ export default function StudentAppPage() {
                     ) : (
                       <div className="aspect-video bg-slate-900 rounded-2xl flex flex-col items-center justify-center text-white p-4 text-center space-y-2">
                         <Sparkles className="text-[#E63946] animate-pulse" size={28} />
-                        <p className="text-xs font-bold">【再生中】日本舞踊の基本とマナー（5分）</p>
+                        <p className="text-xs font-bold">【再生中】日本舞踊の基本とマナー（約3分）</p>
                         <Button size="sm" variant="ghost" onClick={() => setIsPlayingVideo(false)} className="text-white/60 text-[10px]">閉じる</Button>
                       </div>
                     )}
@@ -318,7 +319,7 @@ export default function StudentAppPage() {
                   <div className="grid grid-cols-7 gap-1 text-xs text-center font-medium">
                     {[...Array(31)].map((_, i) => {
                       const day = i + 1;
-                      const isLessonDay = day === 1;
+                      const isLessonDay = day === 20;
                       return (
                         <div 
                           key={day} 
@@ -338,10 +339,10 @@ export default function StudentAppPage() {
 
                 <Card className="border-none shadow-sm rounded-3xl bg-white p-6 space-y-3">
                   <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest">8月{selectedMonthDay}日の予定</h3>
-                  {selectedMonthDay === 1 ? (
+                  {selectedMonthDay === 20 ? (
                     <div className="bg-red-50 p-4 rounded-2xl border border-red-100 space-y-1">
-                      <p className="text-xs font-black text-[#E63946]">10:00 - 11:00 お稽古（確定）</p>
-                      <p className="text-xs font-bold text-slate-700">S教室 / 個人体験レッスン</p>
+                      <p className="text-xs font-black text-[#E63946]">14:00 - 15:00 体験お稽古（確定）</p>
+                      <p className="text-xs font-bold text-slate-700">S教室 / 手ぶらコミコミ1日体験</p>
                     </div>
                   ) : (
                     <p className="text-xs text-slate-400">予定はありません。</p>
@@ -357,36 +358,36 @@ export default function StudentAppPage() {
 
                 <Card className="border-none shadow-sm rounded-3xl bg-white p-6 space-y-4">
                   <h3 className="font-bold text-xs text-slate-400 uppercase tracking-widest flex items-center gap-1">
-                    <Music size={14} className="text-[#E63946]" /> 稽古曲の進捗度
+                    <Music size={14} className="text-[#E63946]" /> 体験演目の進捗
                   </h3>
                   <div className="p-4 bg-slate-50 rounded-2xl space-y-2">
                     <div className="flex justify-between items-center text-xs">
                       <span className="font-extrabold text-slate-800">「さくらさくら」</span>
-                      <span className="font-black text-[#E63946]">70% 習得</span>
+                      <span className="font-black text-[#E63946]">100% 体験完了</span>
                     </div>
                     <div className="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
-                      <div className="bg-[#E63946] h-full rounded-full w-[70%]"></div>
+                      <div className="bg-[#E63946] h-full rounded-full w-[100%]"></div>
                     </div>
                   </div>
                 </Card>
 
                 <Card className="border-none shadow-sm rounded-3xl bg-white p-6 space-y-3">
                   <h3 className="font-bold text-xs text-slate-400 uppercase tracking-widest flex items-center gap-1">
-                    <MessageCircle size={14} className="text-[#E63946]" /> 今日の振り返り・質問を書く
+                    <MessageCircle size={14} className="text-[#E63946]" /> 今日の振り返り・感想を書く
                   </h3>
                   <textarea 
                     value={reflectionText}
                     onChange={(e) => setReflectionText(e.target.value)}
-                    placeholder="稽古の感想や、先生への質問を入力してください..."
-                    className="w-full h-24 p-3 bg-slate-50 border-none rounded-2xl text-xs outline-none focus:ring-2 focus:ring-[#E63946]"
+                    placeholder="体験の感想を入力してください..."
+                    className="w-full h-24 p-3 bg-slate-50 border-none rounded-2xl text-xs font-bold outline-none focus:ring-2 focus:ring-[#E63946]"
                   />
                   {!noteSent ? (
-                    <Button onClick={handleSendNote} disabled={!reflectionText} className="w-full bg-[#1D3557] text-white py-5 rounded-2xl font-bold text-xs gap-2">
-                      <Send size={14} /> 先生へ送信する
+                    <Button onClick={handleSendNote} disabled={!reflectionText} className="w-full bg-[#1D3557] text-white py-5 rounded-2xl font-bold text-xs gap-2 shadow-sm">
+                      <Send size={14} /> ノートを送信する
                     </Button>
                   ) : (
-                    <div className="bg-green-50 text-green-700 p-3 rounded-2xl text-xs font-bold text-center">
-                      送信しました！先生からの確認をお待ちください。
+                    <div className="bg-emerald-50 text-emerald-700 p-3 rounded-2xl text-xs font-bold text-center border border-emerald-200">
+                      送信しました！返信をお待ちください。
                     </div>
                   )}
                 </Card>
@@ -401,7 +402,7 @@ export default function StudentAppPage() {
                       </div>
                       <p className="text-xs text-slate-500 line-clamp-1 italic">“{item.studentNote}”</p>
                       <div className="text-[10px] text-slate-400 font-bold flex items-center justify-between pt-1">
-                        <span>先生からのコメントあり</span>
+                        <span>コメントあり</span>
                         <span className="text-[#E63946] font-bold flex items-center">詳細を見る <ChevronRight size={12}/></span>
                       </div>
                     </Card>

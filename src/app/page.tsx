@@ -6,33 +6,33 @@ import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Lock, Mail, ArrowRight, ShieldCheck, User, Users, UserPlus, LogIn, Compass } from "lucide-react";
+import { Lock, Mail, ArrowRight, ShieldCheck, User, Building2, UserPlus, LogIn, Compass } from "lucide-react";
 
 export default function EntryPage() {
   const router = useRouter();
   
   // モード切替: 'login' (ログイン) | 'signup' (新規登録)
   const [mode, setMode] = useState<'login' | 'signup'>('login');
-  // 役割切替: 'student' (生徒) | 'teacher' (講師)
-  const [role, setRole] = useState<'student' | 'teacher'>('student');
+  // 役割切替: 'student' (生徒) | 'admin' (舞バズ事務局 / BPOスタッフ)
+  const [role, setRole] = useState<'student' | 'admin'>('student');
   
   const [name, setName] = useState("");
   const [email, setEmail] = useState("student@maibazu.jp");
   const [password, setPassword] = useState("••••••••");
 
-  const handleRoleChange = (selectedRole: 'student' | 'teacher') => {
+  const handleRoleChange = (selectedRole: 'student' | 'admin') => {
     setRole(selectedRole);
     if (mode === 'login') {
-      setEmail(selectedRole === 'student' ? "student@maibazu.jp" : "teacher@maibazu.jp");
+      setEmail(selectedRole === 'student' ? "student@maibazu.jp" : "admin@maibazu.jp");
     }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (role === 'student') {
-      router.push('/student-app'); // 生徒用アプリへ
+      router.push('/student-app'); // 生徒用ポータル・アプリへ
     } else {
-      router.push('/dashboard'); // 講師用Adminへ
+      router.push('/admin'); // 舞バズ事務局用 BPO統合管理画面へ
     }
   };
 
@@ -75,7 +75,7 @@ export default function EntryPage() {
             </button>
           </div>
 
-          {/* 役割選択（生徒 ⇆ 講師） */}
+          {/* 役割選択（生徒 ⇆ 舞バズ事務局BPO） */}
           <div className="grid grid-cols-2 p-1 bg-slate-100 rounded-2xl gap-1">
             <button
               type="button"
@@ -88,12 +88,12 @@ export default function EntryPage() {
             </button>
             <button
               type="button"
-              onClick={() => handleRoleChange('teacher')}
+              onClick={() => handleRoleChange('admin')}
               className={`py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all ${
-                role === 'teacher' ? 'bg-[#1D3557] text-white shadow-md' : 'text-slate-500 hover:text-slate-800'
+                role === 'admin' ? 'bg-[#1D3557] text-white shadow-md' : 'text-slate-500 hover:text-slate-800'
               }`}
             >
-              <Users size={15} /> 講師（運営者）
+              <Building2 size={15} /> 事務局 (BPO Admin)
             </button>
           </div>
         </CardHeader>
@@ -107,7 +107,7 @@ export default function EntryPage() {
                 </label>
                 <Input 
                   type="text" 
-                  placeholder={role === 'student' ? "山田 太郎" : "花月 士宝菊"}
+                  placeholder={role === 'student' ? "山田 太郎" : "舞バズ 担当スタッフ"}
                   value={name} 
                   onChange={(e) => setName(e.target.value)}
                   className="bg-slate-50 border-none h-12 text-sm font-bold"
@@ -149,8 +149,8 @@ export default function EntryPage() {
               }`}
             >
               {mode === 'login' 
-                ? (role === 'student' ? '生徒用アプリへ進む' : '管理画面（Admin）へ進む') 
-                : (role === 'student' ? 'アカウントを作成して始める' : '講師登録を完了する')} 
+                ? (role === 'student' ? '生徒用アプリへ進む' : 'BPO管理画面（Admin）へ進む') 
+                : (role === 'student' ? 'アカウントを作成して始める' : '事務局スタッフ登録を完了')} 
               <ArrowRight size={18} />
             </Button>
           </form>
@@ -160,13 +160,13 @@ export default function EntryPage() {
             <p className="font-bold text-[#1D3557] flex items-center gap-1">
               <ShieldCheck size={14} className="text-green-500"/> デモ用アカウント選択中
             </p>
-            <p>ボタンを押すと、自動的に「{role === 'student' ? '生徒用アプリ' : '講師用ダッシュボード'}」へ遷移します。</p>
+            <p>ボタンを押すと、自動的に「{role === 'student' ? '生徒用アプリ' : '複数教室を管理するBPO統合Console'}」へ遷移します。</p>
           </div>
 
-          {/* 🌐 ポータルサイト・教室検索への誘導（ログインしない人用） */}
+          {/* 🌐 ポータルサイト・教室検索への誘導 */}
           <div className="text-center pt-2 border-t space-y-3">
             <div>
-              <Link href="/portal" className="inline-flex items-center gap-1.5 text-xs text-[#E63946] font-bold hover:underline">
+              <Link href="/" className="inline-flex items-center gap-1.5 text-xs text-[#E63946] font-bold hover:underline">
                  <Compass size={14} /> ログインせずに教室を探す（公式ポータル） →
               </Link>
             </div>

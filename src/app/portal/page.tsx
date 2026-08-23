@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, Music, ShoppingBag, MapPin, Users, Sparkles, Heart, Scroll, Zap, Info, ArrowRight } from "lucide-react";
+import { CheckCircle2, Music, ShoppingBag, MapPin, Sparkles, Heart, Scroll, Zap, Info, ArrowRight, CreditCard } from "lucide-react";
 
 export default function Home() {
   return (
@@ -31,7 +31,7 @@ export default function Home() {
         </div>
       </header>
 
-      {/* 🌸 ヒーローセクション */}
+      {/* 🌸 ヒーローセクション（BPO型手ぶら体験の訴求） */}
       <section className="relative overflow-hidden pt-12 pb-16 md:pt-28 md:pb-24 text-black">
         <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
           <div className="z-10 text-center md:text-left">
@@ -45,11 +45,11 @@ export default function Home() {
             </h1>
             <p className="text-base md:text-lg text-slate-500 mb-10 leading-relaxed max-w-md mx-auto md:mx-0 font-medium">
               「やってみたい」という直感を大切にしたいから。<br/>
-              流派の壁や道具の準備、不透明な費用をすべて取り払いました。
+              浴衣・着物レンタル代込み。現地での現金やり取り不要の事前Web決済で、手ぶらで1日体験が楽しめます。
             </p>
             <Link href="/search">
               <Button size="lg" className="text-lg px-10 py-8 bg-[#1D3557] text-white hover:shadow-2xl transition-all hover:-translate-y-1 rounded-2xl font-bold gap-2">
-                1日体験に申し込む <ArrowRight size={20} />
+                手ぶら1日体験に申し込む <ArrowRight size={20} />
               </Button>
             </Link>
           </div>
@@ -123,19 +123,19 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
             <FeatureCard 
-              icon={<CheckCircle2 size={32} className="text-[#E63946]" />} 
-              title="完全明朗会計" 
-              desc="事前決済で不透明な費用なし。表示価格のみで安心して始められます。" 
+              icon={<CreditCard size={32} className="text-[#E63946]" />} 
+              title="完全事前決済" 
+              desc="事前にWebクレカ決済。お稽古場での現金やり取りがなく、表示価格のみで安心して参加できます。" 
             />
             <FeatureCard 
               icon={<ShoppingBag size={32} className="text-[#E63946]" />} 
-              title="手ぶらでOK" 
-              desc="レンタルすべて込み。学校や仕事帰りに、Tシャツ参加歓迎。" 
+              title="手ぶらコミコミ" 
+              desc="浴衣・着物レンタルと着付け代がすべて込み。お仕事や学校帰りに手ぶらで手軽に参加OK。" 
             />
             <FeatureCard 
-              icon={<Music size={32} className="text-[#E63946]" />} 
-              title="楽しみ方は自由" 
-              desc="J-POPに頼らず、親しみやすい本格邦楽で基本をマスター。" 
+              icon={<CheckCircle2 size={32} className="text-[#E63946]" />} 
+              title="事前動画で不安ゼロ" 
+              desc="当日の流れや基本の作法は事前に短時間動画で学べるため、初めてでも緊張せずに楽しめます。" 
             />
           </div>
         </div>
@@ -153,7 +153,7 @@ export default function Home() {
               </header>
               <div className="space-y-4">
                 <StepItem number="STEP 1" title="自宅でオンデマンド予習（5分）" desc="歴史や作法、当日の流れを動画で事前にチェック。不安ゼロで当日へ。" />
-                <StepItem number="STEP 2" title="稽古場での対面レッスン（60分）" desc="道具はすべて用意。親しみやすい本格邦楽に合わせて楽しく身体を動かします。" />
+                <StepItem number="STEP 2" title="稽古場での対面レッスン（60分）" desc="着物一式レンタル＆着付け代込み。先生の丁寧指導で本格邦楽に合わせて楽しく動きます。" />
                 <StepItem number="STEP 3" title="Web振り返りノート" desc="レッスン後の感想や質問をアプリで送信。先生から一言メッセージが届きます。" />
               </div>
             </div>
@@ -161,15 +161,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 🏫 認定教室ボタン */}
+      {/* 🏫 提携中の認定教室（価格をコミコミ体験料金へ変更） */}
       <section id="schools" className="py-24 bg-white text-center text-black">
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-3xl font-bold mb-4 tracking-tight">提携中の認定教室</h2>
-          <p className="text-slate-400 mb-16 italic">クリックで各教室の詳細・事前予習動画の概要をご覧いただけます。</p>
+          <p className="text-slate-400 mb-16 italic">クリックで各教室の詳細・手ぶら体験予約へ進めます。</p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
-            <SchoolCard id="1" name="S 教室" location="大阪・吹田" tags={["20代30代中心", "初心者特化"]} price="15,000円" img="/lesson.jpg" />
-            <SchoolCard id="2" name="H 教室" location="兵庫・伊丹" tags={["手ぶらOK", "SNS歓迎"]} price="12,000円" img="/rental.jpg" />
-            <SchoolCard id="3" name="K 教室" location="東京・世田谷" tags={["夜間対応", "親切指導"]} price="18,000円" img="/hero.jpg" />
+            <SchoolCard id="1" name="S 教室" location="大阪・吹田" tags={["着物込み", "20代30代中心"]} price="3,980円" img="/lesson.jpg" />
+            <SchoolCard id="2" name="H 教室" location="兵庫・伊丹" tags={["手ぶらOK", "事前動画あり"]} price="4,500円" img="/rental.jpg" />
+            <SchoolCard id="3" name="K 教室" location="東京・世田谷" tags={["着物込み", "親切指導"]} price="4,980円" img="/hero.jpg" />
           </div>
           <div className="mt-20">
             <Link href="/search">
@@ -181,7 +181,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ☕ Footer（★受講生・講師の双方とも /login へ誘導するよう統一） */}
+      {/* ☕ Footer */}
       <footer className="py-16 bg-[#1D3557] text-white text-center">
         <div className="max-w-4xl mx-auto px-4 space-y-8">
           <div className="w-16 h-16 rounded-full bg-white p-1.5 mx-auto overflow-hidden shadow-lg flex items-center justify-center">
@@ -192,12 +192,11 @@ export default function Home() {
           <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-center gap-6 text-xs text-white/50">
             <Link href="/search" className="hover:text-white transition-colors">教室検索</Link>
             
-            {/* 👇 生徒側・先生側の両方のリンク先を /login に集約 */}
             <Link href="/login" className="hover:text-[#E63946] font-bold text-white/80 transition-colors underline underline-offset-4">
                受講生の方はこちら（アプリログイン）
             </Link>
             <Link href="/login" className="hover:text-[#E63946] font-bold text-white/80 transition-colors underline underline-offset-4">
-               教室運営者・講師の方はこちら（Adminログイン）
+               舞バズ事務局・スタッフの方はこちら（BPO Console）
             </Link>
           </div>
         </div>
@@ -206,7 +205,7 @@ export default function Home() {
   );
 }
 
-// コンポーネント
+// コンポーネント定義
 function BenefitCard({ icon, title, desc }: any) {
   return (
     <div className="bg-white/5 border border-white/10 p-8 rounded-[2rem] backdrop-blur hover:bg-white/10 transition-colors">
@@ -256,7 +255,7 @@ function SchoolCard({ id, name, location, tags, price, img }: any) {
         <CardHeader className="p-6">
           <CardTitle className="text-xl font-black mb-4 tracking-tight">{name}</CardTitle>
           <div className="flex justify-between items-center pt-4 border-t border-slate-100">
-            <span className="text-[10px] font-bold text-[#1D3557]/40 uppercase tracking-widest">Hybrid Trial</span>
+            <span className="text-[10px] font-bold text-[#1D3557]/40 uppercase tracking-widest">手ぶらコミコミ体験</span>
             <span className="text-xl font-black text-[#E63946]">{price}</span>
           </div>
         </CardHeader>
